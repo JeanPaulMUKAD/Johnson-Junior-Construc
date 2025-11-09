@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 session_start();
 include 'config/database.php'; // Inclut la fonction getConnection()
 
@@ -103,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Johnson Construction</title>
+    <title>Johnson Jr Construction</title>
 
     <!--============== Google Fonts =============-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -130,7 +130,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!--======================= Header =============================-->
     <header id="header" class="header">
         <nav class="nav container">
-            <a href="index.html" class="nav__brand"><span>Johnson</span> Construction</a>
+            <a href="index.html" class="nav__brand"><span>Johnson</span> Jr Construction</a>
             <div id="nav-menu" class="nav__menu">
                 <ul class="nav__list">
                     <li class="nav__item">
@@ -145,9 +145,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <li class="nav__item">
                         <a href="#menu" class="nav__link">Projets</a>
                     </li>
-                    <li class="nav__item">
-                        <a href="#blog" class="nav__link">Actualités</a>
-                    </li>
+                   
                 </ul>
             </div>
 
@@ -391,6 +389,212 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </section>
 
+        <!--======================= Nos Produits ============================-->
+        <section id="products" class="bg-gradient-to-b from-gray-50 to-white py-20">
+            <div class="text-center mb-16">
+                <span class="text-x font-semibold tracking-widest text-red-700 uppercase">Nos Produits</span>
+                <h2 class="mt-2 text-4xl font-extrabold text-gray-800">Matériaux de Qualité</h2>
+                <p class="mt-3 max-w-2xl mx-auto text-gray-500">
+                    Découvrez notre sélection de matériaux fiables pour vos projets de construction, alliant durabilité
+                    et performance.
+                </p>
+            </div>
+
+            <div class="container mx-auto px-6 lg:px-12">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+
+                    <!-- Ciment -->
+                    <div
+                        class="group relative bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300">
+                        <div class="h-64 overflow-hidden">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS04rsYgshTUCPELm9yrt1YXyASfJrBwGUZ2Q&s"
+                                alt="Ciment"
+                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <h3
+                                class="text-2xl font-semibold text-gray-800 group-hover:text-red-700 transition-colors duration-300">
+                                Ciment</h3>
+                            <p class="mt-2 text-gray-600 leading-relaxed">Notre ciment de haute qualité pour tous vos
+                                projets de construction.</p>
+                            <div class="mt-5">
+                                <a href="details-produits.php"
+                                    class="inline-flex items-center gap-2 bg-red-700 hover:bg-[#053d36] text-white px-5 py-2.5 rounded-lg font-medium shadow-md transition-all duration-300">
+                                    Voir détails
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                        <div
+                            class="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-red-700 via-red-500 to-[#053d36] opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        </div>
+                    </div>
+
+                    <!-- Gravier -->
+                    <div
+                        class="group relative bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300">
+                        <div class="h-64 overflow-hidden">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_uHhxesbL0X7U1sFuy5LH9frwGBaaWfCSwQ&s"
+                                alt="Gravier"
+                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <h3
+                                class="text-2xl font-semibold text-gray-800 group-hover:text-red-700 transition-colors duration-300">
+                                Gravier</h3>
+                            <p class="mt-2 text-gray-600 leading-relaxed">Gravier de différentes tailles pour vos
+                                besoins spécifiques.</p>
+                            <div class="mt-5">
+                                <a href="details-produits.php"
+                                    class="inline-flex items-center gap-2 bg-red-700 hover:bg-[#053d36] text-white px-5 py-2.5 rounded-lg font-medium shadow-md transition-all duration-300">
+                                    Voir détails
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                        <div
+                            class="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-red-700 via-red-500 to-[#053d36] opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        </div>
+                    </div>
+
+                    <!-- Carreaux -->
+                    <div
+                        class="group relative bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300">
+                        <div class="h-64 overflow-hidden">
+                            <img src="https://franceschini.fr/wp-content/uploads/2017/09/carreaux-ciment-1.jpg"
+                                alt="Carreaux"
+                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <h3
+                                class="text-2xl font-semibold text-gray-800 group-hover:text-red-700 transition-colors duration-300">
+                                Carreaux</h3>
+                            <p class="mt-2 text-gray-600 leading-relaxed">Large gamme de carreaux pour sols et murs
+                                intérieurs/extérieurs.</p>
+                            <div class="mt-5">
+                                <a href="details-produits.php"
+                                    class="inline-flex items-center gap-2 bg-red-700 hover:bg-[#053d36] text-white px-5 py-2.5 rounded-lg font-medium shadow-md transition-all duration-300">
+                                    Voir détails
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                        <div
+                            class="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-red-700 via-red-500 to-[#053d36] opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        </div>
+                    </div>
+
+                    <!-- Pavés -->
+                    <div
+                        class="group relative bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300">
+                        <div class="h-64 overflow-hidden">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTp31Y6W1qG-T7jhkCUMy8Dquyvy_8RByhHFA&s"
+                                alt="Pavés"
+                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <h3
+                                class="text-2xl font-semibold text-gray-800 group-hover:text-red-700 transition-colors duration-300">
+                                Pavés</h3>
+                            <p class="mt-2 text-gray-600 leading-relaxed">Pavés décoratifs et fonctionnels pour vos
+                                aménagements extérieurs.</p>
+                            <div class="mt-5">
+                                <a href="details-produits.php"
+                                    class="inline-flex items-center gap-2 bg-red-700 hover:bg-[#053d36] text-white px-5 py-2.5 rounded-lg font-medium shadow-md transition-all duration-300">
+                                    Voir détails
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                        <div
+                            class="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-red-700 via-red-500 to-[#053d36] opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        </div>
+                    </div>
+
+                    <!-- Gyproc -->
+                    <div
+                        class="group relative bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300">
+                        <div class="h-64 overflow-hidden">
+                            <img src="https://livios-images.imgix.net/livios/newsitems/17809/-0002-gyproc-plafond-maken.png?auto=format&ar=4%3A3&w=1300&s=741510ff3e3d389e151781d61b9cfdcf"
+                                alt="Gyproc"
+                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <h3
+                                class="text-2xl font-semibold text-gray-800 group-hover:text-red-700 transition-colors duration-300">
+                                Gyproc</h3>
+                            <p class="mt-2 text-gray-600 leading-relaxed">Solutions complètes en plaques de plâtre pour
+                                vos cloisons et plafonds.</p>
+                            <div class="mt-5">
+                                <a href="details-produits.php"
+                                    class="inline-flex items-center gap-2 bg-red-700 hover:bg-[#053d36] text-white px-5 py-2.5 rounded-lg font-medium shadow-md transition-all duration-300">
+                                    Voir détails
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                        <div
+                            class="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-red-700 via-red-500 to-[#053d36] opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        </div>
+                    </div>
+
+                    <!-- Omega -->
+                    <div
+                        class="group relative bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300">
+                        <div class="h-64 overflow-hidden">
+                            <img src="https://omegacosi.com/wp-content/uploads/2024/08/5953dfbb-09b3-4390-aad1-27858f5c2a2a-768x577.jpg"
+                                alt="Omega"
+                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <h3
+                                class="text-2xl font-semibold text-gray-800 group-hover:text-red-700 transition-colors duration-300">
+                                Omega</h3>
+                            <p class="mt-2 text-gray-600 leading-relaxed">Profilés Omega pour vos installations de
+                                plafonds suspendus.</p>
+                            <div class="mt-5">
+                                <a href="details-produits.php"
+                                    class="inline-flex items-center gap-2 bg-red-700 hover:bg-[#053d36] text-white px-5 py-2.5 rounded-lg font-medium shadow-md transition-all duration-300">
+                                    Voir détails
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                        <div
+                            class="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-red-700 via-red-500 to-[#053d36] opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+
         <!--======================= Menu (Projets) ============================-->
         <section id="menu" class="section menu">
             <div class="section__header">
@@ -427,7 +631,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             foreach ($resultats as $row) {
                                 $nomProduit = htmlspecialchars($row['nom']);
                                 $prix = htmlspecialchars($row['prix']);
-                                $quantite = htmlspecialchars($row['quantite']);
+                                $quantite = $row['quantite'];
                                 $image = htmlspecialchars($row['image']);
                                 ?>
                                 <div class="menu__card <?php echo $classe; ?> all mix">
@@ -548,113 +752,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </section>
 
-        <!--======================= Blog (Actualités) ============================-->
-        <section id="blog" class="section blog">
-            <div class="section__header">
-                <span class="section__subtitle">Actualités</span>
-                <h2 class="section__title">Dernières publications</h2>
-            </div>
-            <div class="d-grid blog__wrapper container">
-                <!------- blog post 1 --------->
-                <div class="blog__post">
-                    <div class="blog__overlay"></div>
-                    <img src="https://maformationbatiment.fr/wp-content/uploads/elementor/thumbs/AdobeStock_565303373-scaled-rb9nq4i0glvvj9oiqpd7adk6gtbaasvx8nugkb17rc.jpeg"
-                        alt="article" class="blog__img">
-                    <div class="blog__content">
-                        <h3 class="blog__title">10 conseils pour votre construction durable</h3>
-                        <a href="javascript:void(0)" class="blog__link">En savoir plus</a>
-                    </div>
-                </div>
-                <!------- blog post 2 --------->
-                <div class="blog__post">
-                    <div class="blog__overlay"></div>
-                    <img src="https://img.freepik.com/photos-premium/creer-communautes-prosperes-batiment-fois-photo-groupe-constructeurs-evaluant-progres-chantier-construction_590464-22489.jpg"
-                        alt="article" class="blog__img">
-                    <div class="blog__content">
-                        <h3 class="blog__title">Planifier un chantier : étapes clés</h3>
-                        <a href="javascript:void(0)" class="blog__link">En savoir plus</a>
-                    </div>
-                </div>
-                <!------- blog post 3 --------->
-                <div class="blog__post">
-                    <div class="blog__overlay"></div>
-                    <img src="https://media.istockphoto.com/id/977302930/fr/photo/ouvrier-du-b%C3%A2timent-utilisent-le-harnais-de-s%C3%A9curit%C3%A9-et-de-la-ligne-de-s%C3%A9curit%C3%A9-travaillant.jpg?s=612x612&w=0&k=20&c=7Dt_w7svq9XSaUYjwe4XJwPLIDzOruuNg12otP8Caiw="
-                        alt="article" class="blog__img">
-                    <div class="blog__content">
-                        <h3 class="blog__title">Sécurité sur le chantier : bonnes pratiques</h3>
-                        <a href="javascript:void(0)" class="blog__link">En savoir plus</a>
-                    </div>
-                </div>
-            </div>
 
-            <!--======================= Modale Blog ============================-->
-            <div id="blogModal" class="fixed inset-0 bg-black bg-opacity-60 hidden items-center justify-center z-50">
-                <div class="bg-white rounded-xl max-w-3xl mx-4 overflow-hidden shadow-lg">
-                    <img id="modalImg" src="" alt="" class="w-full h-64 object-cover">
-                    <div class="p-6">
-                        <h3 id="modalTitle" class="text-2xl font-bold mb-4"></h3>
-                        <p id="modalText" class="text-justify leading-relaxed mb-6"></p>
-                        <div class="text-right">
-                            <button onclick="closeBlogModal()"
-                                class="bg-[#065f46] hover:bg-[#053d36] text-white font-semibold py-2 px-5 rounded-lg">Fermer</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <script>
-                const blogPosts = [
-                    {
-                        title: "10 conseils pour votre construction durable",
-                        image: "https://maformationbatiment.fr/wp-content/uploads/elementor/thumbs/AdobeStock_565303373-scaled-rb9nq4i0glvvj9oiqpd7adk6gtbaasvx8nugkb17rc.jpeg",
-                        text: `
-                    1. **Choisir des matériaux durables** : privilégiez le bois certifié FSC, la brique écologique ou le béton recyclé.
-                    2. **Optimiser l'isolation** : réduisez les pertes énergétiques grâce à des isolants performants et respectueux de l'environnement.
-                    3. **Réutiliser et recycler** : réemployez les matériaux récupérés et recyclez les déchets de chantier.
-                    4. **Énergie renouvelable** : intégrez panneaux solaires, pompes à chaleur et systèmes économes en énergie.
-                    5. **Gestion de l'eau** : installez des récupérateurs d’eau de pluie et des sanitaires économes.
-                    6. **Planification efficace** : réduisez les déplacements et optimisez le temps de chantier pour limiter l'empreinte carbone.
-                    7. **Limiter l'impact du chantier** : minimisez le bruit, la poussière et la perturbation de la biodiversité locale.
-                    8. **Choisir des peintures et colles écologiques** : évitez les composés organiques volatils (COV).
-                    9. **Favoriser la lumière naturelle** : conception de bâtiments pour maximiser l’éclairage naturel et réduire la consommation électrique.
-                    10. **Sensibiliser les équipes** : formez vos ouvriers aux pratiques durables et aux gestes écologiques quotidiens.
-                    `
-                    },
-                    {
-                        title: "Planifier un chantier : étapes clés",
-                        image: "https://img.freepik.com/photos-premium/creer-communautes-prosperes-batiment-fois-photo-groupe-constructeurs-evaluant-progres-chantier-construction_590464-22489.jpg",
-                        text: "La planification d’un chantier est essentielle pour respecter les délais et les budgets. Apprenez à coordonner les équipes et anticiper les imprévus."
-                    },
-                    {
-                        title: "Sécurité sur le chantier : bonnes pratiques",
-                        image: "https://media.istockphoto.com/id/977302930/fr/photo/ouvrier-du-b%C3%A2timent-utilisent-le-harnais-de-s%C3%A9curit%C3%A9-et-de-la-ligne-de-s%C3%A9curit%C3%A9-travaillant.jpg?s=612x612&w=0&k=20&c=7Dt_w7svq9XSaUYjwe4XJwPLIDzOruuNg12otP8Caiw=",
-                        text: "Assurer la sécurité sur le chantier est primordial. Du port des équipements de protection à la signalisation, découvrez les meilleures pratiques pour protéger chaque ouvrier."
-                    }
-                ];
-
-                const modal = document.getElementById("blogModal");
-                const modalTitle = document.getElementById("modalTitle");
-                const modalText = document.getElementById("modalText");
-                const modalImg = document.getElementById("modalImg");
-
-                const buttons = document.querySelectorAll(".blog__link");
-
-                buttons.forEach((btn, index) => {
-                    btn.addEventListener("click", () => {
-                        modalTitle.textContent = blogPosts[index].title;
-                        modalText.textContent = blogPosts[index].text;
-                        modalImg.src = blogPosts[index].image;
-                        modal.classList.remove("hidden");
-                        modal.classList.add("flex");
-                    });
-                });
-
-                function closeBlogModal() {
-                    modal.classList.add("hidden");
-                    modal.classList.remove("flex");
-                }
-            </script>
-        </section>
     </main>
 
     <!--======================= Contact ============================-->
@@ -670,15 +768,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div>
                     <label class="block text-gray-700 font-semibold  mb-1">Votre nom</label>
                     <input type="text" placeholder="Entrez votre nom"
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none"
-                        required>
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none" required>
                 </div>
 
                 <div>
                     <label class="block text-gray-700 font-semibold  mb-1">Votre email</label>
                     <input type="email" placeholder="Entrez votre adresse email"
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none"
-                        required>
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none" required>
                 </div>
 
                 <div>
@@ -709,11 +805,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </li>
                     <li class="flex items-center space-x-3">
                         <i class="ri-phone-line text-red-700 text-2xl"></i>
-                        <a href="tel:0977199714"><strong >Téléphone :</strong> +243 977 199 714</a>
+                        <a href="tel:0977199714"><strong>Téléphone :</strong> +243 977 199 714</a>
                     </li>
                     <li class="flex items-center space-x-3">
                         <i class="ri-mail-line text-red-700 text-2xl"></i>
-                        <a href="mailto:contact@johnsonconstruction.com"><strong>Email :</strong> contact@johnsonconstruction.com</a>
+                        <a href="mailto:contact@johnsonconstruction.com"><strong>Email :</strong>
+                            contact@johnsonconstruction.com</a>
                     </li>
                     <li class="flex items-center space-x-3">
                         <i class="ri-time-line text-red-700 text-2xl"></i>
@@ -834,7 +931,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 <div class="mt-4 flex flex-col gap-3 border-t pt-4">
                     <div class="flex justify-between items-center">
-                        <p class="font-bold">Total: <span id="panierTotal">0</span> €</p>
+                        <p class="font-bold">Total: <span id="panierTotal">0</span></p>
                         <div class="flex gap-2">
                             <button id="btnCommander"
                                 class="bg-green-600 hover:bg-green-700 transition text-white px-4 py-2 rounded-lg">
@@ -850,6 +947,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
     </div>
+
+    qu'on recupere la bonne devise puis joue avec le design
 
     <!-- Animation fadeIn -->
     <style>
