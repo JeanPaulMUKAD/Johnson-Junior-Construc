@@ -98,7 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // Récupérer les informations du produit depuis l'URL
 $produit_id = $_GET['id'] ?? 1;
 $produits = [
-   
+
     1 => [
         'nom' => 'Gravier Premium',
         'description' => 'Notre gravier premium est soigneusement sélectionné pour offrir une qualité exceptionnelle dans tous vos projets de construction. Disponible en différentes granulométries, il est parfait pour le béton, le drainage, les allées et les aménagements paysagers.',
@@ -152,8 +152,8 @@ $produits = [
             'Grande résistance mécanique',
             'Diverses couleurs et formes'
         ]
-        ],
-     4 => [
+    ],
+    4 => [
         'nom' => 'Ciment de Haute Qualité',
         'description' => 'Notre ciment de haute qualité est conçu pour garantir la durabilité et la solidité de vos constructions. Idéal pour les fondations, les murs porteurs, les dalles et bien plus encore. Sa composition assure une excellente résistance mécanique et une prise régulière, même dans des conditions climatiques difficiles.',
         'prix' => '15,000 FC',
@@ -395,123 +395,124 @@ $produit_actuel = $produits[$produit_id] ?? $produits[1];
 
 
 
-<!--======================= Section Détails Produit ============================-->
-<section class="container mx-auto px-6 lg:px-16 py-16 mt-32">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <!--======================= Section Détails Produit ============================-->
+        <section class="container mx-auto px-6 lg:px-16 py-16 mt-32">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
-        <!-- Galerie Images -->
-        <div class="space-y-6">
-            <div class="rounded-2xl overflow-hidden shadow-xl">
-                <img src="<?= $produit_actuel['images']['main'] ?>" alt="<?= $produit_actuel['nom'] ?>"
-                    class="w-full h-96 object-cover hover:scale-105 transition-transform duration-500">
+                <!-- Galerie Images -->
+                <div class="space-y-6">
+                    <div class="rounded-2xl overflow-hidden shadow-xl">
+                        <img src="<?= $produit_actuel['images']['main'] ?>" alt="<?= $produit_actuel['nom'] ?>"
+                            class="w-full h-96 object-cover hover:scale-105 transition-transform duration-500">
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-4">
+                        <?php foreach ($produit_actuel['images']['thumbnails'] as $thumbnail): ?>
+                            <img src="<?= $thumbnail ?>" alt="<?= $produit_actuel['nom'] ?>"
+                                class="rounded-lg h-32 w-full object-cover hover:scale-105 transition-transform duration-300 cursor-pointer">
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+
+                <!-- Détails Texte -->
+                <div>
+                    <h2 class="text-4xl font-extrabold text-[#053d36] mb-4"><?= $produit_actuel['nom'] ?></h2>
+                    <p class="text-gray-700 text-xl leading-relaxed mb-6">
+                        <?= $produit_actuel['description'] ?>
+                    </p>
+
+                    <ul class="space-y-2 mb-8 text-gray-600">
+                        <?php foreach ($produit_actuel['caracteristiques'] as $caracteristique): ?>
+                            <li class="flex items-center gap-2">
+                                <svg class="w-5 h-5 text-red-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
+                                </svg>
+                                <?= $caracteristique ?>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+
+                    <div class="flex items-center gap-6">
+                        <span class="text-3xl font-bold text-red-700"><?= $produit_actuel['prix'] ?></span>
+                        <a href="#"
+                            class="bg-red-700 hover:bg-[#053d36] text-white px-8 py-3 rounded-lg font-semibold shadow-md transition">
+                            Commander maintenant
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!--======================= Produits similaires ============================-->
+        <section class="bg-gray-100 py-16">
+            <div class="text-center mb-10">
+                <h3 class="text-3xl font-bold text-gray-800">Produits Similaires</h3>
+                <p class="text-gray-500 mt-2">Découvrez d'autres matériaux de la même catégorie</p>
             </div>
 
-            <div class="grid grid-cols-3 gap-4">
-                <?php foreach ($produit_actuel['images']['thumbnails'] as $thumbnail): ?>
-                    <img src="<?= $thumbnail ?>" alt="<?= $produit_actuel['nom'] ?>"
-                        class="rounded-lg h-32 w-full object-cover hover:scale-105 transition-transform duration-300 cursor-pointer">
-                <?php endforeach; ?>
+            <div class="container mx-auto px-6 lg:px-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Produit Similaire 1 - Gravier -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_uHhxesbL0X7U1sFuy5LH9frwGBaaWfCSwQ&s"
+                        alt="Gravier" class="w-full h-56 object-cover">
+                    <div class="p-5">
+                        <h4 class="text-xl font-semibold text-gray-800 mb-2">Gravier Premium</h4>
+                        <p class="text-gray-600 mb-4 text-xl">Gravier de différentes tailles pour vos besoins
+                            spécifiques.</p>
+                        <a href="details-produits.php?id=1"
+                            class="inline-block bg-red-700 hover:bg-[#053d36] text-white px-5 py-2 rounded-lg font-medium transition">
+                            Voir détails
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Produit Similaire 2 - Carreaux -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300">
+                    <img src="https://franceschini.fr/wp-content/uploads/2017/09/carreaux-ciment-1.jpg" alt="Carreaux"
+                        class="w-full h-56 object-cover">
+                    <div class="p-5">
+                        <h4 class="text-xl font-semibold text-gray-800 mb-2">Carreaux Céramique</h4>
+                        <p class="text-gray-600 mb-4 text-xl">Carreaux pour sols et murs intérieurs/extérieurs.</p>
+                        <a href="details-produits.php?id=2"
+                            class="inline-block bg-red-700 hover:bg-[#053d36] text-white px-5 py-2 rounded-lg font-medium transition">
+                            Voir détails
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Produit Similaire 3 - Pavés -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTp31Y6W1qG-T7jhkCUMy8Dquyvy_8RByhHFA&s"
+                        alt="Pavés" class="w-full h-56 object-cover">
+                    <div class="p-5">
+                        <h4 class="text-xl font-semibold text-gray-800 mb-2">Pavés Autobloquants</h4>
+                        <p class="text-gray-600 mb-4 text-xl">Pavés décoratifs pour vos aménagements extérieurs.</p>
+                        <a href="details-produits.php?id=3"
+                            class="inline-block bg-red-700 hover:bg-[#053d36] text-white px-5 py-2 rounded-lg font-medium transition">
+                            Voir détails
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Produit Similaire 4 - Ciment -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300">
+                    <img src="https://www.constructionlabrique.com/wp-content/uploads/2016/12/coulee-ciment-labrique.jpeg"
+                        alt="Pavés" class="w-full h-56 object-cover">
+                    <div class="p-5">
+                        <h4 class="text-xl font-semibold text-gray-800 mb-2">Ciments</h4>
+                        <p class="text-gray-600 mb-4 text-xl">Ciment décoratifs pour vos aménagements extérieurs.</p>
+                        <a href="details-produits.php?id=4"
+                            class="inline-block bg-red-700 hover:bg-[#053d36] text-white px-5 py-2 rounded-lg font-medium transition">
+                            Voir détails
+                        </a>
+                    </div>
+                </div>
+
             </div>
-        </div>
-
-        <!-- Détails Texte -->
-        <div>
-            <h2 class="text-4xl font-extrabold text-[#053d36] mb-4"><?= $produit_actuel['nom'] ?></h2>
-            <p class="text-gray-700 text-xl leading-relaxed mb-6">
-                <?= $produit_actuel['description'] ?>
-            </p>
-
-            <ul class="space-y-2 mb-8 text-gray-600">
-                <?php foreach ($produit_actuel['caracteristiques'] as $caracteristique): ?>
-                    <li class="flex items-center gap-2">
-                        <svg class="w-5 h-5 text-red-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M5 13l4 4L19 7" />
-                        </svg>
-                        <?= $caracteristique ?>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-
-            <div class="flex items-center gap-6">
-                <span class="text-3xl font-bold text-red-700"><?= $produit_actuel['prix'] ?></span>
-                <a href="#"
-                    class="bg-red-700 hover:bg-[#053d36] text-white px-8 py-3 rounded-lg font-semibold shadow-md transition">
-                    Commander maintenant
-                </a>
-            </div>
-        </div>
-
-    </div>
-</section>
-
-<!--======================= Produits similaires ============================-->
-<section class="bg-gray-100 py-16">
-    <div class="text-center mb-10">
-        <h3 class="text-3xl font-bold text-gray-800">Produits Similaires</h3>
-        <p class="text-gray-500 mt-2">Découvrez d'autres matériaux de la même catégorie</p>
-    </div>
-
-    <div class="container mx-auto px-6 lg:px-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-
-        <!-- Produit Similaire 1 - Gravier -->
-        <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_uHhxesbL0X7U1sFuy5LH9frwGBaaWfCSwQ&s"
-                alt="Gravier" class="w-full h-56 object-cover">
-            <div class="p-5">
-                <h4 class="text-xl font-semibold text-gray-800 mb-2">Gravier Premium</h4>
-                <p class="text-gray-600 mb-4 text-xl">Gravier de différentes tailles pour vos besoins spécifiques.</p>
-                <a href="details-produits.php?id=1"
-                    class="inline-block bg-red-700 hover:bg-[#053d36] text-white px-5 py-2 rounded-lg font-medium transition">
-                    Voir détails
-                </a>
-            </div>
-        </div>
-
-        <!-- Produit Similaire 2 - Carreaux -->
-        <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300">
-            <img src="https://franceschini.fr/wp-content/uploads/2017/09/carreaux-ciment-1.jpg" alt="Carreaux"
-                class="w-full h-56 object-cover">
-            <div class="p-5">
-                <h4 class="text-xl font-semibold text-gray-800 mb-2">Carreaux Céramique</h4>
-                <p class="text-gray-600 mb-4 text-xl">Carreaux pour sols et murs intérieurs/extérieurs.</p>
-                <a href="details-produits.php?id=2"
-                    class="inline-block bg-red-700 hover:bg-[#053d36] text-white px-5 py-2 rounded-lg font-medium transition">
-                    Voir détails
-                </a>
-            </div>
-        </div>
-
-        <!-- Produit Similaire 3 - Pavés -->
-        <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTp31Y6W1qG-T7jhkCUMy8Dquyvy_8RByhHFA&s"
-                alt="Pavés" class="w-full h-56 object-cover">
-            <div class="p-5">
-                <h4 class="text-xl font-semibold text-gray-800 mb-2">Pavés Autobloquants</h4>
-                <p class="text-gray-600 mb-4 text-xl">Pavés décoratifs pour vos aménagements extérieurs.</p>
-                <a href="details-produits.php?id=3"
-                    class="inline-block bg-red-700 hover:bg-[#053d36] text-white px-5 py-2 rounded-lg font-medium transition">
-                    Voir détails
-                </a>
-            </div>
-        </div>
-
-        <!-- Produit Similaire 4 - Ciment -->
-        <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300">
-            <img src="https://www.constructionlabrique.com/wp-content/uploads/2016/12/coulee-ciment-labrique.jpeg"
-                alt="Pavés" class="w-full h-56 object-cover">
-            <div class="p-5">
-                <h4 class="text-xl font-semibold text-gray-800 mb-2">Ciments</h4>
-                <p class="text-gray-600 mb-4 text-xl">Ciment décoratifs pour vos aménagements extérieurs.</p>
-                <a href="details-produits.php?id=4"
-                    class="inline-block bg-red-700 hover:bg-[#053d36] text-white px-5 py-2 rounded-lg font-medium transition">
-                    Voir détails
-                </a>
-            </div>
-        </div>
-
-    </div>
-</section>
+        </section>
 
 
 
@@ -660,8 +661,70 @@ $produit_actuel = $produits[$produit_id] ?? $produits[1];
             }
         </style>
 
+        <!-- SEARCH LOGO -->
+        <script>
+
+            let a = 0;
+            let masque = document.createElement('div');
+            let cercle = document.createElement('div');
+
+            let angle = 0;
+
+            window.addEventListener('load', () => {
+                a = 1;
+
+                // Le cercle commence à tourner immédiatement
+                anime = setInterval(() => {
+                    angle += 10; // Vitesse de rotation du cercle
+                    cercle.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
+                }, 20);
+
+                // Après 1 seconde, on arrête l'animation et on fait disparaître le masque
+                setTimeout(() => {
+                    clearInterval(anime);
+                    masque.style.opacity = '0';
+                }, 1000);
+
+                setTimeout(() => {
+                    masque.style.visibility = 'hidden';
+                }, 1500);
+            });
+
+            // Création du masque
+            masque.style.width = '100%';
+            masque.style.height = '100vh';
+            masque.style.zIndex = 100000;
+            masque.style.background = '#ffffff';
+            masque.style.position = 'fixed';
+            masque.style.top = '0';
+            masque.style.left = '0';
+            masque.style.opacity = '1';
+            masque.style.transition = '0.5s ease';
+            masque.style.display = 'flex';
+            masque.style.justifyContent = 'center';
+            masque.style.alignItems = 'center';
+            document.body.appendChild(masque);
+
+            // Création du cercle (réduit)
+            cercle.style.width = '40px';  // Au lieu de 15vh
+            cercle.style.height = '40px'; // Au lieu de 15vh
+            cercle.style.border = '2px solid #f3f3f3'; // Bordure plus fine
+            cercle.style.borderTop = '2px solid #2F1C6A';
+            cercle.style.borderRadius = '50%';
+            cercle.style.position = 'absolute';
+            cercle.style.top = '50%';
+            cercle.style.left = '50%';
+            cercle.style.transform = 'translate(-50%, -50%)';
+            cercle.style.boxSizing = 'border-box';
+            cercle.style.zIndex = '1';
+            masque.appendChild(cercle);
+
+            // Variable de l'animation
+            let anime;
+
+        </script>
+
 
 </body>
 
 </html>
-

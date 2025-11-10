@@ -145,7 +145,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <li class="nav__item">
                         <a href="#menu" class="nav__link">Projets</a>
                     </li>
-                   
+
                 </ul>
             </div>
 
@@ -373,7 +373,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="d-grid about__wrapper container">
                 <div class="about__content">
                     <span class="about__subtitle">À propos</span>
-                    <h2 class="about__title">Expertise en construction depuis 1998</h2>
+                    <h2 class="about__title">Expertise en construction depuis 2010</h2>
                     <p class="about__description">Johnson Construction est une entreprise familiale spécialisée dans la
                         construction clé en main.
                         Nous combinons savoir-faire, innovation et respect des normes pour livrer des bâtiments durables
@@ -600,6 +600,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="section__header">
                 <span class="section__subtitle">Nos Produits</span>
                 <h2 class="section__title">Matériaux de Construction</h2>
+                <p>Cliquer sur un produit pour votre réservation</p>
             </div>
 
             <div class="menu__filter">
@@ -619,7 +620,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $produits = ['ciment', 'gravier', 'pave', 'carreaux', 'gyproc', 'omega', 'chanel'];
 
                     foreach ($produits as $produit) {
-                        $stmt = $conn->prepare("SELECT nom, prix, quantite, image FROM produits WHERE nom LIKE :nom");
+                        // MODIFICATION : Ajout des champs devise et poids
+                        $stmt = $conn->prepare("SELECT nom, prix, devise, poids, quantite, image FROM produits WHERE nom LIKE :nom");
                         $searchTerm = '%' . $produit . '%';
                         $stmt->bindParam(':nom', $searchTerm);
                         $stmt->execute();
@@ -631,6 +633,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             foreach ($resultats as $row) {
                                 $nomProduit = htmlspecialchars($row['nom']);
                                 $prix = htmlspecialchars($row['prix']);
+                                $devise = htmlspecialchars($row['devise'] ?? 'USD'); // Récupération de la devise
+                                $poids = htmlspecialchars($row['poids'] ?? ''); // Récupération du poids
                                 $quantite = $row['quantite'];
                                 $image = htmlspecialchars($row['image']);
                                 ?>
@@ -645,6 +649,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                                     <div class="menu__card-body">
                                         <h3 class="menu__title"><?php echo $nomProduit; ?></h3>
+
+                                        <!-- Affichage du poids si disponible -->
+                                        <?php if (!empty($poids)): ?>
+                                            <div class="text-sm text-gray-600 mb-2 flex items-center gap-1 text-xl">
+                                                <i class="fas fa-weight-hanging text-blue-500"></i>
+                                                <span class="font-bold">Poids: <?php echo $poids; ?></span>
+                                            </div>
+                                        <?php endif; ?>
+
                                         <div class="rating">
                                             <span class="rating__star"><i class="ri-star-fill"></i></span>
                                             <span class="rating__star"><i class="ri-star-fill"></i></span>
@@ -652,10 +665,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             <span class="rating__star"><i class="ri-star-fill"></i></span>
                                             <span class="rating__star"><i class="ri-star-half-fill"></i></span>
                                         </div>
-                                        <span class="menu__price">Prix: <?php echo $prix; ?> $</span>
+
+                                        <!-- MODIFICATION : Affichage du prix avec la devise -->
+                                        <span class="menu__price">
+                                            Prix: <?php echo $prix; ?>
+                                            <span
+                                                class="font-semibold <?php echo $devise === 'USD' ? 'text-green-600' : 'text-red-600'; ?>">
+                                                <?php echo $devise === 'USD' ? '$' : 'FC'; ?>
+                                            </span>
+                                        </span>
+
                                         <span class="menu__quantity">Quantité disponible: <?php echo $quantite; ?></span>
+
+                                        <!-- MODIFICATION : Passage de la devise et du poids dans la fonction -->
                                         <button
-                                            onclick="ajouterAuPanier('<?php echo $nomProduit; ?>', <?php echo $prix; ?>, <?php echo $quantite; ?>, '<?php echo $image; ?>')"
+                                            onclick="ajouterAuPanier('<?php echo $nomProduit; ?>', <?php echo $prix; ?>, '<?php echo $devise; ?>', '<?php echo $poids; ?>', <?php echo $quantite; ?>, '<?php echo $image; ?>')"
                                             class="bg-red-800 hover:bg-[#053d36] text-white transition px-4 py-2 rounded-lg mt-2 w-full">
                                             Commander
                                         </button>
@@ -664,7 +688,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <?php
                             }
                         } else {
-
                             echo '
                         <div class="menu__card all mix ' . $classe . ' col-span-full text-center text-gray-500 py-10">
                             Aucun produit trouvé dans la catégorie <strong>' . ucfirst($produit) . '</strong>.
@@ -678,6 +701,108 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 ?>
             </div>
         </section>
+
+        <script>
+            // MODIFICATION : Mise à jour de la fonction ajouterAuPanier pour inclure devise et poids
+            function ajouterAuPanier(nom, prix, devise, poids, quantite, image) {
+                // Vérifier si l'utilisateur est connecté
+                <?php if (!isset($_SESSION['user_id'])): ?>
+                    alert('Veuillez vous connecter pour ajouter des produits au panier.');
+                    return;
+                <?php endif; ?>
+
+                // Vérifier la disponibilité
+                if (quantite <= 0) {
+                    alert('Ce produit est actuellement en rupture de stock.');
+                    return;
+                }
+
+                // Récupérer le panier existant ou en créer un nouveau
+                let panier = JSON.parse(localStorage.getItem('panier')) || [];
+
+                // Vérifier si le produit est déjà dans le panier
+                const produitExistant = panier.find(item => item.nom === nom);
+
+                if (produitExistant) {
+                    if (produitExistant.quantitePanier >= quantite) {
+                        alert('Quantité maximale disponible atteinte pour ce produit.');
+                        return;
+                    }
+                    produitExistant.quantitePanier += 1;
+                } else {
+                    // MODIFICATION : Ajout de devise et poids dans l'objet produit
+                    panier.push({
+                        nom: nom,
+                        prix: prix,
+                        devise: devise,
+                        poids: poids,
+                        quantiteDisponible: quantite,
+                        quantitePanier: 1,
+                        image: image
+                    });
+                }
+
+                // Sauvegarder le panier
+                localStorage.setItem('panier', JSON.stringify(panier));
+
+                // Mettre à jour le compteur du panier
+                mettreAJourCompteurPanier();
+
+                // Afficher un message de confirmation
+                showNotification('Produit ajouté au panier avec succès !');
+            }
+
+            function mettreAJourCompteurPanier() {
+                const panier = JSON.parse(localStorage.getItem('panier')) || [];
+                const totalItems = panier.reduce((sum, item) => sum + item.quantitePanier, 0);
+                document.querySelector('.shop__number').textContent = totalItems;
+            }
+
+            function showNotification(message) {
+                // Créer une notification toast
+                const notification = document.createElement('div');
+                notification.className = 'fixed top-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300';
+                notification.textContent = message;
+
+                document.body.appendChild(notification);
+
+                // Animation d'entrée
+                setTimeout(() => {
+                    notification.classList.remove('translate-x-full');
+                }, 100);
+
+                // Animation de sortie après 3 secondes
+                setTimeout(() => {
+                    notification.classList.add('translate-x-full');
+                    setTimeout(() => {
+                        document.body.removeChild(notification);
+                    }, 300);
+                }, 3000);
+            }
+
+            // Initialiser le compteur du panier au chargement de la page
+            document.addEventListener('DOMContentLoaded', function () {
+                mettreAJourCompteurPanier();
+            });
+        </script>
+
+        <style>
+            /* Styles pour améliorer l'affichage */
+            .menu__price {
+                display: flex;
+                align-items: center;
+                gap: 4px;
+            }
+
+            .menu__card {
+                transition: all 0.3s ease;
+            }
+
+            .menu__card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            }
+        </style>
 
 
         <!--======================= Testimonial ============================-->
@@ -948,7 +1073,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
 
-    qu'on recupere la bonne devise puis joue avec le design
 
     <!-- Animation fadeIn -->
     <style>
@@ -968,6 +1092,69 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             animation: fadeIn 0.4s ease-out;
         }
     </style>
+
+     <!-- SEARCH LOGO -->
+    <script>
+    
+    let a = 0;
+    let masque = document.createElement('div');
+    let cercle = document.createElement('div');
+
+    let angle = 0;
+
+    window.addEventListener('load', () => {
+        a = 1;
+
+        // Le cercle commence à tourner immédiatement
+        anime = setInterval(() => {
+            angle += 10; // Vitesse de rotation du cercle
+            cercle.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
+        }, 20);
+
+        // Après 1 seconde, on arrête l'animation et on fait disparaître le masque
+        setTimeout(() => {
+            clearInterval(anime);
+            masque.style.opacity = '0';
+        }, 1000);
+
+        setTimeout(() => {
+            masque.style.visibility = 'hidden';
+        }, 1500);
+    });
+
+    // Création du masque
+    masque.style.width = '100%';
+    masque.style.height = '100vh';
+    masque.style.zIndex = 100000;
+    masque.style.background = '#ffffff';
+    masque.style.position = 'fixed';
+    masque.style.top = '0';
+    masque.style.left = '0';
+    masque.style.opacity = '1';
+    masque.style.transition = '0.5s ease';
+    masque.style.display = 'flex';
+    masque.style.justifyContent = 'center';
+    masque.style.alignItems = 'center';
+    document.body.appendChild(masque);
+
+    // Création du cercle (réduit)
+    cercle.style.width = '40px';  // Au lieu de 15vh
+    cercle.style.height = '40px'; // Au lieu de 15vh
+    cercle.style.border = '2px solid #f3f3f3'; // Bordure plus fine
+    cercle.style.borderTop = '2px solid #2F1C6A';
+    cercle.style.borderRadius = '50%';
+    cercle.style.position = 'absolute';
+    cercle.style.top = '50%';
+    cercle.style.left = '50%';
+    cercle.style.transform = 'translate(-50%, -50%)';
+    cercle.style.boxSizing = 'border-box';
+    cercle.style.zIndex = '1';
+    masque.appendChild(cercle);
+
+    // Variable de l'animation
+    let anime;
+
+    </script>
 
 
 

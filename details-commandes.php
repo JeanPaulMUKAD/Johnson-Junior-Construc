@@ -35,31 +35,46 @@ $reservation_info = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmer_reservation'])) {
     $quantite = intval($_POST['quantite']);
+    $telephone = trim($_POST['telephone']);
+    $adresse = trim($_POST['adresse']);
+    
+    // Validation des champs obligatoires
+    if (empty($telephone)) {
+        die("Le numéro de téléphone est obligatoire !");
+    }
+    
+    if (empty($adresse)) {
+        die("L'adresse est obligatoire !");
+    }
+    
     if ($quantite < 1)
         $quantite = 1;
 
     $montant_total = $quantite * $produit['prix'];
 
     try {
-        $stmt = $conn->prepare("INSERT INTO reservations (utilisateur_id, produit_id, quantite, montant_total, statut) VALUES (:user_id, :produit_id, :quantite, :montant_total, 'confirmée')");
+        $stmt = $conn->prepare("INSERT INTO reservations (utilisateur_id, produit_id, quantite, montant_total, telephone, adresse, statut) VALUES (:user_id, :produit_id, :quantite, :montant_total, :telephone, :adresse, 'confirmée')");
         $stmt->bindParam(':user_id', $user_id);
         $stmt->bindParam(':produit_id', $produit['id']);
         $stmt->bindParam(':quantite', $quantite);
         $stmt->bindParam(':montant_total', $montant_total);
+        $stmt->bindParam(':telephone', $telephone);
+        $stmt->bindParam(':adresse', $adresse);
         $stmt->execute();
 
         $reservation_effectuee = true;
         $reservation_info = [
             'nom' => $produit['nom'],
             'quantite' => $quantite,
-            'montant' => number_format($montant_total, 2, ',', ' ')
+            'montant' => number_format($montant_total, 2, ',', ' '),
+            'telephone' => $telephone,
+            'adresse' => $adresse
         ];
     } catch (PDOException $e) {
         die("Erreur lors de la réservation : " . $e->getMessage());
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -167,6 +182,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmer_reservation
                             </p>
                         </div>
 
+                        <!--Poids-->
+                        <div class="mb-6">
+                            <h2 class="text-xl font-semibold text-gray-800 mb-2">Poids</h2>
+                            <p class="text-gray-600 text-lg">
+                                <?= $produit['poids'] ?>
+                            </p>
+                        </div>
+
                         <!-- Features -->
                         <div class="grid grid-cols-2 gap-4 mb-6">
                             <div class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
@@ -269,31 +292,58 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmer_reservation
         </div>
     </div>
 
-    <!-- Confirmation Modal -->
-    <div id="confirmModal"
-        class="fixed inset-0 bg-black bg-opacity-60 hidden flex items-center justify-center z-50 p-4">
-        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md transform transition-all duration-300 scale-95">
-            <div class="p-8 text-center">
-                <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <i class="fas fa-shopping-cart text-blue-600 text-2xl"></i>
+<!-- Confirmation Modal -->
+<div id="confirmModal"
+    class="fixed inset-0 bg-black bg-opacity-60 hidden flex items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md transform transition-all duration-300 scale-95">
+        <div class="p-8">
+            <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-shopping-cart text-blue-600 text-2xl"></i>
+            </div>
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Confirmer la commande</h2>
+            <p class="text-gray-600 mb-6 text-center">Voulez-vous confirmer votre réservation pour ce produit ?</p>
+            
+            <!-- Formulaire avec téléphone et adresse -->
+            <form id="reservationForm">
+                <div class="space-y-4 mb-6">
+                    <!-- Champ Téléphone -->
+                    <div>
+                        <label for="telephone" class="block text-sm font-medium text-gray-700 mb-2">
+                            <i class="fas fa-phone mr-2"></i>Téléphone *
+                        </label>
+                        <input type="tel" id="telephone" name="telephone" required
+                            class="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
+                            placeholder="Votre numéro de téléphone">
+                        <p class="text-xs text-gray-500 mt-1">Ex: +243 97 123 4567</p>
+                    </div>
+                    
+                    <!-- Champ Adresse -->
+                    <div>
+                        <label for="adresse" class="block text-sm font-medium text-gray-700 mb-2">
+                            <i class="fas fa-map-marker-alt mr-2"></i>Adresse de livraison *
+                        </label>
+                        <textarea id="adresse" name="adresse" required rows="3"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 resize-none"
+                            placeholder="Votre adresse complète de livraison"></textarea>
+                    </div>
                 </div>
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">Confirmer la commande</h2>
-                <p class="text-gray-600 mb-6">Voulez-vous confirmer votre réservation pour ce produit ?</p>
+                
                 <div class="flex justify-center space-x-4">
-                    <button id="nonConfirmer"
+                    <button type="button" id="nonConfirmer"
                         class="px-8 py-3 border-2 border-gray-300 text-gray-700 rounded-2xl font-semibold hover:bg-gray-50 transition duration-200 flex items-center space-x-2">
                         <i class="fas fa-times"></i>
                         <span>Annuler</span>
                     </button>
-                    <button id="ouiConfirmer"
+                    <button type="submit" id="ouiConfirmer"
                         class="px-8 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-2xl font-semibold hover:from-green-600 hover:to-green-700 transition duration-200 flex items-center space-x-2 shadow-lg">
                         <i class="fas fa-check"></i>
                         <span>Confirmer</span>
                     </button>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
+</div>
 
     <!-- Success Modal -->
     <div id="successModal"
@@ -314,13 +364,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmer_reservation
                             <i class="fas fa-mobile-alt text-blue-600 text-sm"></i>
                         </div>
                         <div class="text-left">
-                            <p class="text-sm font-semibold text-blue-800 mb-1">Instructions de paiement</p>
-                            <p class="text-xs text-blue-700 leading-relaxed">
-                                Une fois le reçu téléchargé, veillez faire le paiement au numéro suivant :
+                            <p class="text-sm font-semibold text-blue-800 mb-2">Instructions de paiement</p>
+                            <p class="text-xs text-blue-700 leading-relaxed mb-3">
+                                Une fois le reçu téléchargé, veillez faire le paiement aux numéros suivants :
                             </p>
-                            <p class="text-sm font-bold text-blue-900 mt-2">
-                                <i class="fas fa-phone mr-2"></i>+243 977 199 714
-                            </p>
+                            <div class="space-y-2">
+                                <p class="text-sm text-orange-900 flex items-center">
+                                    <i class="fas fa-phone mr-2 w-5"></i>
+                                    <span class="font-semibold">AirtelMoney:</span>
+                                    <span class="ml-2">+243 975 413 369</span>
+                                </p>
+                                <p class="text-sm text-red-900 flex items-center">
+                                    <i class="fas fa-phone mr-2 w-5"></i>
+                                    <span class="font-semibold">OrangeMoney:</span>
+                                    <span class="ml-2">+243 851 653 923</span>
+                                </p>
+                                <p class="text-sm text-red-900 flex items-center">
+                                    <i class="fas fa-phone mr-2 w-5"></i>
+                                    <span class="font-semibold">M-Pesa:</span>
+                                    <span class="ml-2">+243 839 049 583</span>
+                                </p>
+                                <p class="text-sm text-blue-900 flex items-center">
+                                    <i class="fas fa-user mr-2 w-5"></i>
+                                    <span class="font-semibold">Nom:</span>
+                                    <span class="ml-2">Patrick MULUMBA JEAN</span>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -348,6 +417,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmer_reservation
         const totalPrice = document.getElementById('totalPrice');
         const decreaseBtn = document.getElementById('decreaseQty');
         const increaseBtn = document.getElementById('increaseQty');
+        const reservationForm = document.getElementById('reservationForm');
 
         const prixUnitaire = <?= floatval($produit['prix']) ?>;
         const devise = '<?= $produit['devise'] ?>';
@@ -393,29 +463,55 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmer_reservation
             }, 300);
         });
 
-        document.getElementById('ouiConfirmer').addEventListener('click', async () => {
+        // Gestion du formulaire de réservation
+        reservationForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const telephone = document.getElementById('telephone').value.trim();
+            const adresse = document.getElementById('adresse').value.trim();
             const quantite = parseInt(quantiteInput.value);
-
+            
+            // Validation côté client
+            if (!telephone) {
+                alert('Veuillez saisir votre numéro de téléphone');
+                return;
+            }
+            
+            if (!adresse) {
+                alert('Veuillez saisir votre adresse de livraison');
+                return;
+            }
+            
             // Appel AJAX pour enregistrer la réservation
             const formData = new FormData();
             formData.append('confirmer_reservation', true);
             formData.append('quantite', quantite);
+            formData.append('telephone', telephone);
+            formData.append('adresse', adresse);
 
-            const response = await fetch("", {
-                method: "POST",
-                body: formData
-            });
+            try {
+                const response = await fetch("", {
+                    method: "POST",
+                    body: formData
+                });
 
-            confirmModal.querySelector('.transform').classList.add('scale-95');
-            setTimeout(() => {
-                confirmModal.classList.add('hidden');
-                successModal.classList.remove('hidden');
-                setTimeout(() => {
-                    successModal.querySelector('.transform').classList.remove('scale-95');
-                }, 10);
-            }, 300);
+                if (response.ok) {
+                    confirmModal.querySelector('.transform').classList.add('scale-95');
+                    setTimeout(() => {
+                        confirmModal.classList.add('hidden');
+                        successModal.classList.remove('hidden');
+                        setTimeout(() => {
+                            successModal.querySelector('.transform').classList.remove('scale-95');
+                        }, 10);
+                    }, 300);
 
-            successText.innerHTML = `Vous avez réservé <strong>${quantite}</strong> unité(s) du produit <strong><?= $produit['nom'] ?></strong>.`;
+                    successText.innerHTML = `Vous avez réservé <strong>${quantite}</strong> unité(s) du produit <strong><?= $produit['nom'] ?></strong>.`;
+                } else {
+                    alert('Erreur lors de la réservation. Veuillez réessayer.');
+                }
+            } catch (error) {
+                alert('Erreur lors de la réservation. Veuillez réessayer.');
+            }
         });
 
         document.getElementById('telechargerPDF').addEventListener('click', () => {
@@ -436,10 +532,72 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmer_reservation
             doc.text(`Prix unitaire : ${prixUnitaire.toFixed(2)} ${devise}`, 20, 75);
             doc.text(`Montant total : ${(prixUnitaire * quantiteInput.value).toFixed(2)} ${devise}`, 20, 85);
             doc.text(`Client : <?= $_SESSION['user_nom'] ?>`, 20, 95);
-            doc.text(`Date : ${new Date().toLocaleDateString('fr-FR')}`, 20, 105);
+            doc.text(`Téléphone : ${document.getElementById('telephone').value}`, 20, 105);
+            doc.text(`Adresse : ${document.getElementById('adresse').value}`, 20, 115);
+            doc.text(`Date : ${new Date().toLocaleDateString('fr-FR')}`, 20, 125);
 
             doc.save("reçu_<?= $produit['nom'] ?>.pdf");
         });
+    </script>
+
+    <!-- SEARCH LOGO -->
+    <script>
+        let a = 0;
+        let masque = document.createElement('div');
+        let cercle = document.createElement('div');
+        let angle = 0;
+
+        window.addEventListener('load', () => {
+            a = 1;
+
+            // Le cercle commence à tourner immédiatement
+            anime = setInterval(() => {
+                angle += 10; // Vitesse de rotation du cercle
+                cercle.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
+            }, 20);
+
+            // Après 1 seconde, on arrête l'animation et on fait disparaître le masque
+            setTimeout(() => {
+                clearInterval(anime);
+                masque.style.opacity = '0';
+            }, 1000);
+
+            setTimeout(() => {
+                masque.style.visibility = 'hidden';
+            }, 1500);
+        });
+
+        // Création du masque
+        masque.style.width = '100%';
+        masque.style.height = '100vh';
+        masque.style.zIndex = 100000;
+        masque.style.background = '#ffffff';
+        masque.style.position = 'fixed';
+        masque.style.top = '0';
+        masque.style.left = '0';
+        masque.style.opacity = '1';
+        masque.style.transition = '0.5s ease';
+        masque.style.display = 'flex';
+        masque.style.justifyContent = 'center';
+        masque.style.alignItems = 'center';
+        document.body.appendChild(masque);
+
+        // Création du cercle (réduit)
+        cercle.style.width = '40px';  // Au lieu de 15vh
+        cercle.style.height = '40px'; // Au lieu de 15vh
+        cercle.style.border = '2px solid #f3f3f3'; // Bordure plus fine
+        cercle.style.borderTop = '2px solid #2F1C6A';
+        cercle.style.borderRadius = '50%';
+        cercle.style.position = 'absolute';
+        cercle.style.top = '50%';
+        cercle.style.left = '50%';
+        cercle.style.transform = 'translate(-50%, -50%)';
+        cercle.style.boxSizing = 'border-box';
+        cercle.style.zIndex = '1';
+        masque.appendChild(cercle);
+
+        // Variable de l'animation
+        let anime;
     </script>
 
 </body>
