@@ -1,9 +1,10 @@
-<?php
+<?php declare(strict_types=1); 
 // Configuration de la base de données
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'e_commerce_db');
-define('DB_USER', 'root');
-define('DB_PASS', '');
+define('DB_HOST', '127.0.0.1:3306');
+define('DB_NAME', 'u913148723_e_commerce_db');
+define('DB_USER', 'u913148723_Johnsonjr');
+define('DB_PASS', 'Johnsonjr2003');
+
 
 // Connexion à la base de données
 function getConnection() {

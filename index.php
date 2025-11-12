@@ -946,7 +946,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <div class="menu__card <?php echo $classe; ?> all mix">
                                     <?php if (!empty($image)): ?>
                                         <div class="menu__img-wrapper">
-                                            <img src="uploads/<?php echo $image; ?>" alt="<?php echo $nomProduit; ?>" class="menu__img">
+                                            <img src="./admin/uploads/<?php echo $image; ?>" alt="<?php echo $nomProduit; ?>" class="menu__img">
                                         </div>
                                     <?php else: ?>
                                         <span class="text-gray-400 text-xl">Aucune image</span>
