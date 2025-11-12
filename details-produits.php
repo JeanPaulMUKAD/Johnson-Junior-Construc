@@ -1,9 +1,8 @@
 <?php declare(strict_types=1);
 
 session_start();
-include 'config/database.php'; // Inclut la fonction getConnection()
+include 'config/database.php';
 
-// Initialiser la connexion PDO
 try {
     $conn = getConnection();
 } catch (PDOException $e) {
@@ -16,8 +15,6 @@ $success_register = '';
 $success_login = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-    // ====================== Connexion ======================
     if (isset($_POST['login'])) {
         $email = htmlspecialchars($_POST['email']);
         $mot_de_passe = $_POST['mot_de_passe'];
@@ -46,7 +43,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // ====================== Inscription ======================
     if (isset($_POST['register'])) {
         $nom = htmlspecialchars($_POST['nom']);
         $email = htmlspecialchars($_POST['email']);
@@ -95,85 +91,203 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// Récupérer les informations du produit depuis l'URL
-$produit_id = $_GET['id'] ?? 1;
-$produits = [
-
+$services = [
     1 => [
-        'nom' => 'Gravier Premium',
-        'description' => 'Notre gravier premium est soigneusement sélectionné pour offrir une qualité exceptionnelle dans tous vos projets de construction. Disponible en différentes granulométries, il est parfait pour le béton, le drainage, les allées et les aménagements paysagers.',
-        'prix' => '8,500 FC',
+        'nom' => 'Bâtiment Industriel',
+        'description' => 'Construction et aménagement de bâtiments industriels adaptés à vos activités de production, entreposage et logistique.',
+        'prix' => 'Sur devis',
         'images' => [
-            'main' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_uHhxesbL0X7U1sFuy5LH9frwGBaaWfCSwQ&s',
+            'main' => 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
             'thumbnails' => [
-                'https://kingmateriaux.com/wp-content/uploads/2021/10/gravier-gris-de-marbre-concasse-nevada-8-12-mm.jpg',
-                'https://cdn.prod.website-files.com/66b1e093a38b6999bd091025/66c0af4b012b87214c7dd217_1164%20(20).webp',
-                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUO2hAn6qaKTdAP4ux-KzIyLH-APWaAHNFyA&s'
+                'https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+                'https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80'
             ]
         ],
         'caracteristiques' => [
-            'Granulométrie variée disponible',
-            'Excellente qualité de drainage',
-            'Idéal pour béton et aménagement'
+            'Halls de production sur mesure',
+            'Zones de stockage optimisées',
+            'Conformité aux normes industrielles'
         ]
     ],
     2 => [
-        'nom' => 'Carreaux Céramique',
-        'description' => 'Découvrez notre collection de carreaux céramique haut de gamme, parfaits pour embellir vos sols et murs. Disponibles dans une large gamme de couleurs, textures et finitions, ces carreaux allient esthétique et durabilité pour transformer vos espaces intérieurs et extérieurs.',
-        'prix' => '25,000 FC',
+        'nom' => 'Bâtiment Résidentiel',
+        'description' => 'Construction de maisons individuelles, appartements et villas de standing pour votre confort familial.',
+        'prix' => 'Sur devis',
         'images' => [
-            'main' => 'https://franceschini.fr/wp-content/uploads/2017/09/carreaux-ciment-1.jpg',
+            'main' => 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
             'thumbnails' => [
-                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrxXvkMJDcXvHXQQGf7-5nbHAy5bnjHe2NbQ&s',
-                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2scEuX_v4r6P0cTU2jIB7M-4lKj3ckb-NEy3dN4SNyAZ5DQqxiNLUrl035MVDOxC3zgw&usqp=CAU',
-                'https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&w=500&q=60'
+                'https://images.unsplash.com/photo-1518780664697-55e3ad937233?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
+                'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60'
             ]
         ],
         'caracteristiques' => [
-            'Résistance à l\'usure exceptionnelle',
-            'Facile d\'entretien et nettoyage',
-            'Design moderne et intemporel'
+            'Maisons individuelles clé en main',
+            'Appartements modernes et fonctionnels',
+            'Villas de standing personnalisées'
         ]
     ],
     3 => [
-        'nom' => 'Pavés Autobloquants',
-        'description' => 'Nos pavés autobloquants offrent une solution esthétique et durable pour vos aménagements extérieurs. Conçus pour résister aux conditions climatiques extrêmes et aux charges lourdes, ils sont parfaits pour les allées, les terrasses, les parkings et les places publiques.',
-        'prix' => '12,000 FC',
+        'nom' => 'Bâtiment Commercial',
+        'description' => 'Conception et construction d\'espaces commerciaux stratégiques pour développer votre activité.',
+        'prix' => 'Sur devis',
         'images' => [
-            'main' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTp31Y6W1qG-T7jhkCUMy8Dquyvy_8RByhHFA&s',
+            'main' => 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
             'thumbnails' => [
-                'https://pavesconcept.ca/cdn/shop/files/AVANTAGES-Pave-en-beton-Interpave-5_555x.jpg?v=1686924317',
-                'https://pavesconcept.ca/cdn/shop/products/permeable-cobblestone-paver-pure-paves-permeables-a00416_05_212-hdr_ppt_330x.jpg?v=1616167251',
-                'https://www.lesmateriaux.fr/uploads/products/thumbnail/2884-hb-pave-capri.jpg'
+                'https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
+                'https://images.unsplash.com/photo-1497366811353-6870744d04b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60'
             ]
         ],
         'caracteristiques' => [
-            'Installation facile et rapide',
-            'Grande résistance mécanique',
-            'Diverses couleurs et formes'
+            'Locaux commerciaux sur mesure',
+            'Centres commerciaux',
+            'Showrooms et espaces d\'exposition'
         ]
     ],
     4 => [
-        'nom' => 'Ciment de Haute Qualité',
-        'description' => 'Notre ciment de haute qualité est conçu pour garantir la durabilité et la solidité de vos constructions. Idéal pour les fondations, les murs porteurs, les dalles et bien plus encore. Sa composition assure une excellente résistance mécanique et une prise régulière, même dans des conditions climatiques difficiles.',
-        'prix' => '15,000 FC',
+        'nom' => 'Génie Civil',
+        'description' => 'Expertise en construction d\'infrastructures et ouvrages d\'art avec une maîtrise technique éprouvée.',
+        'prix' => 'Sur devis',
         'images' => [
-            'main' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS04rsYgshTUCPELm9yrt1YXyASfJrBwGUZ2Q&s',
+            'main' => 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
             'thumbnails' => [
-                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMahHUZncqrhCl_DBJUQMCikxiX1NTFyiesg&s',
-                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTKxe-nNzyM5DzNORnfABqJI0WwtYNrwlclQ&s',
-                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDBVH3ykxmZ3XFRkPLwyueOO2pSblt90da8Q&s'
+                'https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
+                'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60'
             ]
         ],
         'caracteristiques' => [
-            'Haute résistance à la compression',
-            'Convient à tous types de chantiers',
-            'Conforme aux normes internationales'
+            'Infrastructures routières et ferroviaires',
+            'Ouvrages d\'art et ponts',
+            'Travaux hydrauliques'
+        ]
+    ],
+    5 => [
+        'nom' => 'Bureau d\'Architecte',
+        'description' => 'Conception et design architectural sur mesure pour vos projets avec créativité et expertise technique.',
+        'prix' => 'Sur devis',
+        'images' => [
+            'main' => 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+            'thumbnails' => [
+                'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
+                'https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80'
+            ]
+        ],
+        'caracteristiques' => [
+            'Conception architecturale innovante',
+            'Plans et études techniques',
+            'Suivi de chantier personnalisé'
+        ]
+    ],
+    6 => [
+        'nom' => 'Installation & Services',
+        'description' => 'Services complets d\'installation, maintenance et dépannage pour tous vos équipements.',
+        'prix' => 'Sur devis',
+        'images' => [
+            'main' => 'https://images.helloartisan.com/forward/file/0/6/3/7/30998e706237e1d005a256e842d9710bc67d7360/panneaux-photovoltaiques-aides-prix-installation-jpg.jpg',
+            'thumbnails' => [
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFynjgSEJtcb0JsaWDL3bh-_ZV_KL0R8DawpoCoZxg20jrXfBVv_Ua8RuxKZsNJMtSXlE&usqp=CAU',
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFynjgSEJtcb0JsaWDL3bh-_ZV_KL0R8DawpoCoZxg20jrXfBVv_Ua8RuxKZsNJMtSXlE&usqp=CAU'
+            ]
+        ],
+        'caracteristiques' => [
+            'Installation photovoltaïque',
+            'Maintenance préventive et curative',
+            'Dépannage urgent 24h/24'
+        ]
+    ],
+    7 => [
+        'nom' => 'Services Ménagers',
+        'description' => 'Services domestiques complets incluant garde, ménage, coursier, jardinage et nounou pour votre confort quotidien.',
+        'prix' => 'Sur devis',
+        'images' => [
+            'main' => 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+            'thumbnails' => [
+                'https://images.unsplash.com/photo-1581578731548-c64695cc6952?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+                'https://images.unsplash.com/photo-1581578731548-c64695cc6952?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80'
+            ]
+        ],
+        'caracteristiques' => [
+            'Garde et sécurité',
+            'Services domestiques complets',
+            'Coursier et livraison',
+            'Jardinage et entretien',
+            'Garde d\'enfants'
+        ]
+    ],
+    8 => [
+        'nom' => 'Vente et Achat',
+        'description' => 'Transactions immobilières sécurisées pour parcelles et concessions avec accompagnement personnalisé.',
+        'prix' => 'Sur devis',
+        'images' => [
+            'main' => 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+            'thumbnails' => [
+                'https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
+                'https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60'
+            ]
+        ],
+        'caracteristiques' => [
+            'Parcelles viabilisées',
+            'Concessions sécurisées',
+            'Accompagnement juridique',
+            'Transactions transparentes'
+        ]
+    ],
+    9 => [
+        'nom' => 'Soudure et Fabrication',
+        'description' => 'Fabrication sur mesure de portes, fenêtres, barrières et charpentes métalliques de haute qualité.',
+        'prix' => 'Sur devis',
+        'images' => [
+            'main' => 'https://matriceriasdelcentro.com/wp-content/uploads/2019/04/soldadura.jpg',
+            'thumbnails' => [
+                'https://matriceriasdelcentro.com/wp-content/uploads/2019/04/soldadura.jpg',
+                'https://matriceriasdelcentro.com/wp-content/uploads/2019/04/soldadura.jpg'
+            ]
+        ],
+        'caracteristiques' => [
+            'Portes sur mesure',
+            'Fenêtres métalliques',
+            'Barrières de sécurité',
+            'Charpentes industrielles'
+        ]
+    ],
+    10 => [
+        'nom' => 'Équipement et Nettoyage',
+        'description' => 'Services professionnels d\'équipement et de nettoyage pour bâtiments, industries et bureaux.',
+        'prix' => 'Sur devis',
+        'images' => [
+            'main' => 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+            'thumbnails' => [
+                'https://images.unsplash.com/photo-1581578731548-c64695cc6952?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
+                'https://images.unsplash.com/photo-1581578731548-c64695cc6952?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60'
+            ]
+        ],
+        'caracteristiques' => [
+            'Nettoyage de bâtiments',
+            'Entretien industriel',
+            'Nettoyage de bureaux',
+            'Équipements professionnels'
+        ]
+    ],
+    11 => [
+        'nom' => 'Location Immobilière',
+        'description' => 'Large choix d\'appartements, locaux commerciaux et maisons commerciales disponibles à la location.',
+        'prix' => 'Sur devis',
+        'images' => [
+            'main' => 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+            'thumbnails' => [
+                'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
+                'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60'
+            ]
+        ],
+        'caracteristiques' => [
+            'Appartements meublés',
+            'Locaux commerciaux',
+            'Maisons commerciales',
+            'Contrats flexibles'
         ]
     ]
 ];
 
-$produit_actuel = $produits[$produit_id] ?? $produits[1];
+$service_actuel = $services[$_GET['id'] ?? 1] ?? $services[1];
 ?>
 
 <!DOCTYPE html>
@@ -182,7 +296,7 @@ $produit_actuel = $produits[$produit_id] ?? $produits[1];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Détails des produits - <?= $produit_actuel['nom'] ?></title>
+    <title>Détails des services - <?= $service_actuel['nom'] ?></title>
 
     <!--============== Google Fonts =============-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -198,13 +312,59 @@ $produit_actuel = $produits[$produit_id] ?? $produits[1];
     <!--============== Tailwind css Link =====-->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!--============= Font Awesome (icônes) =====-->
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-zoom {
+            transition: transform 0.5s ease;
+        }
+
+        .image-zoom:hover {
+            transform: scale(1.05);
+        }
+
+        .feature-icon {
+            background: #f8f9fa;
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #e9ecef;
+        }
+
+        .service-item {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .service-item:hover {
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    </style>
 </head>
 
 <body>
 
-    <!--======================= Header =============================-->
+    <!--======================= Header Original =============================-->
     <header id="header" class="header">
         <nav class="nav container">
             <a href="index.html" class="nav__brand"><span>Johnson</span> Jr Construction</a>
@@ -242,7 +402,6 @@ $produit_actuel = $produits[$produit_id] ?? $produits[1];
                         <i class="ri-user-add-line"></i>
                     </a>
                 </div>
-
 
                 <!--======================= Formulaire Connexion ===================-->
                 <div id="login-modal" class="modal <?php if ($error_login || isset($_POST['login']))
@@ -301,12 +460,10 @@ $produit_actuel = $produits[$produit_id] ?? $produits[1];
                     </div>
                 </div>
 
-
                 <script>
-                    // ouvrir modales
                     document.querySelectorAll('.ri-login-box-line, .ri-user-add-line').forEach(btn => {
                         btn.addEventListener('click', e => {
-                            e.preventDefault(); // éviter le saut de page
+                            e.preventDefault();
                             if (btn.classList.contains('ri-login-box-line')) {
                                 document.getElementById('login-modal').classList.remove('hidden');
                             } else {
@@ -319,8 +476,6 @@ $produit_actuel = $produits[$produit_id] ?? $produits[1];
                         document.getElementById(id).classList.add('hidden');
                     }
                 </script>
-
-
 
                 <!-- Panier -->
                 <div class="nav__icon shop__icon">
@@ -392,132 +547,117 @@ $produit_actuel = $produits[$produit_id] ?? $produits[1];
             </div>
         </div>
 
-
-
-
-        <!--======================= Section Détails Produit ============================-->
+        <!--======================= Section Détails Service ============================-->
         <section class="container mx-auto px-6 lg:px-16 py-16 mt-32">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
 
                 <!-- Galerie Images -->
                 <div class="space-y-6">
-                    <div class="rounded-2xl overflow-hidden shadow-xl">
-                        <img src="<?= $produit_actuel['images']['main'] ?>" alt="<?= $produit_actuel['nom'] ?>"
-                            class="w-full h-96 object-cover hover:scale-105 transition-transform duration-500">
+                    <!-- Image Principale -->
+                    <div class="rounded-2xl overflow-hidden shadow-lg bg-white p-4">
+                        <img src="<?= $service_actuel['images']['main'] ?>" alt="<?= $service_actuel['nom'] ?>"
+                            class="w-full h-96 object-cover image-zoom rounded-xl" id="mainImage">
                     </div>
 
-                    <div class="grid grid-cols-3 gap-4">
-                        <?php foreach ($produit_actuel['images']['thumbnails'] as $thumbnail): ?>
-                            <img src="<?= $thumbnail ?>" alt="<?= $produit_actuel['nom'] ?>"
-                                class="rounded-lg h-32 w-full object-cover hover:scale-105 transition-transform duration-300 cursor-pointer">
+                    <!-- Miniatures -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <?php foreach ($service_actuel['images']['thumbnails'] as $thumbnail): ?>
+                            <div
+                                class="rounded-xl overflow-hidden border border-gray-200 hover:border-red-500 transition cursor-pointer">
+                                <img src="<?= $thumbnail ?>" alt="<?= $service_actuel['nom'] ?>"
+                                    class="w-full h-28 object-cover hover:scale-110 transition duration-300 thumbnail">
+                            </div>
                         <?php endforeach; ?>
                     </div>
                 </div>
 
-                <!-- Détails Texte -->
-                <div>
-                    <h2 class="text-4xl font-extrabold text-[#053d36] mb-4"><?= $produit_actuel['nom'] ?></h2>
-                    <p class="text-gray-700 text-xl leading-relaxed mb-6">
-                        <?= $produit_actuel['description'] ?>
+                <!-- Détails Service -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg">
+                    <!-- En-tête -->
+                    <div class="mb-6">
+                        <span
+                            class="inline-block bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm font-medium mb-3">
+                            Service Professionnel
+                        </span>
+                        <h1 class="text-4xl font-bold text-gray-900 mb-4"><?= $service_actuel['nom'] ?></h1>
+                        <div class="flex items-center space-x-4 mb-4">
+                            <span
+                                class="bg-[#811313] text-white px-4 py-2 rounded-full text-lg font-semibold"><?= $service_actuel['prix'] ?></span>
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <p class="text-gray-700 text-lg leading-relaxed mb-8">
+                        <?= $service_actuel['description'] ?>
                     </p>
 
-                    <ul class="space-y-2 mb-8 text-gray-600">
-                        <?php foreach ($produit_actuel['caracteristiques'] as $caracteristique): ?>
-                            <li class="flex items-center gap-2">
-                                <svg class="w-5 h-5 text-red-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M5 13l4 4L19 7" />
-                                </svg>
-                                <?= $caracteristique ?>
-                            </li>
-                        <?php endforeach; ?>
-                    </ul>
+                    <!-- Caractéristiques -->
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Caractéristiques principales</h3>
+                        <ul class="space-y-3">
+                            <?php foreach ($service_actuel['caracteristiques'] as $caracteristique): ?>
+                                <li class="flex items-center space-x-3">
+                                    <div class="feature-icon">
+                                        <i class="ri-check-line text-[#053d36] text-lg"></i>
+                                    </div>
+                                    <span class="text-gray-700"><?= $caracteristique ?></span>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
 
-                    <div class="flex items-center gap-6">
-                        <span class="text-3xl font-bold text-red-700"><?= $produit_actuel['prix'] ?></span>
-                        <a href="#"
-                            class="bg-red-700 hover:bg-[#053d36] text-white px-8 py-3 rounded-lg font-semibold shadow-md transition">
-                            Commander maintenant
-                        </a>
+                    <!-- Actions -->
+                    <div class="space-y-4">
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <button
+                                class="flex-1 bg-[#811313] hover:bg-[#053d36] text-white py-4 px-6 rounded-xl font-semibold transition duration-300 flex items-center justify-center space-x-2">
+                                <i class="ri-calendar-line"></i>
+                                <span>Prendre rendez-vous</span>
+                            </button>
+                            <button
+                                class="flex-1 bg-[#053d36] hover:bg-[#811313] text-white py-4 px-6 rounded-xl font-semibold transition duration-300 flex items-center justify-center space-x-2">
+                                <i class="ri-phone-line"></i>
+                                <span>Nous contacter</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
-
             </div>
         </section>
 
-        <!--======================= Produits similaires ============================-->
-        <section class="bg-gray-100 py-16">
-            <div class="text-center mb-10">
-                <h3 class="text-3xl font-bold text-gray-800">Produits Similaires</h3>
-                <p class="text-gray-500 mt-2">Découvrez d'autres matériaux de la même catégorie</p>
-            </div>
-
-            <div class="container mx-auto px-6 lg:px-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-
-                <!-- Produit Similaire 1 - Gravier -->
-                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_uHhxesbL0X7U1sFuy5LH9frwGBaaWfCSwQ&s"
-                        alt="Gravier" class="w-full h-56 object-cover">
-                    <div class="p-5">
-                        <h4 class="text-xl font-semibold text-gray-800 mb-2">Gravier Premium</h4>
-                        <p class="text-gray-600 mb-4 text-xl">Gravier de différentes tailles pour vos besoins
-                            spécifiques.</p>
-                        <a href="details-produits.php?id=1"
-                            class="inline-block bg-red-700 hover:bg-[#053d36] text-white px-5 py-2 rounded-lg font-medium transition">
-                            Voir détails
-                        </a>
-                    </div>
+        <!--======================= Tous Nos Services ============================-->
+        <section class="bg-gray-50 py-16">
+            <div class="container mx-auto px-6 lg:px-12">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl font-bold text-gray-900 mb-4">Tous Nos Services</h2>
+                    <p class="text-gray-600 text-lg max-w-2xl mx-auto">
+                        Découvrez l'ensemble de nos prestations pour tous vos projets
+                    </p>
                 </div>
 
-                <!-- Produit Similaire 2 - Carreaux -->
-                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300">
-                    <img src="https://franceschini.fr/wp-content/uploads/2017/09/carreaux-ciment-1.jpg" alt="Carreaux"
-                        class="w-full h-56 object-cover">
-                    <div class="p-5">
-                        <h4 class="text-xl font-semibold text-gray-800 mb-2">Carreaux Céramique</h4>
-                        <p class="text-gray-600 mb-4 text-xl">Carreaux pour sols et murs intérieurs/extérieurs.</p>
-                        <a href="details-produits.php?id=2"
-                            class="inline-block bg-red-700 hover:bg-[#053d36] text-white px-5 py-2 rounded-lg font-medium transition">
-                            Voir détails
-                        </a>
-                    </div>
+                <!-- Services Principaux avec Images -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                    <?php foreach ($services as $id => $service): ?>
+                        <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+                            <div class="relative overflow-hidden">
+                                <img src="<?= $service['images']['main'] ?>" alt="<?= $service['nom'] ?>"
+                                    class="w-full h-48 object-cover image-zoom">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold text-gray-900 mb-2"><?= $service['nom'] ?></h3>
+                                <p class="text-gray-600 mb-4 line-clamp-2"><?= $service['description'] ?></p>
+                                <a href="details-produits.php?id=<?= $id ?>"
+                                    class="inline-block bg-[#811313] hover:bg-[#053d36] text-white px-4 py-2 rounded-lg font-medium transition">
+                                    Découvrir
+                                </a>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
-
-                <!-- Produit Similaire 3 - Pavés -->
-                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTp31Y6W1qG-T7jhkCUMy8Dquyvy_8RByhHFA&s"
-                        alt="Pavés" class="w-full h-56 object-cover">
-                    <div class="p-5">
-                        <h4 class="text-xl font-semibold text-gray-800 mb-2">Pavés Autobloquants</h4>
-                        <p class="text-gray-600 mb-4 text-xl">Pavés décoratifs pour vos aménagements extérieurs.</p>
-                        <a href="details-produits.php?id=3"
-                            class="inline-block bg-red-700 hover:bg-[#053d36] text-white px-5 py-2 rounded-lg font-medium transition">
-                            Voir détails
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Produit Similaire 4 - Ciment -->
-                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300">
-                    <img src="https://www.constructionlabrique.com/wp-content/uploads/2016/12/coulee-ciment-labrique.jpeg"
-                        alt="Pavés" class="w-full h-56 object-cover">
-                    <div class="p-5">
-                        <h4 class="text-xl font-semibold text-gray-800 mb-2">Ciments</h4>
-                        <p class="text-gray-600 mb-4 text-xl">Ciment décoratifs pour vos aménagements extérieurs.</p>
-                        <a href="details-produits.php?id=4"
-                            class="inline-block bg-red-700 hover:bg-[#053d36] text-white px-5 py-2 rounded-lg font-medium transition">
-                            Voir détails
-                        </a>
-                    </div>
-                </div>
-
             </div>
         </section>
 
-
-
-
-        <!--======================= Footer ============================-->
+        <!--======================= Footer Original ============================-->
         <footer class="footer mt-16">
             <div class="d-grid footer__wrapper container">
                 <div class="footer__content">
@@ -594,135 +734,121 @@ $produit_actuel = $produits[$produit_id] ?? $produits[1];
             <p class="footer__copyright">&copy; 2025 Johnson Construction. Tous droits réservés</p>
         </footer>
 
-
-        <!--=================== ScrollReveal ==================-->
-        <script src="assets/js/scrollreveal.min.js"></script>
-
-        <!--=================== Mixitup  ====================-->
-        <script src="assets/js/mixitup.min.js"></script>
-
-        <!--=================== Main JS ====================-->
-        <script src="assets/js/main.js"> </script>
-
-        <!--=================== Panier JS ====================-->
-        <script src="assets/js/panier.js"></script>
-        <!--=================== Search JS ====================-->
-        <script src="assets/js/search.js"> </script>
-
-        <!-- Modal Panier -->
-        <div id="panierModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full"
-            style="z-index:1000;">
-            <div class="relative top-20 mx-auto p-5 border w-[500px] shadow-lg rounded-md bg-white">
-                <div class="mt-3">
-                    <h3 class="text-xl font-bold leading-6 font-medium text-gray-900">Panier</h3>
-
-                    <!-- Conteneur messages -->
-                    <div id="panierMessage"></div>
-
-                    <div class="mt-2 px-7 py-3" id="panierContenu">
-                        <!-- Le contenu du panier sera injecté ici -->
-                    </div>
-
-                    <div class="mt-4 flex flex-col gap-3 border-t pt-4">
-                        <div class="flex justify-between items-center">
-                            <p class="font-bold">Total: <span id="panierTotal">0</span> €</p>
-                            <div class="flex gap-2">
-                                <button id="btnCommander"
-                                    class="bg-green-600 hover:bg-green-700 transition text-white px-4 py-2 rounded-lg">
-                                    Commander
-                                </button>
-                                <button id="fermerPanier"
-                                    class="bg-red-600 hover:bg-[#053d36] transition text-white px-4 py-2 rounded-lg">
-                                    Fermer
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Animation fadeIn -->
-        <style>
-            @keyframes fadeIn {
-                from {
-                    opacity: 0;
-                    transform: translateY(-5px);
-                }
-
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-
-            .animate-fadeIn {
-                animation: fadeIn 0.4s ease-out;
-            }
-        </style>
-
-        <!-- SEARCH LOGO -->
         <script>
+            // Gestion des miniatures
+            document.querySelectorAll('.thumbnail').forEach(thumb => {
+                thumb.addEventListener('click', function () {
+                    const mainImage = document.getElementById('mainImage');
+                    mainImage.src = this.src;
 
-            let a = 0;
-            let masque = document.createElement('div');
-            let cercle = document.createElement('div');
-
-            let angle = 0;
-
-            window.addEventListener('load', () => {
-                a = 1;
-
-                // Le cercle commence à tourner immédiatement
-                anime = setInterval(() => {
-                    angle += 10; // Vitesse de rotation du cercle
-                    cercle.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
-                }, 20);
-
-                // Après 1 seconde, on arrête l'animation et on fait disparaître le masque
-                setTimeout(() => {
-                    clearInterval(anime);
-                    masque.style.opacity = '0';
-                }, 1000);
-
-                setTimeout(() => {
-                    masque.style.visibility = 'hidden';
-                }, 1500);
+                    // Ajouter un effet de transition
+                    mainImage.style.opacity = '0';
+                    setTimeout(() => {
+                        mainImage.style.opacity = '1';
+                    }, 200);
+                });
             });
 
-            // Création du masque
-            masque.style.width = '100%';
-            masque.style.height = '100vh';
-            masque.style.zIndex = 100000;
-            masque.style.background = '#ffffff';
-            masque.style.position = 'fixed';
-            masque.style.top = '0';
-            masque.style.left = '0';
-            masque.style.opacity = '1';
-            masque.style.transition = '0.5s ease';
-            masque.style.display = 'flex';
-            masque.style.justifyContent = 'center';
-            masque.style.alignItems = 'center';
-            document.body.appendChild(masque);
+            // Animation au scroll
+            document.addEventListener('DOMContentLoaded', function () {
+                const cards = document.querySelectorAll('.card-hover');
 
-            // Création du cercle (réduit)
-            cercle.style.width = '40px';  // Au lieu de 15vh
-            cercle.style.height = '40px'; // Au lieu de 15vh
-            cercle.style.border = '2px solid #f3f3f3'; // Bordure plus fine
-            cercle.style.borderTop = '2px solid #2F1C6A';
-            cercle.style.borderRadius = '50%';
-            cercle.style.position = 'absolute';
-            cercle.style.top = '50%';
-            cercle.style.left = '50%';
-            cercle.style.transform = 'translate(-50%, -50%)';
-            cercle.style.boxSizing = 'border-box';
-            cercle.style.zIndex = '1';
-            masque.appendChild(cercle);
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                        }
+                    });
+                }, { threshold: 0.1 });
 
-            // Variable de l'animation
-            let anime;
+                cards.forEach(card => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    card.style.transition = 'all 0.6s ease';
+                    observer.observe(card);
+                });
+            });
 
+            // Gestion des modales
+            function closeModal(id) {
+                document.getElementById(id).classList.add('hidden');
+            }
+
+            // Fermer les modales en cliquant à l'extérieur
+            window.addEventListener('click', function (event) {
+                const modals = document.querySelectorAll('.modal');
+                modals.forEach(modal => {
+                    if (event.target === modal) {
+                        modal.classList.add('hidden');
+                    }
+                });
+            });
         </script>
+    </main>
+
+    <!-- SEARCH LOGO -->
+    <script>
+
+        let a = 0;
+        let masque = document.createElement('div');
+        let cercle = document.createElement('div');
+
+        let angle = 0;
+
+        window.addEventListener('load', () => {
+            a = 1;
+
+            // Le cercle commence à tourner immédiatement
+            anime = setInterval(() => {
+                angle += 10; // Vitesse de rotation du cercle
+                cercle.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
+            }, 20);
+
+            // Après 1 seconde, on arrête l'animation et on fait disparaître le masque
+            setTimeout(() => {
+                clearInterval(anime);
+                masque.style.opacity = '0';
+            }, 1000);
+
+            setTimeout(() => {
+                masque.style.visibility = 'hidden';
+            }, 1500);
+        });
+
+        // Création du masque
+        masque.style.width = '100%';
+        masque.style.height = '100vh';
+        masque.style.zIndex = 100000;
+        masque.style.background = '#ffffff';
+        masque.style.position = 'fixed';
+        masque.style.top = '0';
+        masque.style.left = '0';
+        masque.style.opacity = '1';
+        masque.style.transition = '0.5s ease';
+        masque.style.display = 'flex';
+        masque.style.justifyContent = 'center';
+        masque.style.alignItems = 'center';
+        document.body.appendChild(masque);
+
+        // Création du cercle (réduit)
+        cercle.style.width = '40px';  // Au lieu de 15vh
+        cercle.style.height = '40px'; // Au lieu de 15vh
+        cercle.style.border = '2px solid #f3f3f3'; // Bordure plus fine
+        cercle.style.borderTop = '2px solid #2F1C6A';
+        cercle.style.borderRadius = '50%';
+        cercle.style.position = 'absolute';
+        cercle.style.top = '50%';
+        cercle.style.left = '50%';
+        cercle.style.transform = 'translate(-50%, -50%)';
+        cercle.style.boxSizing = 'border-box';
+        cercle.style.zIndex = '1';
+        masque.appendChild(cercle);
+
+        // Variable de l'animation
+        let anime;
+
+    </script>
 
 
 </body>

@@ -389,34 +389,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </section>
 
-        <!--======================= Nos Produits ============================-->
-        <section id="products" class="bg-gradient-to-b from-gray-50 to-white py-20">
+        <!--======================= Nos Services de Location ============================-->
+        <section id="location" class="bg-gradient-to-b from-gray-50 to-white py-20">
             <div class="text-center mb-16">
-                <span class="text-x font-semibold tracking-widest text-red-700 uppercase">Nos Produits</span>
-                <h2 class="mt-2 text-4xl font-extrabold text-gray-800">Matériaux de Qualité</h2>
+                <span class="text-x font-semibold tracking-widest text-red-700 uppercase">Nos Services</span>
+                <h2 class="mt-2 text-4xl font-extrabold text-gray-800">Location de Bâtiments & Services</h2>
                 <p class="mt-3 max-w-2xl mx-auto text-gray-500">
-                    Découvrez notre sélection de matériaux fiables pour vos projets de construction, alliant durabilité
-                    et performance.
+                    Découvrez notre gamme complète de services immobiliers et de construction pour tous vos projets.
                 </p>
             </div>
 
             <div class="container mx-auto px-6 lg:px-12">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
 
-                    <!-- Ciment -->
+                    <!-- Bâtiment Industriel -->
                     <div
                         class="group relative bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300">
                         <div class="h-64 overflow-hidden">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS04rsYgshTUCPELm9yrt1YXyASfJrBwGUZ2Q&s"
-                                alt="Ciment"
+                            <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+                                alt="Bâtiment Industriel"
                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         </div>
                         <div class="p-6">
                             <h3
                                 class="text-2xl font-semibold text-gray-800 group-hover:text-red-700 transition-colors duration-300">
-                                Ciment</h3>
-                            <p class="mt-2 text-gray-600 leading-relaxed">Notre ciment de haute qualité pour tous vos
-                                projets de construction.</p>
+                                Bâtiment Industriel</h3>
+                            <p class="mt-2 text-gray-600 leading-relaxed">Locaux industriels adaptés à vos activités de
+                                production, entreposage et logistique.</p>
                             <div class="mt-5">
                                 <a href="details-produits.php"
                                     class="inline-flex items-center gap-2 bg-red-700 hover:bg-[#053d36] text-white px-5 py-2.5 rounded-lg font-medium shadow-md transition-all duration-300">
@@ -434,20 +433,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                     </div>
 
-                    <!-- Gravier -->
+                    <!-- Bâtiment Résidentiel -->
                     <div
                         class="group relative bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300">
                         <div class="h-64 overflow-hidden">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_uHhxesbL0X7U1sFuy5LH9frwGBaaWfCSwQ&s"
-                                alt="Gravier"
+                            <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+                                alt="Bâtiment Résidentiel"
                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         </div>
                         <div class="p-6">
                             <h3
                                 class="text-2xl font-semibold text-gray-800 group-hover:text-red-700 transition-colors duration-300">
-                                Gravier</h3>
-                            <p class="mt-2 text-gray-600 leading-relaxed">Gravier de différentes tailles pour vos
-                                besoins spécifiques.</p>
+                                Bâtiment Résidentiel</h3>
+                            <p class="mt-2 text-gray-600 leading-relaxed">Appartements, villas et maisons de standing
+                                pour votre confort familial.</p>
                             <div class="mt-5">
                                 <a href="details-produits.php"
                                     class="inline-flex items-center gap-2 bg-red-700 hover:bg-[#053d36] text-white px-5 py-2.5 rounded-lg font-medium shadow-md transition-all duration-300">
@@ -465,20 +464,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                     </div>
 
-                    <!-- Carreaux -->
+                    <!-- Bâtiment Commercial -->
                     <div
                         class="group relative bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300">
                         <div class="h-64 overflow-hidden">
-                            <img src="https://franceschini.fr/wp-content/uploads/2017/09/carreaux-ciment-1.jpg"
-                                alt="Carreaux"
+                            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+                                alt="Bâtiment Commercial"
                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         </div>
                         <div class="p-6">
                             <h3
                                 class="text-2xl font-semibold text-gray-800 group-hover:text-red-700 transition-colors duration-300">
-                                Carreaux</h3>
-                            <p class="mt-2 text-gray-600 leading-relaxed">Large gamme de carreaux pour sols et murs
-                                intérieurs/extérieurs.</p>
+                                Bâtiment Commercial</h3>
+                            <p class="mt-2 text-gray-600 leading-relaxed">Espaces commerciaux stratégiques pour
+                                développer votre activité.</p>
                             <div class="mt-5">
                                 <a href="details-produits.php"
                                     class="inline-flex items-center gap-2 bg-red-700 hover:bg-[#053d36] text-white px-5 py-2.5 rounded-lg font-medium shadow-md transition-all duration-300">
@@ -496,20 +495,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                     </div>
 
-                    <!-- Pavés -->
+                    <!-- Génie Civil -->
                     <div
                         class="group relative bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300">
                         <div class="h-64 overflow-hidden">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTp31Y6W1qG-T7jhkCUMy8Dquyvy_8RByhHFA&s"
-                                alt="Pavés"
+                            <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+                                alt="Génie Civil"
                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         </div>
                         <div class="p-6">
                             <h3
                                 class="text-2xl font-semibold text-gray-800 group-hover:text-red-700 transition-colors duration-300">
-                                Pavés</h3>
-                            <p class="mt-2 text-gray-600 leading-relaxed">Pavés décoratifs et fonctionnels pour vos
-                                aménagements extérieurs.</p>
+                                Génie Civil</h3>
+                            <p class="mt-2 text-gray-600 leading-relaxed">Expertise en construction d'infrastructures et
+                                ouvrages d'art.</p>
                             <div class="mt-5">
                                 <a href="details-produits.php"
                                     class="inline-flex items-center gap-2 bg-red-700 hover:bg-[#053d36] text-white px-5 py-2.5 rounded-lg font-medium shadow-md transition-all duration-300">
@@ -527,20 +526,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                     </div>
 
-                    <!-- Gyproc -->
+                    <!-- Bureau d'Architecte -->
                     <div
                         class="group relative bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300">
                         <div class="h-64 overflow-hidden">
-                            <img src="https://livios-images.imgix.net/livios/newsitems/17809/-0002-gyproc-plafond-maken.png?auto=format&ar=4%3A3&w=1300&s=741510ff3e3d389e151781d61b9cfdcf"
-                                alt="Gyproc"
+                            <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+                                alt="Bureau d'Architecte"
                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         </div>
                         <div class="p-6">
                             <h3
                                 class="text-2xl font-semibold text-gray-800 group-hover:text-red-700 transition-colors duration-300">
-                                Gyproc</h3>
-                            <p class="mt-2 text-gray-600 leading-relaxed">Solutions complètes en plaques de plâtre pour
-                                vos cloisons et plafonds.</p>
+                                Bureau d'Architecte</h3>
+                            <p class="mt-2 text-gray-600 leading-relaxed">Conception et design architectural sur mesure
+                                pour vos projets.</p>
                             <div class="mt-5">
                                 <a href="details-produits.php"
                                     class="inline-flex items-center gap-2 bg-red-700 hover:bg-[#053d36] text-white px-5 py-2.5 rounded-lg font-medium shadow-md transition-all duration-300">
@@ -558,20 +557,327 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                     </div>
 
-                    <!-- Omega -->
+                    <!-- Installation & Services -->
                     <div
                         class="group relative bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300">
                         <div class="h-64 overflow-hidden">
-                            <img src="https://omegacosi.com/wp-content/uploads/2024/08/5953dfbb-09b3-4390-aad1-27858f5c2a2a-768x577.jpg"
-                                alt="Omega"
+                            <img src="https://images.helloartisan.com/forward/file/0/6/3/7/30998e706237e1d005a256e842d9710bc67d7360/panneaux-photovoltaiques-aides-prix-installation-jpg.jpg"
+                                alt="Installation & Services"
                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         </div>
                         <div class="p-6">
                             <h3
                                 class="text-2xl font-semibold text-gray-800 group-hover:text-red-700 transition-colors duration-300">
-                                Omega</h3>
-                            <p class="mt-2 text-gray-600 leading-relaxed">Profilés Omega pour vos installations de
-                                plafonds suspendus.</p>
+                                Installation & Services</h3>
+                            <p class="mt-2 text-gray-600 leading-relaxed">Services complets d'installation, maintenance
+                                et dépannage pour tous vos besoins.</p>
+
+                            <!-- Icônes des services -->
+                            <div class="mt-4 grid grid-cols-3 gap-4 py-3">
+                                <div class="flex flex-col items-center text-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-700 mb-2"
+                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                                    </svg>
+                                    <span class="text-xs font-medium text-gray-700">Photovoltaïque</span>
+                                </div>
+                                <div class="flex flex-col items-center text-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-700 mb-2"
+                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                    <span class="text-xs font-medium text-gray-700">Maintenance</span>
+                                </div>
+                                <div class="flex flex-col items-center text-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-700 mb-2"
+                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                    </svg>
+                                    <span class="text-xs font-medium text-gray-700">Dépannage</span>
+                                </div>
+                            </div>
+
+                            <div class="mt-5">
+                                <a href="details-produits.php"
+                                    class="inline-flex items-center gap-2 bg-red-700 hover:bg-[#053d36] text-white px-5 py-2.5 rounded-lg font-medium shadow-md transition-all duration-300">
+                                    Voir détails
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                        <div
+                            class="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-red-700 via-red-500 to-[#053d36] opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        </div>
+                    </div>
+
+                    <!-- Services Ménagers -->
+                    <div
+                        class="group relative bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300">
+                        <div class="h-64 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+                                alt="Services Ménagers"
+                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <h3
+                                class="text-2xl font-semibold text-gray-800 group-hover:text-red-700 transition-colors duration-300">
+                                Services Ménagers</h3>
+                            <p class="mt-2 text-gray-600 leading-relaxed">Personnel qualifié pour tous vos besoins
+                                domestiques et familiaux.</p>
+
+                            <!-- Icônes des services ménagers -->
+                            <div class="mt-4 grid grid-cols-2 gap-3 py-3">
+                                <div class="flex items-center space-x-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-700" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                    </svg>
+                                    <span class="text-sm font-medium text-gray-700">Garde</span>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-700" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                                    </svg>
+                                    <span class="text-sm font-medium text-gray-700">Domestique</span>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-700" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                                    </svg>
+                                    <span class="text-sm font-medium text-gray-700">Coursier</span>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-700" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11" />
+                                    </svg>
+                                    <span class="text-sm font-medium text-gray-700">Jardinier</span>
+                                </div>
+                                <div class="flex items-center space-x-2 col-span-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-700" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                    </svg>
+                                    <span class="text-sm font-medium text-gray-700">Nounou</span>
+                                </div>
+                            </div>
+
+                            <div class="mt-5">
+                                <a href="details-produits.php"
+                                    class="inline-flex items-center gap-2 bg-red-700 hover:bg-[#053d36] text-white px-5 py-2.5 rounded-lg font-medium shadow-md transition-all duration-300">
+                                    Voir détails
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                        <div
+                            class="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-red-700 via-red-500 to-[#053d36] opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        </div>
+                    </div>
+
+                    <!-- Vente et Achat -->
+                    <div
+                        class="group relative bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300">
+                        <div class="h-64 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+                                alt="Vente et Achat"
+                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <h3
+                                class="text-2xl font-semibold text-gray-800 group-hover:text-red-700 transition-colors duration-300">
+                                Vente et Achat</h3>
+                            <p class="mt-2 text-gray-600 leading-relaxed">Parcelles et concessions disponibles pour vos
+                                projets immobiliers.</p>
+                            <div class="mt-5">
+                                <a href="details-produits.php"
+                                    class="inline-flex items-center gap-2 bg-red-700 hover:bg-[#053d36] text-white px-5 py-2.5 rounded-lg font-medium shadow-md transition-all duration-300">
+                                    Voir détails
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                        <div
+                            class="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-red-700 via-red-500 to-[#053d36] opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        </div>
+                    </div>
+
+                    <!-- Soudure et Fabrication -->
+                    <div
+                        class="group relative bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300">
+                        <div class="h-64 overflow-hidden">
+                            <img src="https://matriceriasdelcentro.com/wp-content/uploads/2019/04/soldadura.jpg"
+                                alt="Soudure et Fabrication"
+                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <h3
+                                class="text-2xl font-semibold text-gray-800 group-hover:text-red-700 transition-colors duration-300">
+                                Soudure et Fabrication</h3>
+                            <p class="mt-2 text-gray-600 leading-relaxed">Fabrication sur mesure de portes, fenêtres,
+                                barrières et charpentes.</p>
+
+                            <!-- Icônes des services de soudure -->
+                            <div class="mt-4 grid grid-cols-2 gap-4 py-3">
+                                <div class="flex flex-col items-center text-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-700 mb-2"
+                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                    </svg>
+                                    <span class="text-xs font-medium text-gray-700">Porte</span>
+                                </div>
+                                <div class="flex flex-col items-center text-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-700 mb-2"
+                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                    </svg>
+                                    <span class="text-xs font-medium text-gray-700">Fenêtre</span>
+                                </div>
+                                <div class="flex flex-col items-center text-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-700 mb-2"
+                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                    </svg>
+                                    <span class="text-xs font-medium text-gray-700">Barrière</span>
+                                </div>
+                                <div class="flex flex-col items-center text-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-700 mb-2"
+                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                    <span class="text-xs font-medium text-gray-700">Charpente</span>
+                                </div>
+                            </div>
+
+                            <div class="mt-5">
+                                <a href="details-produits.php"
+                                    class="inline-flex items-center gap-2 bg-red-700 hover:bg-[#053d36] text-white px-5 py-2.5 rounded-lg font-medium shadow-md transition-all duration-300">
+                                    Voir détails
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                        <div
+                            class="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-red-700 via-red-500 to-[#053d36] opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        </div>
+                    </div>
+
+                    <!-- Équipement et Nettoyage -->
+                    <div
+                        class="group relative bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300">
+                        <div class="h-64 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+                                alt="Équipement et Nettoyage"
+                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <h3
+                                class="text-2xl font-semibold text-gray-800 group-hover:text-red-700 transition-colors duration-300">
+                                Équipement et Nettoyage</h3>
+                            <p class="mt-2 text-gray-600 leading-relaxed">Services d'équipement et de nettoyage pour
+                                tous types de locaux.</p>
+
+                            <!-- Icônes des services d'équipement -->
+                            <div class="mt-4 grid grid-cols-2 gap-3 py-3">
+                                <div class="flex items-center space-x-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-700" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                                    </svg>
+                                    <span class="text-sm font-medium text-gray-700">Bâtiment</span>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-700" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                                    </svg>
+                                    <span class="text-sm font-medium text-gray-700">Industrie</span>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-700" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                    </svg>
+                                    <span class="text-sm font-medium text-gray-700">Bureau</span>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-700" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                    <span class="text-sm font-medium text-gray-700">Nettoyage</span>
+                                </div>
+                            </div>
+
+                            <div class="mt-5">
+                                <a href="details-produits.php"
+                                    class="inline-flex items-center gap-2 bg-red-700 hover:bg-[#053d36] text-white px-5 py-2.5 rounded-lg font-medium shadow-md transition-all duration-300">
+                                    Voir détails
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                        <div
+                            class="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-red-700 via-red-500 to-[#053d36] opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        </div>
+                    </div>
+
+                    <!-- Maison et Location à Louer -->
+                    <div
+                        class="group relative bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300">
+                        <div class="h-64 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+                                alt="Maison et Location à Louer"
+                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <h3
+                                class="text-2xl font-semibold text-gray-800 group-hover:text-red-700 transition-colors duration-300">
+                                Maison et Location à Louer</h3>
+                            <p class="mt-2 text-gray-600 leading-relaxed">Appartements, locaux et maisons commerciales
+                                disponibles à la location.</p>
                             <div class="mt-5">
                                 <a href="details-produits.php"
                                     class="inline-flex items-center gap-2 bg-red-700 hover:bg-[#053d36] text-white px-5 py-2.5 rounded-lg font-medium shadow-md transition-all duration-300">
@@ -592,7 +898,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
             </div>
         </section>
-
 
 
         <!--======================= Menu (Projets) ============================-->
@@ -1093,66 +1398,66 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     </style>
 
-     <!-- SEARCH LOGO -->
+    <!-- SEARCH LOGO -->
     <script>
-    
-    let a = 0;
-    let masque = document.createElement('div');
-    let cercle = document.createElement('div');
 
-    let angle = 0;
+        let a = 0;
+        let masque = document.createElement('div');
+        let cercle = document.createElement('div');
 
-    window.addEventListener('load', () => {
-        a = 1;
+        let angle = 0;
 
-        // Le cercle commence à tourner immédiatement
-        anime = setInterval(() => {
-            angle += 10; // Vitesse de rotation du cercle
-            cercle.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
-        }, 20);
+        window.addEventListener('load', () => {
+            a = 1;
 
-        // Après 1 seconde, on arrête l'animation et on fait disparaître le masque
-        setTimeout(() => {
-            clearInterval(anime);
-            masque.style.opacity = '0';
-        }, 1000);
+            // Le cercle commence à tourner immédiatement
+            anime = setInterval(() => {
+                angle += 10; // Vitesse de rotation du cercle
+                cercle.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
+            }, 20);
 
-        setTimeout(() => {
-            masque.style.visibility = 'hidden';
-        }, 1500);
-    });
+            // Après 1 seconde, on arrête l'animation et on fait disparaître le masque
+            setTimeout(() => {
+                clearInterval(anime);
+                masque.style.opacity = '0';
+            }, 1000);
 
-    // Création du masque
-    masque.style.width = '100%';
-    masque.style.height = '100vh';
-    masque.style.zIndex = 100000;
-    masque.style.background = '#ffffff';
-    masque.style.position = 'fixed';
-    masque.style.top = '0';
-    masque.style.left = '0';
-    masque.style.opacity = '1';
-    masque.style.transition = '0.5s ease';
-    masque.style.display = 'flex';
-    masque.style.justifyContent = 'center';
-    masque.style.alignItems = 'center';
-    document.body.appendChild(masque);
+            setTimeout(() => {
+                masque.style.visibility = 'hidden';
+            }, 1500);
+        });
 
-    // Création du cercle (réduit)
-    cercle.style.width = '40px';  // Au lieu de 15vh
-    cercle.style.height = '40px'; // Au lieu de 15vh
-    cercle.style.border = '2px solid #f3f3f3'; // Bordure plus fine
-    cercle.style.borderTop = '2px solid #2F1C6A';
-    cercle.style.borderRadius = '50%';
-    cercle.style.position = 'absolute';
-    cercle.style.top = '50%';
-    cercle.style.left = '50%';
-    cercle.style.transform = 'translate(-50%, -50%)';
-    cercle.style.boxSizing = 'border-box';
-    cercle.style.zIndex = '1';
-    masque.appendChild(cercle);
+        // Création du masque
+        masque.style.width = '100%';
+        masque.style.height = '100vh';
+        masque.style.zIndex = 100000;
+        masque.style.background = '#ffffff';
+        masque.style.position = 'fixed';
+        masque.style.top = '0';
+        masque.style.left = '0';
+        masque.style.opacity = '1';
+        masque.style.transition = '0.5s ease';
+        masque.style.display = 'flex';
+        masque.style.justifyContent = 'center';
+        masque.style.alignItems = 'center';
+        document.body.appendChild(masque);
 
-    // Variable de l'animation
-    let anime;
+        // Création du cercle (réduit)
+        cercle.style.width = '40px';  // Au lieu de 15vh
+        cercle.style.height = '40px'; // Au lieu de 15vh
+        cercle.style.border = '2px solid #f3f3f3'; // Bordure plus fine
+        cercle.style.borderTop = '2px solid #2F1C6A';
+        cercle.style.borderRadius = '50%';
+        cercle.style.position = 'absolute';
+        cercle.style.top = '50%';
+        cercle.style.left = '50%';
+        cercle.style.transform = 'translate(-50%, -50%)';
+        cercle.style.boxSizing = 'border-box';
+        cercle.style.zIndex = '1';
+        masque.appendChild(cercle);
+
+        // Variable de l'animation
+        let anime;
 
     </script>
 
