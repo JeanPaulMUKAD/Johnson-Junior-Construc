@@ -367,7 +367,7 @@ $service_actuel = $services[$_GET['id'] ?? 1] ?? $services[1];
     <!--======================= Header Original =============================-->
     <header id="header" class="header">
         <nav class="nav container">
-            <a href="index.html" class="nav__brand"><span>Johnson</span> Jr Construction</a>
+            <a href="index.html" class="nav__brand p-4"><span>Johnson</span> Jr Construction</a>
             <div id="nav-menu" class="nav__menu">
                 <ul class="nav__list">
                     <li class="nav__item">
@@ -509,19 +509,19 @@ $service_actuel = $services[$_GET['id'] ?? 1] ?? $services[1];
                 <ul class="sidebar__list">
                     <li class="sidebar__item">
                         <span class="sidebar__subtitle">Adresse :</span>
-                        <span>L'shi, 15 rue des Constructeurs</span>
+                        <span>Camps scout :avenue Lupopo/7/kassapa/ annexe</span>
                     </li>
                     <li class="sidebar__item">
                         <span class="sidebar__subtitle">Horaires :</span>
-                        <span>Lu–Ve 8:00 - 18:00</span>
+                        <span>Lundi–Vendredi 8:00 - 18:00</span>
                     </li>
                     <li class="sidebar__item">
                         <span class="sidebar__subtitle">Appelez-nous :</span>
-                        <a href="tel0977199714">+243 977 199 714</a>
+                        <a href="tel0977199714">+243 975 413 369</a>
                     </li>
                     <li class="sidebar__item">
                         <span class="sidebar__subtitle">Email :</span>
-                        <a href="mailto:contact@johnsonconstruction.com">contact@johnsonconstruction.com</a>
+                        <a href="mailto:contact@johnsonconstruction.com">johnson31@outlook.fr</a>
                     </li>
                     <li class="sidebar__item">
                         <span class="sidebar__subtitle">Suivez-nous :</span>
@@ -658,8 +658,9 @@ $service_actuel = $services[$_GET['id'] ?? 1] ?? $services[1];
         </section>
 
         <!--======================= Footer Original ============================-->
-        <footer class="footer mt-16">
-            <div class="d-grid footer__wrapper container">
+        <footer class="footer">
+            <div
+                class="d-grid footer__wrapper container p-6">
                 <div class="footer__content">
                     <h4 class="footer__brand"><span>Johnson</span> Construction</h4>
                     <p class="footer__description">Des constructions durables, réalisées avec professionnalisme et
@@ -733,6 +734,76 @@ $service_actuel = $services[$_GET['id'] ?? 1] ?? $services[1];
             </div>
             <p class="footer__copyright">&copy; 2025 Johnson Construction. Tous droits réservés</p>
         </footer>
+
+        <!--=================== ScrollReveal ==================-->
+        <script src="assets/js/scrollreveal.min.js"></script>
+
+        <!--=================== Mixitup  ====================-->
+        <script src="assets/js/mixitup.min.js"></script>
+
+        <!--=================== Main JS ====================-->
+        <script src="assets/js/main.js"> </script>
+
+        <!--=================== Panier JS ====================-->
+        <script src="assets/js/panier.js"></script>
+        <!--=================== Search JS ====================-->
+        <script src="assets/js/search.js"> </script>
+
+
+        <!-- Modal Panier -->
+        <div id="panierModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full"
+            style="z-index:1000;">
+            <div class="relative top-20 mx-auto p-5 border w-[300px] shadow-lg rounded-md bg-white">
+                <div class="mt-3">
+                    <h3 class="text-xl font-bold leading-6 font-medium text-gray-900">Panier</h3>
+
+                    <!-- Conteneur messages -->
+                    <div id="panierMessage"></div>
+
+                    <div class="mt-2 px-7 py-3" id="panierContenu">
+                        <!-- Le contenu du panier sera injecté ici -->
+                    </div>
+
+                    <div class="mt-4 flex flex-col gap-3 border-t pt-4">
+                        <div class="flex justify-between items-center">
+                            <p class="font-bold">Total: <span id="panierTotal">0</span></p>
+                            <div class="flex gap-2">
+                                <button id="btnCommander"
+                                    class="bg-green-600 hover:bg-green-700 transition text-white px-4 py-2 rounded-lg">
+                                    Commander
+                                </button>
+                                <button id="fermerPanier"
+                                    class="bg-red-600 hover:bg-[#053d36] transition text-white px-4 py-2 rounded-lg">
+                                    Fermer
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <!-- Animation fadeIn -->
+        <style>
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(-5px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .animate-fadeIn {
+                animation: fadeIn 0.4s ease-out;
+            }
+        </style>
 
         <script>
             // Gestion des miniatures

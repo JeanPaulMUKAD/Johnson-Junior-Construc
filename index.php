@@ -129,8 +129,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <!--======================= Header =============================-->
     <header id="header" class="header">
-        <nav class="nav container">
-            <a href="index.html" class="nav__brand"><span>Johnson</span> Jr Construction</a>
+        <nav class="nav container ">
+            <a href="index.html" class="nav__brand p-4"><span>Johnson</span> Jr Construction</a>
             <div id="nav-menu" class="nav__menu">
                 <ul class="nav__list">
                     <li class="nav__item">
@@ -276,19 +276,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <ul class="sidebar__list">
                     <li class="sidebar__item">
                         <span class="sidebar__subtitle">Adresse :</span>
-                        <span>L'shi, 15 rue des Constructeurs</span>
+                        <span>Camps scout :avenue Lupopo/7/kassapa/ annexe</span>
                     </li>
                     <li class="sidebar__item">
                         <span class="sidebar__subtitle">Horaires :</span>
-                        <span>Lu–Ve 8:00 - 18:00</span>
+                        <span>Lundi–Vendredi 8:00 - 18:00</span>
                     </li>
                     <li class="sidebar__item">
                         <span class="sidebar__subtitle">Appelez-nous :</span>
-                        <a href="tel0977199714">+243 977 199 714</a>
+                        <a href="tel0977199714">+243 975 413 369</a>
                     </li>
                     <li class="sidebar__item">
                         <span class="sidebar__subtitle">Email :</span>
-                        <a href="mailto:contact@johnsonconstruction.com">contact@johnsonconstruction.com</a>
+                        <a href="mailto:contact@johnsonconstruction.com">johnson31@outlook.fr</a>
                     </li>
                     <li class="sidebar__item">
                         <span class="sidebar__subtitle">Suivez-nous :</span>
@@ -370,7 +370,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <!--======================= About ============================-->
         <section id="about" class="section about">
-            <div class="d-grid about__wrapper container">
+            <div
+                class="d-grid about__wrapper container mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center px-4">
                 <div class="about__content">
                     <span class="about__subtitle">À propos</span>
                     <h2 class="about__title">Expertise en construction depuis 2010</h2>
@@ -925,10 +926,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $produits = ['ciment', 'gravier', 'pave', 'carreaux', 'gyproc', 'omega', 'chanel'];
 
                     foreach ($produits as $produit) {
-                        // MODIFICATION : Ajout des champs devise et poids
-                        $stmt = $conn->prepare("SELECT nom, prix, devise, poids, quantite, image FROM produits WHERE nom LIKE :nom");
-                        $searchTerm = '%' . $produit . '%';
-                        $stmt->bindParam(':nom', $searchTerm);
+                        $stmt = $conn->prepare("SELECT nom, prix, devise, poids, quantite, image FROM produits WHERE LOWER(nom) LIKE :nom OR nom LIKE :nom2");
+                        $searchTerm1 = '%' . strtolower($produit) . '%';
+                        $searchTerm2 = '%' . ucfirst($produit) . '%';
+                        $stmt->bindParam(':nom', $searchTerm1);
+                        $stmt->bindParam(':nom2', $searchTerm2);
                         $stmt->execute();
 
                         $classe = strtolower(preg_replace('/[^a-zA-Z0-9]/', '', $produit));
@@ -938,24 +940,49 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             foreach ($resultats as $row) {
                                 $nomProduit = htmlspecialchars($row['nom']);
                                 $prix = htmlspecialchars($row['prix']);
-                                $devise = htmlspecialchars($row['devise'] ?? 'USD'); // Récupération de la devise
-                                $poids = htmlspecialchars($row['poids'] ?? ''); // Récupération du poids
+                                $devise = htmlspecialchars($row['devise'] ?? 'USD');
+                                $poids = htmlspecialchars($row['poids'] ?? '');
                                 $quantite = $row['quantite'];
                                 $image = htmlspecialchars($row['image']);
                                 ?>
                                 <div class="menu__card <?php echo $classe; ?> all mix">
                                     <?php if (!empty($image)): ?>
                                         <div class="menu__img-wrapper">
-                                            <img src="./admin/uploads/<?php echo $image; ?>" alt="<?php echo $nomProduit; ?>" class="menu__img">
+                                            <?php
+                                            // CORRECTION : N'ajoutez pas "admin/uploads/" si le chemin contient déjà "uploads/"
+                                            if (strpos($image, 'uploads/') === 0) {
+                                                // Le chemin commence déjà par "uploads/"
+                                                $imagePath = "admin/" . $image;
+                                            } else {
+                                                // Le chemin ne commence pas par "uploads/"
+                                                $imagePath = "admin/uploads/" . $image;
+                                            }
+
+                                            // Vérifier si le fichier existe
+                                            if (file_exists($imagePath)): ?>
+                                                <img src="<?php echo $imagePath; ?>" alt="<?php echo $nomProduit; ?>" class="menu__img">
+                                            <?php else: ?>
+                                                <div class="text-gray-400 text-center p-4">
+                                                    <i class="fas fa-image text-4xl mb-2"></i>
+                                                    <p>Image non trouvée</p>
+                                                    <!-- Debug info corrigé -->
+                                                    <small class="text-xs block mt-2">
+                                                        Nom: <?php echo $image; ?><br>
+                                                        Chemin testé: <?php echo $imagePath; ?>
+                                                    </small>
+                                                </div>
+                                            <?php endif; ?>
                                         </div>
                                     <?php else: ?>
-                                        <span class="text-gray-400 text-xl">Aucune image</span>
+                                        <div class="text-gray-400 text-center p-4">
+                                            <i class="fas fa-image text-4xl mb-2"></i>
+                                            <p>Aucune image enregistrée</p>
+                                        </div>
                                     <?php endif; ?>
 
                                     <div class="menu__card-body">
                                         <h3 class="menu__title"><?php echo $nomProduit; ?></h3>
 
-                                        <!-- Affichage du poids si disponible -->
                                         <?php if (!empty($poids)): ?>
                                             <div class="text-sm text-gray-600 mb-2 flex items-center gap-1 text-xl">
                                                 <i class="fas fa-weight-hanging text-blue-500"></i>
@@ -971,7 +998,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             <span class="rating__star"><i class="ri-star-half-fill"></i></span>
                                         </div>
 
-                                        <!-- MODIFICATION : Affichage du prix avec la devise -->
                                         <span class="menu__price">
                                             Prix: <?php echo $prix; ?>
                                             <span
@@ -982,7 +1008,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                                         <span class="menu__quantity">Quantité disponible: <?php echo $quantite; ?></span>
 
-                                        <!-- MODIFICATION : Passage de la devise et du poids dans la fonction -->
                                         <button
                                             onclick="ajouterAuPanier('<?php echo $nomProduit; ?>', <?php echo $prix; ?>, '<?php echo $devise; ?>', '<?php echo $poids; ?>', <?php echo $quantite; ?>, '<?php echo $image; ?>')"
                                             class="bg-red-800 hover:bg-[#053d36] text-white transition px-4 py-2 rounded-lg mt-2 w-full">
@@ -994,9 +1019,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             }
                         } else {
                             echo '
-                        <div class="menu__card all mix ' . $classe . ' col-span-full text-center text-gray-500 py-10">
-                            Aucun produit trouvé dans la catégorie <strong>' . ucfirst($produit) . '</strong>.
-                        </div>
+                    <div class="menu__card all mix ' . $classe . ' col-span-full text-center text-gray-500 py-10">
+                        Aucun produit trouvé dans la catégorie <strong>' . ucfirst($produit) . '</strong>.
+                    </div>
                     ';
                         }
                     }
@@ -1008,7 +1033,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </section>
 
         <script>
-            // MODIFICATION : Mise à jour de la fonction ajouterAuPanier pour inclure devise et poids
+            // MODIFICATION : Mise à jour de la fonction ajouterAuPanier pour inclure devise, poids et image
             function ajouterAuPanier(nom, prix, devise, poids, quantite, image) {
                 // Vérifier si l'utilisateur est connecté
                 <?php if (!isset($_SESSION['user_id'])): ?>
@@ -1035,7 +1060,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     }
                     produitExistant.quantitePanier += 1;
                 } else {
-                    // MODIFICATION : Ajout de devise et poids dans l'objet produit
+                    // MODIFICATION : Ajout de devise, poids et image dans l'objet produit
                     panier.push({
                         nom: nom,
                         prix: prix,
@@ -1043,7 +1068,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         poids: poids,
                         quantiteDisponible: quantite,
                         quantitePanier: 1,
-                        image: image
+                        image: image // L'image est maintenant correctement incluse
                     });
                 }
 
@@ -1055,12 +1080,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 // Afficher un message de confirmation
                 showNotification('Produit ajouté au panier avec succès !');
+
+                // Debug: Afficher le panier dans la console
+                console.log('Panier actuel:', panier);
             }
 
             function mettreAJourCompteurPanier() {
                 const panier = JSON.parse(localStorage.getItem('panier')) || [];
                 const totalItems = panier.reduce((sum, item) => sum + item.quantitePanier, 0);
-                document.querySelector('.shop__number').textContent = totalItems;
+
+                // Sélectionner tous les éléments avec la classe shop__number
+                const compteursPanier = document.querySelectorAll('.shop__number');
+                compteursPanier.forEach(compteur => {
+                    compteur.textContent = totalItems;
+                });
             }
 
             function showNotification(message) {
@@ -1085,9 +1118,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }, 3000);
             }
 
+            // Fonction pour afficher le contenu du panier (utile pour le débogage)
+            function afficherPanierConsole() {
+                const panier = JSON.parse(localStorage.getItem('panier')) || [];
+                console.log('Contenu du panier:', panier);
+                panier.forEach((produit, index) => {
+                    console.log(`Produit ${index + 1}:`, {
+                        nom: produit.nom,
+                        prix: produit.prix,
+                        devise: produit.devise,
+                        poids: produit.poids,
+                        quantitePanier: produit.quantitePanier,
+                        image: produit.image
+                    });
+                });
+            }
+
             // Initialiser le compteur du panier au chargement de la page
             document.addEventListener('DOMContentLoaded', function () {
                 mettreAJourCompteurPanier();
+
+                // Afficher le panier dans la console pour débogage
+                afficherPanierConsole();
             });
         </script>
 
@@ -1231,20 +1283,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <ul class="space-y-4 text-gray-700">
                     <li class="flex items-center space-x-3">
                         <i class="ri-map-pin-2-line text-red-700 text-2xl"></i>
-                        <span><strong>Adresse :</strong> L'shi, 15 rue des Constructeurs</span>
+                        <span><strong>Adresse :</strong> Camps scout :avenue Lupopo/7/kassapa/ annexe</span>
                     </li>
                     <li class="flex items-center space-x-3">
                         <i class="ri-phone-line text-red-700 text-2xl"></i>
-                        <a href="tel:0977199714"><strong>Téléphone :</strong> +243 977 199 714</a>
+                        <a href="tel:0975413369"><strong>Téléphone :</strong> +243 975 413 369</a>
                     </li>
                     <li class="flex items-center space-x-3">
                         <i class="ri-mail-line text-red-700 text-2xl"></i>
                         <a href="mailto:contact@johnsonconstruction.com"><strong>Email :</strong>
-                            contact@johnsonconstruction.com</a>
+                            johnson31@outlook.fr</a>
                     </li>
                     <li class="flex items-center space-x-3">
                         <i class="ri-time-line text-red-700 text-2xl"></i>
-                        <span><strong>Horaires :</strong> Lu–Ve 8:00 - 18:00</span>
+                        <span><strong>Horaires :</strong> Lundi–Vendredi 8:00 - 18:00</span>
                     </li>
                 </ul>
             </div>
@@ -1255,7 +1307,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <!--======================= Footer ============================-->
     <footer class="footer">
-        <div class="d-grid footer__wrapper container">
+        <div class="d-grid footer__wrapper container p-6">
             <div class="footer__content">
                 <h4 class="footer__brand"><span>Johnson</span> Construction</h4>
                 <p class="footer__description">Des constructions durables, réalisées avec professionnalisme et
@@ -1346,37 +1398,58 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="assets/js/search.js"> </script>
 
     <!-- Modal Panier -->
-    <div id="panierModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full"
-        style="z-index:1000;">
-        <div class="relative top-20 mx-auto p-5 border w-[500px] shadow-lg rounded-md bg-white">
+    <div id="panierModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full z-50">
+        <div class="relative top-20 mx-auto p-5 border w-[90%] max-w-md shadow-lg rounded-md bg-white">
             <div class="mt-3">
-                <h3 class="text-xl font-bold leading-6 font-medium text-gray-900">Panier</h3>
-
-                <!-- Conteneur messages -->
-                <div id="panierMessage"></div>
-
-                <div class="mt-2 px-7 py-3" id="panierContenu">
-                    <!-- Le contenu du panier sera injecté ici -->
+                <!-- En-tête du panier -->
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold text-gray-900">Votre Panier</h3>
+                    <button id="fermerPanierBtn" class="text-gray-500 hover:text-gray-700 transition">
+                        <i class="ri-close-line text-2xl"></i>
+                    </button>
                 </div>
 
-                <div class="mt-4 flex flex-col gap-3 border-t pt-4">
-                    <div class="flex justify-between items-center">
-                        <p class="font-bold">Total: <span id="panierTotal">0</span></p>
-                        <div class="flex gap-2">
-                            <button id="btnCommander"
-                                class="bg-green-600 hover:bg-green-700 transition text-white px-4 py-2 rounded-lg">
-                                Commander
-                            </button>
-                            <button id="fermerPanier"
-                                class="bg-red-600 hover:bg-[#053d36] transition text-white px-4 py-2 rounded-lg">
-                                Fermer
-                            </button>
+                <!-- Conteneur messages -->
+                <div id="panierMessage" class="mb-4"></div>
+
+                <!-- Contenu du panier -->
+                <div class="max-h-96 overflow-y-auto border rounded-lg p-3 bg-gray-50" id="panierContenu">
+                    <!-- Le contenu du panier sera injecté ici -->
+                    <div class="text-center py-8 text-gray-500">
+                        <i class="ri-shopping-cart-line text-4xl mb-2"></i>
+                        <p>Votre panier est vide</p>
+                    </div>
+                </div>
+
+                <!-- Total et boutons -->
+                <div class="mt-4 border-t pt-4">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-lg font-semibold text-gray-800">Total:</span>
+                        <div class="flex items-center gap-1">
+                            <span id="panierTotal" class="text-lg font-bold text-blue-600">0</span>
+                            <span id="panierTotalDevise" class="text-lg font-bold text-blue-600">$</span>
                         </div>
+                    </div>
+
+                    <div class="flex flex-col gap-3">
+                        <button id="btnCommander"
+                            class="bg-red-800 hover:bg-[#053d36] text-white transition px-4 py-3 rounded-lg font-semibold w-full flex items-center justify-center gap-2">
+                            <i class="ri-shopping-bag-line"></i>
+                            Passer la Commande
+                        </button>
+
+                        <button id="continuerAchatsBtn"
+                            class="bg-gray-500 hover:bg-gray-600 text-white transition px-4 py-3 rounded-lg font-semibold w-full flex items-center justify-center gap-2">
+                            <i class="ri-arrow-left-line"></i>
+                            Continuer les Achats
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+
 
 
     <!-- Animation fadeIn -->

@@ -23,8 +23,27 @@ try {
 
     $produit = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if (!$produit)
+    if (!$produit) {
         die("Produit introuvable !");
+    }
+        
+    // Gestion du chemin de l'image
+    $imageProduit = $produit['image'];
+    if (!empty($imageProduit)) {
+        if (strpos($imageProduit, 'uploads/') === 0) {
+            $imagePath = "admin/" . $imageProduit;
+        } else {
+            $imagePath = "admin/uploads/" . $imageProduit;
+        }
+        
+        // Vérifier si le fichier existe
+        if (!file_exists($imagePath)) {
+            $imagePath = "admin/uploads/default.jpg";
+        }
+    } else {
+        $imagePath = "admin/uploads/default.jpg";
+    }
+    
 } catch (PDOException $e) {
     die("Erreur : " . $e->getMessage());
 }
@@ -34,44 +53,77 @@ $reservation_effectuee = false;
 $reservation_info = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmer_reservation'])) {
-    $quantite = intval($_POST['quantite']);
-    $telephone = trim($_POST['telephone']);
-    $adresse = trim($_POST['adresse']);
+    
+    // Récupération et validation des données
+    $quantite = isset($_POST['quantite']) ? intval($_POST['quantite']) : 0;
+    $telephone = isset($_POST['telephone']) ? trim($_POST['telephone']) : '';
+    $adresse = isset($_POST['adresse']) ? trim($_POST['adresse']) : '';
     
     // Validation des champs obligatoires
     if (empty($telephone)) {
-        die("Le numéro de téléphone est obligatoire !");
+        echo "Le numéro de téléphone est obligatoire";
+        exit;
     }
     
     if (empty($adresse)) {
-        die("L'adresse est obligatoire !");
+        echo "L'adresse est obligatoire";
+        exit;
     }
     
-    if ($quantite < 1)
+    if ($quantite < 1) {
         $quantite = 1;
+    }
+    
+    // Vérifier que la quantité ne dépasse pas le stock
+    if ($quantite > $produit['quantite']) {
+        echo "Quantité demandée supérieure au stock disponible";
+        exit;
+    }
 
-    $montant_total = $quantite * $produit['prix'];
+    $montant_total = $quantite * floatval($produit['prix']);
 
     try {
-        $stmt = $conn->prepare("INSERT INTO reservations (utilisateur_id, produit_id, quantite, montant_total, telephone, adresse, statut) VALUES (:user_id, :produit_id, :quantite, :montant_total, :telephone, :adresse, 'confirmée')");
-        $stmt->bindParam(':user_id', $user_id);
-        $stmt->bindParam(':produit_id', $produit['id']);
-        $stmt->bindParam(':quantite', $quantite);
+        // Commencer une transaction
+        $conn->beginTransaction();
+        
+        // Insérer la réservation
+        $stmt = $conn->prepare("INSERT INTO reservations (utilisateur_id, produit_id, quantite, montant_total, telephone, adresse, statut, date_reservation) VALUES (:user_id, :produit_id, :quantite, :montant_total, :telephone, :adresse, 'confirmée', NOW())");
+        
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->bindParam(':produit_id', $produit['id'], PDO::PARAM_INT);
+        $stmt->bindParam(':quantite', $quantite, PDO::PARAM_INT);
         $stmt->bindParam(':montant_total', $montant_total);
         $stmt->bindParam(':telephone', $telephone);
         $stmt->bindParam(':adresse', $adresse);
-        $stmt->execute();
-
-        $reservation_effectuee = true;
-        $reservation_info = [
-            'nom' => $produit['nom'],
-            'quantite' => $quantite,
-            'montant' => number_format($montant_total, 2, ',', ' '),
-            'telephone' => $telephone,
-            'adresse' => $adresse
-        ];
-    } catch (PDOException $e) {
-        die("Erreur lors de la réservation : " . $e->getMessage());
+        
+        if (!$stmt->execute()) {
+            throw new Exception("Erreur lors de l'insertion de la réservation");
+        }
+        
+        // Mettre à jour le stock du produit
+        $updateStmt = $conn->prepare("UPDATE produits SET quantite = quantite - :quantite WHERE id = :produit_id AND quantite >= :quantite");
+        $updateStmt->bindParam(':quantite', $quantite, PDO::PARAM_INT);
+        $updateStmt->bindParam(':produit_id', $produit['id'], PDO::PARAM_INT);
+        
+        if (!$updateStmt->execute() || $updateStmt->rowCount() == 0) {
+            throw new Exception("Stock insuffisant pour effectuer la réservation");
+        }
+        
+        // Valider la transaction
+        $conn->commit();
+        
+        // Réponse de succès
+        echo "success";
+        exit;
+        
+    } catch (Exception $e) {
+        // Annuler la transaction en cas d'erreur
+        if ($conn && $conn->inTransaction()) {
+            $conn->rollBack();
+        }
+        
+        echo "Erreur lors de la réservation : " . $e->getMessage();
+        exit;
     }
 }
 ?>
@@ -80,7 +132,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmer_reservation
 
 <head>
     <meta charset="UTF-8">
-    <title><?= $produit['nom'] ?> - Johnson Jr Construction</title>
+    <title><?= htmlspecialchars($produit['nom']) ?> - Johnson Jr Construction</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -138,7 +190,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmer_reservation
                 <span>Accueil</span>
             </a>
             <span class="text-gray-400">/</span>
-            <span class="text-blue-600 font-medium"><?= $produit['nom'] ?></span>
+            <span class="text-blue-600 font-medium"><?= htmlspecialchars($produit['nom']) ?></span>
         </nav>
     </div>
 
@@ -150,8 +202,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmer_reservation
                 <!-- Product Image -->
                 <div class="flex flex-col items-center">
                     <div class="w-full max-w-md rounded-2xl overflow-hidden shadow-lg bg-gray-100">
-                        <img src="<?= $produit['image'] ?>" alt="<?= $produit['nom'] ?>"
-                            class="w-full h-96 object-cover transition duration-300 hover:scale-105">
+                        <img src="<?= $imagePath ?>" alt="<?= htmlspecialchars($produit['nom']) ?>"
+                            class="w-full h-96 object-cover transition duration-300 hover:scale-105"
+                            onerror="this.onerror=null; this.src='admin/uploads/default.jpg';">
                     </div>
                     <div class="mt-4 flex space-x-2">
                         <div class="w-4 h-4 bg-blue-600 rounded-full"></div>
@@ -167,18 +220,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmer_reservation
                         <div
                             class="inline-flex items-center px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-sm font-medium mb-4">
                             <i class="fas fa-tag mr-2"></i>
-                            <?= $produit['categorie'] ?>
+                            <?= htmlspecialchars($produit['categorie']) ?>
                         </div>
 
                         <!-- Product Name -->
                         <h1 class="text-4xl font-bold text-gray-800 mb-4 leading-tight">
-                            <?= $produit['nom'] ?>
+                            <?= htmlspecialchars($produit['nom']) ?>
                         </h1>
 
                         <!-- Description -->
                         <div class="prose prose-lg mb-6">
                             <p class="text-gray-600 leading-relaxed text-lg">
-                                <?= nl2br($produit['description']) ?>
+                                <?= nl2br(htmlspecialchars($produit['description'])) ?>
                             </p>
                         </div>
 
@@ -186,7 +239,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmer_reservation
                         <div class="mb-6">
                             <h2 class="text-xl font-semibold text-gray-800 mb-2">Poids</h2>
                             <p class="text-gray-600 text-lg">
-                                <?= $produit['poids'] ?>
+                                <?= htmlspecialchars($produit['poids']) ?>
                             </p>
                         </div>
 
@@ -220,7 +273,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmer_reservation
                                 <p class="text-sm text-gray-500 mb-1">Prix unitaire</p>
                                 <p class="text-3xl font-bold text-green-600">
                                     <?= number_format(floatval($produit['prix']), 2, ',', ' ') ?>
-                                    <?= $produit['devise'] ?>
+                                    <?= htmlspecialchars($produit['devise']) ?>
                                 </p>
                             </div>
                             <div class="text-right">
@@ -241,14 +294,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmer_reservation
                             <div class="flex items-center space-x-4">
                                 <div
                                     class="flex items-center border border-gray-300 rounded-2xl bg-white overflow-hidden">
-                                    <button id="decreaseQty"
+                                    <button type="button" id="decreaseQty"
                                         class="w-12 h-12 flex items-center justify-center text-gray-600 hover:bg-gray-100 transition duration-200">
                                         <i class="fas fa-minus"></i>
                                     </button>
                                     <input type="number" id="quantiteProduit" value="1" min="1"
                                         max="<?= $produit['quantite'] ?>"
                                         class="w-20 h-12 text-center border-0 bg-transparent text-lg font-semibold focus:outline-none focus:ring-0">
-                                    <button id="increaseQty"
+                                    <button type="button" id="increaseQty"
                                         class="w-12 h-12 flex items-center justify-center text-gray-600 hover:bg-gray-100 transition duration-200">
                                         <i class="fas fa-plus"></i>
                                     </button>
@@ -257,7 +310,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmer_reservation
                                     <p class="text-sm text-gray-500">Total</p>
                                     <p id="totalPrice" class="text-xl font-bold text-green-600">
                                         <?= number_format(floatval($produit['prix']), 2, ',', ' ') ?>
-                                        <?= $produit['devise'] ?>
+                                        <?= htmlspecialchars($produit['devise']) ?>
                                     </p>
                                 </div>
                             </div>
@@ -292,58 +345,58 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmer_reservation
         </div>
     </div>
 
-<!-- Confirmation Modal -->
-<div id="confirmModal"
-    class="fixed inset-0 bg-black bg-opacity-60 hidden flex items-center justify-center z-50 p-4">
-    <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md transform transition-all duration-300 scale-95">
-        <div class="p-8">
-            <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <i class="fas fa-shopping-cart text-blue-600 text-2xl"></i>
-            </div>
-            <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Confirmer la commande</h2>
-            <p class="text-gray-600 mb-6 text-center">Voulez-vous confirmer votre réservation pour ce produit ?</p>
-            
-            <!-- Formulaire avec téléphone et adresse -->
-            <form id="reservationForm">
-                <div class="space-y-4 mb-6">
-                    <!-- Champ Téléphone -->
-                    <div>
-                        <label for="telephone" class="block text-sm font-medium text-gray-700 mb-2">
-                            <i class="fas fa-phone mr-2"></i>Téléphone *
-                        </label>
-                        <input type="tel" id="telephone" name="telephone" required
-                            class="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
-                            placeholder="Votre numéro de téléphone">
-                        <p class="text-xs text-gray-500 mt-1">Ex: +243 97 123 4567</p>
+    <!-- Confirmation Modal -->
+    <div id="confirmModal"
+        class="fixed inset-0 bg-black bg-opacity-60 hidden flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md transform transition-all duration-300 scale-95">
+            <div class="p-8">
+                <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-shopping-cart text-blue-600 text-2xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Confirmer la commande</h2>
+                <p class="text-gray-600 mb-6 text-center">Voulez-vous confirmer votre réservation pour ce produit ?</p>
+                
+                <!-- Formulaire avec téléphone et adresse -->
+                <form id="reservationForm">
+                    <div class="space-y-4 mb-6">
+                        <!-- Champ Téléphone -->
+                        <div>
+                            <label for="telephone" class="block text-sm font-medium text-gray-700 mb-2">
+                                <i class="fas fa-phone mr-2"></i>Téléphone *
+                            </label>
+                            <input type="tel" id="telephone" name="telephone" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
+                                placeholder="Votre numéro de téléphone">
+                            <p class="text-xs text-gray-500 mt-1">Ex: +243 97 123 4567</p>
+                        </div>
+                        
+                        <!-- Champ Adresse -->
+                        <div>
+                            <label for="adresse" class="block text-sm font-medium text-gray-700 mb-2">
+                                <i class="fas fa-map-marker-alt mr-2"></i>Adresse de livraison *
+                            </label>
+                            <textarea id="adresse" name="adresse" required rows="3"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 resize-none"
+                                placeholder="Votre adresse complète de livraison"></textarea>
+                        </div>
                     </div>
                     
-                    <!-- Champ Adresse -->
-                    <div>
-                        <label for="adresse" class="block text-sm font-medium text-gray-700 mb-2">
-                            <i class="fas fa-map-marker-alt mr-2"></i>Adresse de livraison *
-                        </label>
-                        <textarea id="adresse" name="adresse" required rows="3"
-                            class="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 resize-none"
-                            placeholder="Votre adresse complète de livraison"></textarea>
+                    <div class="flex justify-center space-x-4">
+                        <button type="button" id="nonConfirmer"
+                            class="px-8 py-3 border-2 border-gray-300 text-gray-700 rounded-2xl font-semibold hover:bg-gray-50 transition duration-200 flex items-center space-x-2">
+                            <i class="fas fa-times"></i>
+                            <span>Annuler</span>
+                        </button>
+                        <button type="submit" id="ouiConfirmer"
+                            class="px-8 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-2xl font-semibold hover:from-green-600 hover:to-green-700 transition duration-200 flex items-center space-x-2 shadow-lg">
+                            <i class="fas fa-check"></i>
+                            <span>Confirmer</span>
+                        </button>
                     </div>
-                </div>
-                
-                <div class="flex justify-center space-x-4">
-                    <button type="button" id="nonConfirmer"
-                        class="px-8 py-3 border-2 border-gray-300 text-gray-700 rounded-2xl font-semibold hover:bg-gray-50 transition duration-200 flex items-center space-x-2">
-                        <i class="fas fa-times"></i>
-                        <span>Annuler</span>
-                    </button>
-                    <button type="submit" id="ouiConfirmer"
-                        class="px-8 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-2xl font-semibold hover:from-green-600 hover:to-green-700 transition duration-200 flex items-center space-x-2 shadow-lg">
-                        <i class="fas fa-check"></i>
-                        <span>Confirmer</span>
-                    </button>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 
     <!-- Success Modal -->
     <div id="successModal"
@@ -356,7 +409,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmer_reservation
                 <h2 class="text-2xl font-bold text-gray-800 mb-4">Commande confirmée !</h2>
                 <p id="successText" class="text-gray-600 mb-2"></p>
 
-                <!-- Message de paiement mis à jour -->
+                <!-- Message de paiement -->
                 <div class="bg-blue-50 border border-blue-200 rounded-2xl p-4 mb-6">
                     <div class="flex items-start space-x-3">
                         <div
@@ -421,16 +474,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmer_reservation
 
         const prixUnitaire = <?= floatval($produit['prix']) ?>;
         const devise = '<?= $produit['devise'] ?>';
+        const nomProduit = '<?= $produit['nom'] ?>';
 
         // Gestion de la quantité
         function updateTotalPrice() {
-            const quantite = parseInt(quantiteInput.value);
+            const quantite = parseInt(quantiteInput.value) || 1;
             const total = quantite * prixUnitaire;
-            totalPrice.textContent = `${total.toFixed(2)} ${devise}`;
+            totalPrice.textContent = `${total.toFixed(2).replace('.', ',')} ${devise}`;
         }
 
         decreaseBtn.addEventListener('click', () => {
-            let value = parseInt(quantiteInput.value);
+            let value = parseInt(quantiteInput.value) || 1;
             if (value > 1) {
                 quantiteInput.value = value - 1;
                 updateTotalPrice();
@@ -438,8 +492,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmer_reservation
         });
 
         increaseBtn.addEventListener('click', () => {
-            let value = parseInt(quantiteInput.value);
-            const max = parseInt(quantiteInput.max);
+            let value = parseInt(quantiteInput.value) || 1;
+            const max = parseInt(quantiteInput.max) || 1;
             if (value < max) {
                 quantiteInput.value = value + 1;
                 updateTotalPrice();
@@ -469,7 +523,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmer_reservation
             
             const telephone = document.getElementById('telephone').value.trim();
             const adresse = document.getElementById('adresse').value.trim();
-            const quantite = parseInt(quantiteInput.value);
+            const quantite = parseInt(quantiteInput.value) || 1;
             
             // Validation côté client
             if (!telephone) {
@@ -482,20 +536,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmer_reservation
                 return;
             }
             
-            // Appel AJAX pour enregistrer la réservation
-            const formData = new FormData();
-            formData.append('confirmer_reservation', true);
-            formData.append('quantite', quantite);
-            formData.append('telephone', telephone);
-            formData.append('adresse', adresse);
-
+            // Désactiver le bouton pour éviter les doubles clics
+            const confirmBtn = document.getElementById('ouiConfirmer');
+            confirmBtn.disabled = true;
+            confirmBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>Traitement...</span>';
+            
             try {
-                const response = await fetch("", {
+                const formData = new FormData();
+                formData.append('confirmer_reservation', 'true');
+                formData.append('quantite', quantite);
+                formData.append('telephone', telephone);
+                formData.append('adresse', adresse);
+
+                const response = await fetch(window.location.href, {
                     method: "POST",
                     body: formData
                 });
 
-                if (response.ok) {
+                const result = await response.text();
+                
+                if (result.trim() === 'success') {
+                    // SUCCÈS - Afficher la modale de confirmation
                     confirmModal.querySelector('.transform').classList.add('scale-95');
                     setTimeout(() => {
                         confirmModal.classList.add('hidden');
@@ -505,12 +566,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmer_reservation
                         }, 10);
                     }, 300);
 
-                    successText.innerHTML = `Vous avez réservé <strong>${quantite}</strong> unité(s) du produit <strong><?= $produit['nom'] ?></strong>.`;
+                    successText.innerHTML = `Vous avez réservé <strong>${quantite}</strong> unité(s) du produit <strong>${nomProduit}</strong>.`;
                 } else {
-                    alert('Erreur lors de la réservation. Veuillez réessayer.');
+                    // ÉCHEC - Afficher l'erreur
+                    throw new Error(result || 'Erreur inconnue lors de la réservation');
                 }
             } catch (error) {
-                alert('Erreur lors de la réservation. Veuillez réessayer.');
+                console.error('Erreur:', error);
+                alert('Erreur: ' + error.message);
+            } finally {
+                // Réactiver le bouton
+                confirmBtn.disabled = false;
+                confirmBtn.innerHTML = '<i class="fas fa-check"></i><span>Confirmer</span>';
             }
         });
 
@@ -527,16 +594,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmer_reservation
             doc.text("Reçu de réservation", 105, 35, { align: "center" });
 
             doc.setFontSize(12);
-            doc.text(`Produit : <?= $produit['nom'] ?>`, 20, 55);
+            doc.text(`Produit : ${nomProduit}`, 20, 55);
             doc.text(`Quantité : ${quantiteInput.value}`, 20, 65);
             doc.text(`Prix unitaire : ${prixUnitaire.toFixed(2)} ${devise}`, 20, 75);
-            doc.text(`Montant total : ${(prixUnitaire * quantiteInput.value).toFixed(2)} ${devise}`, 20, 85);
-            doc.text(`Client : <?= $_SESSION['user_nom'] ?>`, 20, 95);
-            doc.text(`Téléphone : ${document.getElementById('telephone').value}`, 20, 105);
-            doc.text(`Adresse : ${document.getElementById('adresse').value}`, 20, 115);
-            doc.text(`Date : ${new Date().toLocaleDateString('fr-FR')}`, 20, 125);
+            doc.text(`Montant total : ${(prixUnitaire * parseInt(quantiteInput.value)).toFixed(2)} ${devise}`, 20, 85);
+            doc.text(`Téléphone : ${document.getElementById('telephone').value}`, 20, 95);
+            doc.text(`Adresse : ${document.getElementById('adresse').value}`, 20, 105);
+            doc.text(`Date : ${new Date().toLocaleDateString('fr-FR')}`, 20, 115);
 
-            doc.save("reçu_<?= $produit['nom'] ?>.pdf");
+            doc.save("reçu_" + nomProduit.replace(/[^a-z0-9]/gi, '_') + ".pdf");
         });
     </script>
 
