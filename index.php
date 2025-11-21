@@ -127,6 +127,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 <body>
+
     <!--======================= Header =============================-->
     <header id="header" class="header">
         <nav class="nav container ">
@@ -912,6 +913,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="menu__filter">
                 <span class="menu__item menu__item--active" data-filter=".all">Tous</span>
                 <span class="menu__item" data-filter=".ciment">Ciment</span>
+                <span class="menu_item" data-filter=".bloc-ciment">Bloc-ciment</span>
                 <span class="menu__item" data-filter=".gravier">Gravier</span>
                 <span class="menu__item" data-filter=".pave">Pavé</span>
                 <span class="menu__item" data-filter=".carreaux">Carreaux</span>
@@ -923,7 +925,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="d-grid menu__wrapper container">
                 <?php
                 try {
-                    $produits = ['ciment', 'gravier', 'pave', 'carreaux', 'gyproc', 'omega', 'chanel'];
+                    $produits = ['ciment', 'bloc-ciment', 'gravier', 'pave', 'carreaux', 'gyproc', 'omega', 'chanel'];
 
                     foreach ($produits as $produit) {
                         $stmt = $conn->prepare("SELECT nom, prix, devise, poids, quantite, image FROM produits WHERE LOWER(nom) LIKE :nom OR nom LIKE :nom2");
@@ -1032,134 +1034,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </section>
 
-        <script>
-            // MODIFICATION : Mise à jour de la fonction ajouterAuPanier pour inclure devise, poids et image
-            function ajouterAuPanier(nom, prix, devise, poids, quantite, image) {
-                // Vérifier si l'utilisateur est connecté
-                <?php if (!isset($_SESSION['user_id'])): ?>
-                    alert('Veuillez vous connecter pour ajouter des produits au panier.');
-                    return;
-                <?php endif; ?>
 
-                // Vérifier la disponibilité
-                if (quantite <= 0) {
-                    alert('Ce produit est actuellement en rupture de stock.');
-                    return;
-                }
 
-                // Récupérer le panier existant ou en créer un nouveau
-                let panier = JSON.parse(localStorage.getItem('panier')) || [];
-
-                // Vérifier si le produit est déjà dans le panier
-                const produitExistant = panier.find(item => item.nom === nom);
-
-                if (produitExistant) {
-                    if (produitExistant.quantitePanier >= quantite) {
-                        alert('Quantité maximale disponible atteinte pour ce produit.');
-                        return;
-                    }
-                    produitExistant.quantitePanier += 1;
-                } else {
-                    // MODIFICATION : Ajout de devise, poids et image dans l'objet produit
-                    panier.push({
-                        nom: nom,
-                        prix: prix,
-                        devise: devise,
-                        poids: poids,
-                        quantiteDisponible: quantite,
-                        quantitePanier: 1,
-                        image: image // L'image est maintenant correctement incluse
-                    });
-                }
-
-                // Sauvegarder le panier
-                localStorage.setItem('panier', JSON.stringify(panier));
-
-                // Mettre à jour le compteur du panier
-                mettreAJourCompteurPanier();
-
-                // Afficher un message de confirmation
-                showNotification('Produit ajouté au panier avec succès !');
-
-                // Debug: Afficher le panier dans la console
-                console.log('Panier actuel:', panier);
-            }
-
-            function mettreAJourCompteurPanier() {
-                const panier = JSON.parse(localStorage.getItem('panier')) || [];
-                const totalItems = panier.reduce((sum, item) => sum + item.quantitePanier, 0);
-
-                // Sélectionner tous les éléments avec la classe shop__number
-                const compteursPanier = document.querySelectorAll('.shop__number');
-                compteursPanier.forEach(compteur => {
-                    compteur.textContent = totalItems;
-                });
-            }
-
-            function showNotification(message) {
-                // Créer une notification toast
-                const notification = document.createElement('div');
-                notification.className = 'fixed top-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300';
-                notification.textContent = message;
-
-                document.body.appendChild(notification);
-
-                // Animation d'entrée
-                setTimeout(() => {
-                    notification.classList.remove('translate-x-full');
-                }, 100);
-
-                // Animation de sortie après 3 secondes
-                setTimeout(() => {
-                    notification.classList.add('translate-x-full');
-                    setTimeout(() => {
-                        document.body.removeChild(notification);
-                    }, 300);
-                }, 3000);
-            }
-
-            // Fonction pour afficher le contenu du panier (utile pour le débogage)
-            function afficherPanierConsole() {
-                const panier = JSON.parse(localStorage.getItem('panier')) || [];
-                console.log('Contenu du panier:', panier);
-                panier.forEach((produit, index) => {
-                    console.log(`Produit ${index + 1}:`, {
-                        nom: produit.nom,
-                        prix: produit.prix,
-                        devise: produit.devise,
-                        poids: produit.poids,
-                        quantitePanier: produit.quantitePanier,
-                        image: produit.image
-                    });
-                });
-            }
-
-            // Initialiser le compteur du panier au chargement de la page
-            document.addEventListener('DOMContentLoaded', function () {
-                mettreAJourCompteurPanier();
-
-                // Afficher le panier dans la console pour débogage
-                afficherPanierConsole();
-            });
-        </script>
-
-        <style>
-            /* Styles pour améliorer l'affichage */
-            .menu__price {
-                display: flex;
-                align-items: center;
-                gap: 4px;
-            }
-
-            .menu__card {
-                transition: all 0.3s ease;
-            }
-
-            .menu__card:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            }
-        </style>
 
 
         <!--======================= Testimonial ============================-->
@@ -1382,21 +1258,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <p class="footer__copyright">&copy; 2025 Johnson Construction. Tous droits réservés</p>
     </footer>
 
-
-    <!--=================== ScrollReveal ==================-->
-    <script src="assets/js/scrollreveal.min.js"></script>
-
-    <!--=================== Mixitup  ====================-->
-    <script src="assets/js/mixitup.min.js"></script>
-
-    <!--=================== Main JS ====================-->
-    <script src="assets/js/main.js"> </script>
-
-    <!--=================== Panier JS ====================-->
-    <script src="assets/js/panier.js"></script>
-    <!--=================== Search JS ====================-->
-    <script src="assets/js/search.js"> </script>
-
     <!-- Modal Panier -->
     <div id="panierModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full z-50">
         <div class="relative top-20 mx-auto p-5 border w-[90%] max-w-md shadow-lg rounded-md bg-white">
@@ -1449,8 +1310,130 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
 
+    <!--=================== ScrollReveal ==================-->
+    <script src="assets/js/scrollreveal.min.js"></script>
 
+    <!--=================== Mixitup  ====================-->
+    <script src="assets/js/mixitup.min.js"></script>
 
+    <!--=================== Main JS ====================-->
+    <script src="assets/js/main.js"> </script>
+
+    <!--=================== Panier JS ====================-->
+    <script src="assets/js/panier.js"></script>
+    <!--=================== Search JS ====================-->
+    <script src="assets/js/search.js"> </script>
+
+    <script>
+        // MODIFICATION : Mise à jour de la fonction ajouterAuPanier pour inclure devise, poids et image
+        function ajouterAuPanier(nom, prix, devise, poids, quantite, image) {
+            // Vérifier si l'utilisateur est connecté
+            <?php if (!isset($_SESSION['user_id'])): ?>
+                alert('Veuillez vous connecter pour ajouter des produits au panier.');
+                return;
+            <?php endif; ?>
+
+            // Vérifier la disponibilité
+            if (quantite <= 0) {
+                alert('Ce produit est actuellement en rupture de stock.');
+                return;
+            }
+
+            // Récupérer le panier existant ou en créer un nouveau
+            let panier = JSON.parse(localStorage.getItem('panier')) || [];
+
+            // Vérifier si le produit est déjà dans le panier
+            const produitExistant = panier.find(item => item.nom === nom);
+
+            if (produitExistant) {
+                if (produitExistant.quantitePanier >= quantite) {
+                    alert('Quantité maximale disponible atteinte pour ce produit.');
+                    return;
+                }
+                produitExistant.quantitePanier += 1;
+            } else {
+                // MODIFICATION : Ajout de devise, poids et image dans l'objet produit
+                panier.push({
+                    nom: nom,
+                    prix: prix,
+                    devise: devise,
+                    poids: poids,
+                    quantiteDisponible: quantite,
+                    quantitePanier: 1,
+                    image: image // L'image est maintenant correctement incluse
+                });
+            }
+
+            // Sauvegarder le panier
+            localStorage.setItem('panier', JSON.stringify(panier));
+
+            // Mettre à jour le compteur du panier
+            mettreAJourCompteurPanier();
+
+            // Afficher un message de confirmation
+            showNotification('Produit ajouté au panier avec succès !');
+
+            // Debug: Afficher le panier dans la console
+            console.log('Panier actuel:', panier);
+        }
+
+        function mettreAJourCompteurPanier() {
+            const panier = JSON.parse(localStorage.getItem('panier')) || [];
+            const totalItems = panier.reduce((sum, item) => sum + item.quantitePanier, 0);
+
+            // Sélectionner tous les éléments avec la classe shop__number
+            const compteursPanier = document.querySelectorAll('.shop__number');
+            compteursPanier.forEach(compteur => {
+                compteur.textContent = totalItems;
+            });
+        }
+
+        function showNotification(message) {
+            // Créer une notification toast
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300';
+            notification.textContent = message;
+
+            document.body.appendChild(notification);
+
+            // Animation d'entrée
+            setTimeout(() => {
+                notification.classList.remove('translate-x-full');
+            }, 100);
+
+            // Animation de sortie après 3 secondes
+            setTimeout(() => {
+                notification.classList.add('translate-x-full');
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Fonction pour afficher le contenu du panier (utile pour le débogage)
+        function afficherPanierConsole() {
+            const panier = JSON.parse(localStorage.getItem('panier')) || [];
+            console.log('Contenu du panier:', panier);
+            panier.forEach((produit, index) => {
+                console.log(`Produit ${index + 1}:`, {
+                    nom: produit.nom,
+                    prix: produit.prix,
+                    devise: produit.devise,
+                    poids: produit.poids,
+                    quantitePanier: produit.quantitePanier,
+                    image: produit.image
+                });
+            });
+        }
+
+        // Initialiser le compteur du panier au chargement de la page
+        document.addEventListener('DOMContentLoaded', function () {
+            mettreAJourCompteurPanier();
+
+            // Afficher le panier dans la console pour débogage
+            afficherPanierConsole();
+        });
+    </script>
 
     <!-- Animation fadeIn -->
     <style>
@@ -1470,6 +1453,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             animation: fadeIn 0.4s ease-out;
         }
     </style>
+    <style>
+        /* Styles pour améliorer l'affichage */
+        .menu__price {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .menu__card {
+            transition: all 0.3s ease;
+        }
+
+        .menu__card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+
 
     <!-- SEARCH LOGO -->
     <script>
@@ -1533,9 +1534,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         let anime;
 
     </script>
-
-
-
 
 </body>
 

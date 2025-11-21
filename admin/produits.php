@@ -8,17 +8,41 @@ if (!isset($_SESSION['admin_id'])) {
     exit();
 }
 
+// Fonction pour obtenir le taux de change depuis l'API
+function getTauxChange() {
+    // Taux par défaut si l'API échoue
+    $tauxParDefaut = 2500;
+    
+    try {
+        // Utilisation d'une API gratuite de taux de change
+        $apiUrl = 'https://api.exchangerate-api.com/v4/latest/USD';
+        $response = file_get_contents($apiUrl);
+        
+        if ($response !== false) {
+            $data = json_decode($response, true);
+            if (isset($data['rates']['CDF'])) {
+                return floatval($data['rates']['CDF']);
+            }
+        }
+    } catch (Exception $e) {
+        error_log("Erreur API taux de change: " . $e->getMessage());
+    }
+    
+    return $tauxParDefaut;
+}
+
+// Récupérer le taux de change actuel
+$tauxChange = getTauxChange();
+
 // Fonction de conversion USD vers FC (Francs Congolais)
-function convertirUsdVersFc($prixUsd)
+function convertirUsdVersFc($prixUsd, $tauxChange)
 {
-    $tauxChange = 2500; // 1 USD = 2,500 FC
     return $prixUsd * $tauxChange;
 }
 
 // Fonction de conversion FC vers USD
-function convertirFcVersUsd($prixFc)
+function convertirFcVersUsd($prixFc, $tauxChange)
 {
-    $tauxChange = 2500; // 1 USD = 2,500 FC
     return $prixFc / $tauxChange;
 }
 
@@ -118,6 +142,23 @@ $result = $conn->query("SELECT * FROM produits ORDER BY id ASC");
     <?php include "includes/sidebar.php"; ?>
 
     <div class="flex-1 p-6">
+        <!-- Affichage du taux de change actuel -->
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <i class="fas fa-sync-alt text-blue-600"></i>
+                    <span class="text-sm font-medium text-blue-800">
+                        Taux de change actuel : 
+                        <span id="taux-actuel" class="font-bold">1 USD = <?= formaterPrix($tauxChange) ?> CDF</span>
+                    </span>
+                </div>
+                <button onclick="mettreAJourTaux()" class="text-blue-600 hover:text-blue-800 text-sm flex items-center gap-1">
+                    <i class="fas fa-redo-alt"></i>
+                    Actualiser
+                </button>
+            </div>
+        </div>
+
         <h1 class="text-2xl font-bold mb-4 text-blue-700">Gestion des produits</h1>
 
         <?php if ($message): ?>
@@ -142,6 +183,7 @@ $result = $conn->query("SELECT * FROM produits ORDER BY id ASC");
                     <select name="produit_existant" id="produit_existant"
                         class="w-full border-2 border-gray-200 rounded-xl p-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition duration-200 bg-white">
                         <option value="">-- Choisir un produit --</option>
+                        <option value="bloc-ciment">Bloc-ciment</option>
                         <option value="ciment">Ciment</option>
                         <option value="gravier">Gravier</option>
                         <option value="pave">Pavé</option>
@@ -151,8 +193,8 @@ $result = $conn->query("SELECT * FROM produits ORDER BY id ASC");
                         <option value="chanel">Chanel</option>
                     </select>
                     <p class="text-xs text-gray-500 mt-2 flex items-center gap-1">
-                        <i class="fas fa-info-circle text-blue-500"></i>
-                        Sélectionnez un produit existant ou remplissez les champs ci-dessous pour un nouveau produit
+                        <i class="fas fa-info-circle text-red-500"></i>
+                        Sélectionnez un produit existant.
                     </p>
                 </div>
 
@@ -179,17 +221,11 @@ $result = $conn->query("SELECT * FROM produits ORDER BY id ASC");
                         <i class="fas fa-layer-group mr-2 text-blue-500"></i>
                         Catégorie
                     </label>
-                    <select name="categorie"
+                    <input type="text" name="categorie" placeholder="Ex: Ciment Dangonte, ..."
                         class="w-full border-2 border-gray-200 rounded-xl p-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition duration-200">
-                        <option value="">Choisir une catégorie</option>
-                        <option value="ciment">Ciment</option>
-                        <option value="granulats">Granulats</option>
-                        <option value="carrelage">Carrelage</option>
-                        <option value="pavage">Pavage</option>
-                        <option value="plaque">Plaques & Cloisons</option>
-                        <option value="profil">Profils Métalliques</option>
-                        <option value="quincaillerie">Quincaillerie</option>
-                    </select>
+                    <p class="text-xs text-gray-500 mt-2">
+                        Saisissez la catégorie du produit choisi
+                    </p>
                 </div>
 
                 <div class="md:col-span-2">
@@ -219,11 +255,11 @@ $result = $conn->query("SELECT * FROM produits ORDER BY id ASC");
                         <div class="md:col-span-2">
                             <input type="number" min="0" step="0.01" name="prix" id="prix" placeholder="Prix en USD"
                                 class="w-full border-2 border-gray-200 rounded-xl p-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition duration-200"
-                                required>
+                                required oninput="convertirPrixTempsReel('prix', 'conversion-text', 'conversion-display')">
                         </div>
                     </div>
                     <div class="mt-3 space-y-2">
-                        <div id="conversion-info" class="text-sm text-blue-600 bg-blue-50 p-3 rounded-lg">
+                        <div id="conversion-info" class="text-sm text-red-600 bg-blue-50 p-3 rounded-lg">
                             <i class="fas fa-info-circle mr-2"></i>
                             Le prix sera enregistré en <span class="font-semibold">Dollars (USD)</span>
                         </div>
@@ -329,9 +365,9 @@ $result = $conn->query("SELECT * FROM produits ORDER BY id ASC");
                                         <!-- Afficher la conversion -->
                                         <div class="text-sm text-gray-500">
                                             <?php if ($p['devise'] === 'USD'): ?>
-                                                <?= formaterPrix(convertirUsdVersFc($p['prix'])) ?> FC
+                                                <?= formaterPrix(convertirUsdVersFc($p['prix'], $tauxChange)) ?> FC
                                             <?php else: ?>
-                                                <?= formaterPrix(convertirFcVersUsd($p['prix'])) ?> $
+                                                <?= formaterPrix(convertirFcVersUsd($p['prix'], $tauxChange)) ?> $
                                             <?php endif; ?>
                                         </div>
                                     </div>
@@ -418,21 +454,10 @@ $result = $conn->query("SELECT * FROM produits ORDER BY id ASC");
                                 <i class="fas fa-layer-group mr-2 text-yellow-500"></i>
                                 Catégorie
                             </label>
-                            <select name="categorie"
-                                class="w-full border-2 border-yellow-200 rounded-xl p-3 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 transition duration-200">
-                                <option value="ciment" <?= $prod['categorie'] === 'ciment' ? 'selected' : '' ?>>Ciment</option>
-                                <option value="granulats" <?= $prod['categorie'] === 'granulats' ? 'selected' : '' ?>>Granulats
-                                </option>
-                                <option value="carrelage" <?= $prod['categorie'] === 'carrelage' ? 'selected' : '' ?>>Carrelage
-                                </option>
-                                <option value="pavage" <?= $prod['categorie'] === 'pavage' ? 'selected' : '' ?>>Pavage</option>
-                                <option value="plaque" <?= $prod['categorie'] === 'plaque' ? 'selected' : '' ?>>Plaques &
-                                    Cloisons</option>
-                                <option value="profil" <?= $prod['categorie'] === 'profil' ? 'selected' : '' ?>>Profils
-                                    Métalliques</option>
-                                <option value="quincaillerie" <?= $prod['categorie'] === 'quincaillerie' ? 'selected' : '' ?>>
-                                    Quincaillerie</option>
-                            </select>
+                            <input type="text" name="categorie" value="<?= htmlspecialchars($prod['categorie']) ?>"
+                                placeholder="Ex: Ciment, Carrelage, Quincaillerie..."
+                                class="w-full border-2 border-yellow-200 rounded-xl p-3 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 transition duration-200"
+                                required>
                         </div>
 
                         <div class="md:col-span-2">
@@ -464,7 +489,7 @@ $result = $conn->query("SELECT * FROM produits ORDER BY id ASC");
                                     <input type="number" min="0" step="0.01" name="prix" id="prix-edit"
                                         value="<?= floatval($prod['prix']) ?>"
                                         class="w-full border-2 border-yellow-200 rounded-xl p-3 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 transition duration-200"
-                                        required>
+                                        required oninput="convertirPrixTempsReel('prix-edit', 'conversion-text-edit', 'conversion-display-edit')">
                                 </div>
                             </div>
                             <div class="mt-3 space-y-2">
@@ -472,10 +497,10 @@ $result = $conn->query("SELECT * FROM produits ORDER BY id ASC");
                                     <i class="fas fa-info-circle mr-2"></i>
                                     <?php if ($prod['devise'] === 'USD'): ?>
                                         Stocké : <span class="font-semibold"><?= formaterPrix($prod['prix']) ?> $</span>
-                                        | Conversion : <?= formaterPrix(convertirUsdVersFc($prod['prix'])) ?> FC
+                                        | Conversion : <?= formaterPrix(convertirUsdVersFc($prod['prix'], $tauxChange)) ?> FC
                                     <?php else: ?>
                                         Stocké : <span class="font-semibold"><?= formaterPrix($prod['prix']) ?> FC</span>
-                                        | Conversion : <?= formaterPrix(convertirFcVersUsd($prod['prix'])) ?> $
+                                        | Conversion : <?= formaterPrix(convertirFcVersUsd($prod['prix'], $tauxChange)) ?> $
                                     <?php endif; ?>
                                 </div>
                                 <div id="conversion-display-edit"
@@ -572,6 +597,78 @@ $result = $conn->query("SELECT * FROM produits ORDER BY id ASC");
 
     <!-- Script -->
     <script>
+        // Variable globale pour stocker le taux de change
+        let TAUX_CHANGE = <?= $tauxChange ?>;
+
+        async function mettreAJourTaux() {
+            try {
+                const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+                const data = await response.json();
+
+                if (data && data.rates && data.rates.CDF) {
+                    TAUX_CHANGE = data.rates.CDF;
+                    document.getElementById('taux-actuel').textContent = 
+                        `1 USD = ${TAUX_CHANGE.toLocaleString('fr-FR')} CDF`;
+                    
+                    // Mettre à jour les conversions affichées
+                    convertirPrixTempsReel('prix', 'conversion-text', 'conversion-display');
+                    if (document.getElementById('prix-edit')) {
+                        convertirPrixTempsReel('prix-edit', 'conversion-text-edit', 'conversion-display-edit');
+                    }
+                    
+                    // Afficher un message de succès
+                    showNotification('Taux de change mis à jour avec succès', 'success');
+                }
+            } catch (error) {
+                console.error('Erreur lors de la récupération du taux:', error);
+                showNotification('Erreur lors de la mise à jour du taux', 'error');
+            }
+        }
+
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 ${
+                type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+            }`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        function convertirPrixTempsReel(inputId, textId, displayId) {
+            const prixInput = document.getElementById(inputId);
+            const devise = document.getElementById(inputId === 'prix' ? 'devise' : 'devise-edit').value;
+            const prix = parseFloat(prixInput.value);
+            const conversionText = document.getElementById(textId);
+            const conversionDisplay = document.getElementById(displayId);
+
+            if (isNaN(prix) || prix <= 0) {
+                conversionDisplay.classList.add('hidden');
+                return;
+            }
+
+            let convertedPrice;
+            let convertedCurrency;
+
+            if (devise === 'USD') {
+                convertedPrice = prix * TAUX_CHANGE;
+                convertedCurrency = 'FC';
+            } else {
+                convertedPrice = prix / TAUX_CHANGE;
+                convertedCurrency = 'USD';
+            }
+
+            conversionText.textContent = `≈ ${formatNumber(convertedPrice)} ${convertedCurrency}`;
+            conversionDisplay.classList.remove('hidden');
+        }
+
+        function formatNumber(num) {
+            return new Intl.NumberFormat('fr-FR').format(Math.round(num));
+        }
+
         function openDeleteModal(id) {
             const modal = document.getElementById("deleteModal");
             const link = document.getElementById("confirmDeleteLink");
@@ -605,27 +702,42 @@ $result = $conn->query("SELECT * FROM produits ORDER BY id ASC");
             }
         }
 
+        function updatePricePlaceholderEdit() {
+            const devise = document.getElementById('devise-edit').value;
+            const prixInput = document.getElementById('prix-edit');
+
+            if (devise === 'USD') {
+                prixInput.placeholder = 'Prix en USD';
+            } else {
+                prixInput.placeholder = 'Prix en Francs Congolais';
+            }
+
+            // Ajouter l'événement de conversion en temps réel
+            prixInput.oninput = function () {
+                convertirPrixTempsReel('prix-edit', 'conversion-text-edit', 'conversion-display-edit');
+            };
+        }
+
         // Gestion de la sélection du produit existant
         document.getElementById('produit_existant').addEventListener('change', function () {
             const produitSelect = this.value;
             const nomInput = document.getElementById('nom_produit');
-            const categorieSelect = document.querySelector('select[name="categorie"]');
+            const categorieInput = document.querySelector('input[name="categorie"]');
             const poidsInput = document.querySelector('input[name="poids"]');
 
             const produitsData = {
-                'ciment': { nom: 'Ciment', categorie: 'ciment', poids: '50kg' },
-                'gravier': { nom: 'Gravier', categorie: 'granulats', poids: '8-12mm' },
-                'pave': { nom: 'Pavé', categorie: 'pavage', poids: '10x20cm' },
-                'carreaux': { nom: 'Carreaux', categorie: 'carrelage', poids: '30x30cm' },
-                'gyproc': { nom: 'gyproc', categorie: 'plaque', poids: '12.5mm' },
-                'omega': { nom: 'Omega', categorie: 'profil', poids: '6m' },
-                'chanel': { nom: 'Chanel', categorie: 'profil', poids: '6m' }
+                'ciment': { nom: 'Ciment' },
+                'bloc-ciment': { nom: 'Bloc-ciment' },
+                'gravier': { nom: 'Gravier' },
+                'pave': { nom: 'Pavé' },
+                'carreaux': { nom: 'Carreaux' },
+                'gyproc': { nom: 'Gyproc' },
+                'omega': { nom: 'Omega' },
+                'chanel': { nom: 'Chanel' }
             };
 
             if (produitSelect && produitsData[produitSelect]) {
                 nomInput.value = produitsData[produitSelect].nom;
-                categorieSelect.value = produitsData[produitSelect].categorie;
-                poidsInput.value = produitsData[produitSelect].poids;
                 nomInput.focus();
             }
         });
@@ -641,85 +753,32 @@ $result = $conn->query("SELECT * FROM produits ORDER BY id ASC");
             }
         });
 
-        // Conversion en temps réel
-        const TAUX_CHANGE = 2500; // 1 USD = 2,500 FC
-
-        function convertPrice(inputId, textId, displayId) {
-            const prixInput = document.getElementById(inputId);
-            const devise = document.getElementById(inputId === 'prix' ? 'devise' : 'devise-edit').value;
-            const prix = parseFloat(prixInput.value);
-            const conversionText = document.getElementById(textId);
-            const conversionDisplay = document.getElementById(displayId);
-
-            if (isNaN(prix) || prix <= 0) {
-                conversionDisplay.classList.add('hidden');
-                return;
-            }
-
-            let convertedPrice;
-            let convertedCurrency;
-
-            if (devise === 'USD') {
-                convertedPrice = prix * TAUX_CHANGE;
-                convertedCurrency = 'FC';
-            } else {
-                convertedPrice = prix / TAUX_CHANGE;
-                convertedCurrency = 'USD';
-            }
-
-            conversionText.textContent = `≈ ${formatNumber(convertedPrice)} ${convertedCurrency}`;
-            conversionDisplay.classList.remove('hidden');
-        }
-
-        function formatNumber(num) {
-            return new Intl.NumberFormat('fr-FR').format(Math.round(num));
-        }
-
-        function updatePricePlaceholderEdit() {
-            const devise = document.getElementById('devise-edit').value;
-            const prixInput = document.getElementById('prix-edit');
-
-            if (devise === 'USD') {
-                prixInput.placeholder = 'Prix en USD';
-            } else {
-                prixInput.placeholder = 'Prix en Francs Congolais';
-            }
-
-            // Ajouter l'événement de conversion en temps réel
-            prixInput.oninput = function () {
-                convertPrice('prix-edit', 'conversion-text-edit', 'conversion-display-edit');
-            };
-        }
-
         // Initialiser les événements au chargement de la page
         document.addEventListener('DOMContentLoaded', function () {
             updatePricePlaceholder();
             if (document.getElementById('devise-edit')) {
                 updatePricePlaceholderEdit();
             }
+            
+            // Mettre à jour le taux toutes les 5 minutes
+            setInterval(mettreAJourTaux, 5 * 60 * 1000);
         });
     </script>
 
-
-
+    <!-- Le reste du code JavaScript pour l'animation de chargement reste inchangé -->
     <script>
-
         let a = 0;
         let masque = document.createElement('div');
         let cercle = document.createElement('div');
-
         let angle = 0;
 
         window.addEventListener('load', () => {
             a = 1;
-
-            // Le cercle commence à tourner immédiatement
             anime = setInterval(() => {
-                angle += 10; // Vitesse de rotation du cercle
+                angle += 10;
                 cercle.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
             }, 20);
 
-            // Après 1 seconde, on arrête l'animation et on fait disparaître le masque
             setTimeout(() => {
                 clearInterval(anime);
                 masque.style.opacity = '0';
@@ -730,7 +789,6 @@ $result = $conn->query("SELECT * FROM produits ORDER BY id ASC");
             }, 1500);
         });
 
-        // Création du masque
         masque.style.width = '100%';
         masque.style.height = '100vh';
         masque.style.zIndex = 100000;
@@ -745,10 +803,9 @@ $result = $conn->query("SELECT * FROM produits ORDER BY id ASC");
         masque.style.alignItems = 'center';
         document.body.appendChild(masque);
 
-        // Création du cercle (réduit)
-        cercle.style.width = '40px';  // Au lieu de 15vh
-        cercle.style.height = '40px'; // Au lieu de 15vh
-        cercle.style.border = '2px solid #f3f3f3'; // Bordure plus fine
+        cercle.style.width = '40px';
+        cercle.style.height = '40px';
+        cercle.style.border = '2px solid #f3f3f3';
         cercle.style.borderTop = '2px solid #2F1C6A';
         cercle.style.borderRadius = '50%';
         cercle.style.position = 'absolute';
@@ -759,10 +816,7 @@ $result = $conn->query("SELECT * FROM produits ORDER BY id ASC");
         cercle.style.zIndex = '1';
         masque.appendChild(cercle);
 
-        // Variable de l'animation
         let anime;
-
     </script>
 </body>
-
 </html>

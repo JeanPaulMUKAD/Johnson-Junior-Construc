@@ -34,12 +34,29 @@ if (isset($_GET['toggle'])) {
     }
 }
 
+// Recherche des clients
+$search = isset($_GET['search']) ? trim($_GET['search']) : '';
+$whereClause = "WHERE role = 'client'";
+
+if (!empty($search)) {
+    $whereClause .= " AND nom LIKE ?";
+}
+
+// Récupérer les clients avec recherche
+$sql = "SELECT * FROM utilisateurs $whereClause ORDER BY id ASC";
+$stmt = $conn->prepare($sql);
+
+if (!empty($search)) {
+    $searchTerm = "%$search%";
+    $stmt->bind_param("s", $searchTerm);
+}
+
+$stmt->execute();
+$result = $stmt->get_result();
+
 // Message de confirmation
 $message = isset($_SESSION['message']) ? $_SESSION['message'] : "";
 unset($_SESSION['message']);
-
-// Récupérer tous les clients
-$result = $conn->query("SELECT * FROM utilisateurs WHERE role = 'client' ORDER BY id ASC");
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -108,13 +125,29 @@ $result = $conn->query("SELECT * FROM utilisateurs WHERE role = 'client' ORDER B
                 <div class="flex items-center justify-between">
                     <h2 class="text-xl font-semibold text-gray-800">Liste des clients</h2>
                     <div class="flex items-center gap-3">
-                        <div class="relative">
+                        <form method="GET" action="clients.php" class="relative">
                             <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                            <input type="text" placeholder="Rechercher un client..." 
+                            <input type="text" name="search" placeholder="Rechercher un client..." 
+                                   value="<?= htmlspecialchars($search) ?>"
                                    class="pl-10 pr-4 py-2 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
-                        </div>
+                            <?php if (!empty($search)): ?>
+                                <a href="clients.php" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition">
+                                    <i class="fas fa-times"></i>
+                                </a>
+                            <?php endif; ?>
+                        </form>
                     </div>
                 </div>
+                <?php if (!empty($search)): ?>
+                    <div class="mt-2 text-sm text-blue-600 flex items-center gap-2">
+                        <i class="fas fa-info-circle"></i>
+                        Résultats de recherche pour : "<?= htmlspecialchars($search) ?>"
+                        <a href="clients.php" class="text-red-500 hover:text-red-700 ml-2 flex items-center gap-1">
+                            <i class="fas fa-times"></i>
+                            Effacer
+                        </a>
+                    </div>
+                <?php endif; ?>
             </div>
 
             <div class="overflow-x-auto">
@@ -236,8 +269,13 @@ $result = $conn->query("SELECT * FROM utilisateurs WHERE role = 'client' ORDER B
                                             <i class="fas fa-users text-3xl text-gray-400"></i>
                                         </div>
                                         <div>
-                                            <p class="text-lg font-medium">Aucun client enregistré</p>
-                                            <p class="text-sm">Les clients apparaîtront ici une fois inscrits</p>
+                                            <?php if (!empty($search)): ?>
+                                                <p class="text-lg font-medium">Aucun client trouvé</p>
+                                                <p class="text-sm">Aucun résultat pour "<?= htmlspecialchars($search) ?>"</p>
+                                            <?php else: ?>
+                                                <p class="text-lg font-medium">Aucun client enregistré</p>
+                                                <p class="text-sm">Les clients apparaîtront ici une fois inscrits</p>
+                                            <?php endif; ?>
                                         </div>
                                     </div>
                                 </td>
@@ -359,6 +397,18 @@ $result = $conn->query("SELECT * FROM utilisateurs WHERE role = 'client' ORDER B
                 closeToggleModal();
             }
         });
+
+        // Recherche en temps réel (optionnel)
+        document.querySelector('input[name="search"]').addEventListener('input', function(e) {
+            // Si vous voulez une recherche en temps réel sans submit, décommentez cette partie
+            // et ajoutez un délai pour éviter trop de requêtes
+            /*
+            clearTimeout(this.searchTimeout);
+            this.searchTimeout = setTimeout(() => {
+                this.form.submit();
+            }, 500);
+            */
+        });
     </script>
 
     <style>
@@ -387,14 +437,11 @@ $result = $conn->query("SELECT * FROM utilisateurs WHERE role = 'client' ORDER B
         }
     </style>
 
-
 <!-- SEARCH LOGO -->
 <script>
-
     let a = 0;
     let masque = document.createElement('div');
     let cercle = document.createElement('div');
-
     let angle = 0;
 
     window.addEventListener('load', () => {
@@ -448,8 +495,6 @@ $result = $conn->query("SELECT * FROM utilisateurs WHERE role = 'client' ORDER B
 
     // Variable de l'animation
     let anime;
-
 </script>
 </body>
-
 </html>

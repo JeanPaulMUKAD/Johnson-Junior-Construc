@@ -1,3 +1,4 @@
+<?php declare(strict_types=1); ?>
 <!-- sidebar.php -->
 <!-- Importation Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -41,7 +42,7 @@
 
         <!-- Pied de la sidebar -->
         <div class="p-4 border-t border-blue-800">
-            <a href="deconnexion.php"
+            <a href="/admin/connexion/logout.php"
                 class="flex items-center justify-center gap-2 py-2 px-4 rounded text-red-500 hover:bg-red-700 hover:text-white transition">
                 <i class="fa-solid fa-right-from-bracket"></i>
                 <span>Déconnexion</span>
