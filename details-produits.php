@@ -91,6 +91,274 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
+// Base de données des pièces disponibles par caractéristique
+$pieces_disponibles = [
+    'Halls de production sur mesure' => [
+        'Hangar industriel standard - 500m²',
+        'Hangar avec hauteur sous plafond 8m - 750m²',
+        'Hall de production modulaire - 1000m²',
+        'Espace production avec bureaux intégrés - 600m²'
+    ],
+    'Zones de stockage optimisées' => [
+        'Entrepôt racking dynamique - 300m²',
+        'Zone stockage palettes - 400m²',
+        'Cellule logistique réfrigérée - 200m²',
+        'Plateforme de distribution - 800m²'
+    ],
+    'Maisons individuelles clé en main' => [
+        'Villa 4 pièces - 120m²',
+        'Maison 5 pièces avec jardin - 150m²',
+        'Pavillon 3 chambres - 90m²',
+        'Maison contemporaine - 180m²'
+    ],
+    'Appartements modernes et fonctionnels' => [
+        'Studio meublé - 25m²',
+        'Appartement T2 - 45m²',
+        'Duplex T3 - 75m²',
+        'Appartement standing T4 - 95m²'
+    ],
+    'Villas de standing personnalisées' => [
+        'Villa prestige 6 pièces - 250m²',
+        'Maison maître avec piscine - 300m²',
+        'Villa contemporaine - 200m²',
+        'Propriété de charme - 350m²'
+    ],
+    'Locaux commerciaux sur mesure' => [
+        'Boutique vitrine - 80m²',
+        'Espace commercial centre-ville - 120m²',
+        'Local activité - 60m²',
+        'Showroom professionnel - 200m²'
+    ],
+    'Centres commerciaux' => [
+        'Galerie marchande - 5000m²',
+        'Centre commercial de proximité - 2000m²',
+        'Espace retail - 1500m²'
+    ],
+    'Showrooms et espaces d\'exposition' => [
+        'Showroom automobile - 800m²',
+        'Espace exposition meubles - 600m²',
+        'Galerie d\'art - 300m²'
+    ],
+    'Infrastructures routières et ferroviaires' => [
+        'Pont routier 4 voies',
+        'Échangeur autoroutier',
+        'Ligne ferroviaire 10km',
+        'Tunnel routier 2km'
+    ],
+    'Ouvrages d\'art et ponts' => [
+        'Pont suspendu 500m',
+        'Viaduc autoroutier',
+        'Passerelle piétonne',
+        'Pont en arc 200m'
+    ],
+    'Travaux hydrauliques' => [
+        'Station d\'épuration',
+        'Réseau d\'irrigation',
+        'Barrage hydroélectrique',
+        'Canal de navigation'
+    ],
+    'Conception architecturale innovante' => [
+        'Étude de faisabilité',
+        'Plans d\'exécution',
+        'Maquette 3D numérique',
+        'Dossier de permis de construire'
+    ],
+    'Plans et études techniques' => [
+        'Plans architecturaux',
+        'Étude structure béton',
+        'Calculs de stabilité',
+        'Détails d\'exécution'
+    ],
+    'Suivi de chantier personnalisé' => [
+        'Coordination de chantier',
+        'Contrôle qualité mensuel',
+        'Reporting hebdomadaire',
+        'Réunions de chantier'
+    ],
+    'Installation photovoltaïque' => [
+        'Kit solaire 3kW - Maison individuelle',
+        'Centrale 10kW - PME',
+        'Installation industrielle 50kW',
+        'Système autonome avec batterie'
+    ],
+    'Maintenance préventive et curative' => [
+        'Contrat maintenance annuel',
+        'Intervention d\'urgence',
+        'Révision semestrielle',
+        'Diagnostic complet'
+    ],
+    'Dépannage urgent 24h/24' => [
+        'Intervention express 2h',
+        'Service weekends et fériés',
+        'Assistance téléphonique',
+        'Déplacement urgent'
+    ],
+    'Garde et sécurité' => [
+        'Agent de sécurité résidentiel',
+        'Surveillance électronique',
+        'Gardiens de propriété',
+        'Service de rondes'
+    ],
+    'Services domestiques complets' => [
+        'Ménage hebdomadaire - 3h',
+        'Ménage mensuel complet - 6h',
+        'Nettoyage printanier',
+        'Entretien régulier'
+    ],
+    'Coursier et livraison' => [
+        'Livraison express intra-muros',
+        'Service coursier à vélo',
+        'Livraison colis jusqu\'à 25kg',
+        'Course quotidienne'
+    ],
+    'Jardinage et entretien' => [
+        'Tonte pelouse - jusqu\'à 500m²',
+        'Taille haies et arbustes',
+        'Entretien massifs fleuris',
+        'Élagage arbres'
+    ],
+    'Garde d\'enfants' => [
+        'Baby-sitting occasionnel',
+        'Garde régulière après école',
+        'Nounou à domicile',
+        'Garde weekends'
+    ],
+    'Parcelles viabilisées' => [
+        'Parcelle 500m² - Viabilisée',
+        'Terrain 1000m² - Lotissement',
+        'Parcelle constructible 750m²',
+        'Terrain avec vue - 600m²'
+    ],
+    'Concessions sécurisées' => [
+        'Concession commerciale 10 ans',
+        'Bail emphytéotique 30 ans',
+        'Droit de superficie',
+        'Location-gérance'
+    ],
+    'Portes sur mesure' => [
+        'Porte blindée standard',
+        'Porte d\'entrée design',
+        'Porte coupe-feu',
+        'Porte acoustique'
+    ],
+    'Fenêtres métalliques' => [
+        'Fenêtre PVC double vitrage',
+        'Baie vitrée aluminium',
+        'Fenêtre coulissante',
+        'Véranda sur mesure'
+    ],
+    'Barrières de sécurité' => [
+        'Barrière automatique 4m',
+        'Portail battant motorisé',
+        'Grille de sécurité',
+        'Barrière levante'
+    ],
+    'Charpentes industrielles' => [
+        'Charpente métallique 20x50m',
+        'Structure acier galvanisé',
+        'Ossature bâtiment industriel',
+        'Charpente atelier'
+    ],
+    'Nettoyage de bâtiments' => [
+        'Nettoyage fin de chantier',
+        'Entretien immeuble bureaux',
+        'Nettoyage vitres hautes',
+        'Décapage sols industriels'
+    ],
+    'Entretien industriel' => [
+        'Nettoyage usine 2000m²',
+        'Dégraissage machines',
+        'Nettoyage atelier',
+        'Entretien zones techniques'
+    ],
+    'Nettoyage de bureaux' => [
+        'Nettoyage quotidien bureaux',
+        'Entretien espaces communs',
+        'Nettoyage sanitaires',
+        'Aspiration moquettes'
+    ],
+    'Équipements professionnels' => [
+        'Matériel nettoyage industriel',
+        'Aspirateurs professionnels',
+        'Autolaveuses sols',
+        'Équipement sécurité'
+    ],
+    'Appartements meublés' => [
+        'Studio meublé centre-ville',
+        'Appartement T2 équipé',
+        'Duplex standing meublé',
+        'Loft contemporain'
+    ],
+    'Locaux commerciaux' => [
+        'Local boutique 60m²',
+        'Espace commercial 120m²',
+        'Bureau-commerce 80m²',
+        'Local artisanal 200m²'
+    ],
+    'Maisons commerciales' => [
+        'Maison de ville commerciale',
+        'Pavillon avec local professionnel',
+        'Immeuble mixte habitation/commerce',
+        'Propriété avec activité'
+    ],
+    'Décoration de la dot et véhicule' => [
+        'Kit décoration complète véhicule marié',
+        'Décoration florale pour dot',
+        'Rubans et accessoires premium',
+        'Décoration personnalisée selon thème'
+    ],
+    'Protocolat et organisation' => [
+        'Coordinateur de mariage dédié',
+        'Planning détaillé de la cérémonie',
+        'Gestion des invités et placement',
+        'Coordination des prestataires'
+    ],
+    'Animation et cavalier' => [
+        'DJ professionnel avec matériel complet',
+        'Animateur de cérémonie',
+        'Cavalier pour entrée mariés',
+        'Animation musicale sur mesure'
+    ],
+    'Conception et impression des invitations' => [
+        'Invitation design personnalisé',
+        'Cartes de remerciement',
+        'Programme de cérémonie',
+        'Faire-part luxe avec enveloppes'
+    ],
+    'Accompagnement cadeau' => [
+        'Création de liste de mariage',
+        'Service de collecte des cadeaux',
+        'Emballage cadeaux premium',
+        'Livraison des cadeaux à domicile'
+    ],
+
+    // Pièces pour Peinture
+    'Peinture de maison intérieure et extérieure' => [
+        'Peinture acrylique murale intérieure',
+        'Peinture façade extérieure hydrofuge',
+        'Peinture plafonds et moulures',
+        'Préparation et ponçage des surfaces'
+    ],
+    'Peinture de clôture et portails' => [
+        'Peinture anticorrosion pour métal',
+        'Peinture bois extérieur durable',
+        'Protection anti-UV et intempéries',
+        'Finition mate, satinée ou brillante'
+    ],
+    'Décoration murale et effets spéciaux' => [
+        'Faux-finis et patines',
+        'Peinture effets métallisés',
+        'Décoration trompe-l\'œil',
+        'Stries et motifs personnalisés'
+    ],
+    'Rénovation et rafraîchissement' => [
+        'Nettoyage et préparation surfaces',
+        'Rebouchage fissures et imperfections',
+        'Application primaire d\'accrochage',
+        'Finition professionnelle 2 couches'
+    ]
+];
+
 $services = [
     1 => [
         'nom' => 'Bâtiment Industriel',
@@ -284,6 +552,44 @@ $services = [
             'Maisons commerciales',
             'Contrats flexibles'
         ]
+        ],
+
+     12 => [
+        'nom' => 'Services de Mariage',
+        'description' => 'Organisation complète de votre mariage avec une équipe professionnelle pour un jour inoubliable.',
+        'prix' => 'Sur devis',
+        'images' => [
+            'main' => 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+            'thumbnails' => [
+                'https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
+                'https://images.unsplash.com/photo-1447877085163-3cce903855cd?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60'
+            ]
+        ],
+        'caracteristiques' => [
+            'Décoration de la dot et véhicule',
+            'Protocolat et organisation',
+            'Animation et cavalier',
+            'Conception et impression des invitations',
+            'Accompagnement cadeau'
+        ]
+    ],
+    13 => [
+        'nom' => 'Services de Peinture',
+        'description' => 'Services professionnels de peinture pour embellir et protéger vos espaces intérieurs et extérieurs.',
+        'prix' => 'Sur devis',
+        'images' => [
+            'main' => 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+            'thumbnails' => [
+                'https://images.unsplash.com/photo-1566195992011-5f6b21e539aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
+                'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60'
+            ]
+        ],
+        'caracteristiques' => [
+            'Peinture de maison intérieure et extérieure',
+            'Peinture de clôture et portails',
+            'Décoration murale et effets spéciaux',
+            'Rénovation et rafraîchissement'
+        ]
     ]
 ];
 
@@ -358,6 +664,81 @@ $service_actuel = $services[$_GET['id'] ?? 1] ?? $services[1];
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
+        }
+
+        /* Styles pour les caractéristiques déroulantes */
+        .caracteristique-item {
+            cursor: pointer;
+            padding: 12px 16px;
+            margin: 8px 0;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #811313;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .caracteristique-item:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .caracteristique-item.active {
+            background: #e3f2fd;
+            border-left-color: #053d36;
+        }
+
+        .caracteristique-item .icon {
+            transition: transform 0.3s ease;
+        }
+
+        .caracteristique-item.active .icon {
+            transform: rotate(180deg);
+        }
+
+        .pieces-disponibles {
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            background: white;
+            border-radius: 8px;
+            margin-top: 8px;
+        }
+
+        .pieces-disponibles.show {
+            max-height: 500px;
+            padding: 16px;
+            border: 1px solid #e9ecef;
+        }
+
+        .piece-item {
+            padding: 8px 12px;
+            margin: 4px 0;
+            background: #f8f9fa;
+            border-radius: 6px;
+            border-left: 3px solid #053d36;
+            transition: all 0.2s ease;
+        }
+
+        .piece-item:hover {
+            background: #e9ecef;
+            transform: translateX(3px);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fadeIn {
+            animation: fadeIn 0.4s ease-out;
         }
     </style>
 </head>
@@ -587,38 +968,59 @@ $service_actuel = $services[$_GET['id'] ?? 1] ?? $services[1];
                     </div>
 
                     <!-- Description -->
-                    <p class="text-gray-700 text-lg leading-relaxed mb-8">
+                    <p class="text-gray-700 text-[14px] leading-relaxed mb-8">
                         <?= $service_actuel['description'] ?>
                     </p>
 
-                    <!-- Caractéristiques -->
+                    <!-- Caractéristiques avec pièces déroulantes -->
                     <div class="mb-8">
                         <h3 class="text-xl font-semibold text-gray-900 mb-4">Caractéristiques principales</h3>
-                        <ul class="space-y-3">
-                            <?php foreach ($service_actuel['caracteristiques'] as $caracteristique): ?>
-                                <li class="flex items-center space-x-3">
-                                    <div class="feature-icon">
-                                        <i class="ri-check-line text-[#053d36] text-lg"></i>
+                        <div class="space-y-3" id="caracteristiques-container">
+                            <?php foreach ($service_actuel['caracteristiques'] as $index => $caracteristique): ?>
+                                <div class="caracteristique-item" data-index="<?= $index ?>">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center space-x-3">
+                                            <div class="feature-icon">
+                                                <i class="ri-check-line text-[#053d36] text-lg"></i>
+                                            </div>
+                                            <span class="text-gray-700 font-medium"><?= $caracteristique ?></span>
+                                        </div>
+                                        <i class="ri-arrow-down-s-line icon text-gray-500"></i>
                                     </div>
-                                    <span class="text-gray-700"><?= $caracteristique ?></span>
-                                </li>
+
+                                    <!-- Section des pièces disponibles -->
+                                    <?php if (isset($pieces_disponibles[$caracteristique])): ?>
+                                        <div class="pieces-disponibles" id="pieces-<?= $index ?>">
+                                            <h4 class="font-semibold text-gray-800 mb-3 text-sm">Pièces disponibles :</h4>
+                                            <div class="space-y-2">
+                                                <?php foreach ($pieces_disponibles[$caracteristique] as $piece): ?>
+                                                    <div class="piece-item text-[14px]">
+                                                        <?= htmlspecialchars($piece) ?>
+                                                    </div>
+                                                <?php endforeach; ?>
+                                            </div>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
                             <?php endforeach; ?>
-                        </ul>
+                        </div>
                     </div>
 
                     <!-- Actions -->
                     <div class="space-y-4">
                         <div class="flex flex-col sm:flex-row gap-4">
-                            <button
-                                class="flex-1 bg-[#811313] hover:bg-[#053d36] text-white py-4 px-6 rounded-xl font-semibold transition duration-300 flex items-center justify-center space-x-2">
+                            <a href="mailto:johnson31@outlook.fr?subject=Demande de rendez-vous&body=Bonjour, je souhaite prendre rendez-vous pour le service suivant : <?= $service_actuel['nom'] ?>"
+                                target="_blank"
+                                class="flex-1 bg-[#811313] hover:bg-[#053d36] text-white py-4 px-6 rounded-xl font-semibold transition duration-300 flex items-center justify-center space-x-2 no-underline">
                                 <i class="ri-calendar-line"></i>
                                 <span>Prendre rendez-vous</span>
-                            </button>
-                            <button
-                                class="flex-1 bg-[#053d36] hover:bg-[#811313] text-white py-4 px-6 rounded-xl font-semibold transition duration-300 flex items-center justify-center space-x-2">
+                            </a>
+                            <a href="https://wa.me/243851653923?text=Bonjour, je suis intéressé(e) par le service suivant : <?= urlencode($service_actuel['nom']) ?>"
+                                target="_blank"
+                                class="flex-1 bg-[#053d36] hover:bg-[#811313] text-white py-4 px-6 rounded-xl font-semibold transition duration-300 flex items-center justify-center space-x-2 no-underline">
                                 <i class="ri-phone-line"></i>
                                 <span>Nous contacter</span>
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -659,8 +1061,7 @@ $service_actuel = $services[$_GET['id'] ?? 1] ?? $services[1];
 
         <!--======================= Footer Original ============================-->
         <footer class="footer">
-            <div
-                class="d-grid footer__wrapper container p-6">
+            <div class="d-grid footer__wrapper container p-6">
                 <div class="footer__content">
                     <h4 class="footer__brand"><span>Johnson</span> Construction</h4>
                     <p class="footer__description">Des constructions durables, réalisées avec professionnalisme et
@@ -749,7 +1150,6 @@ $service_actuel = $services[$_GET['id'] ?? 1] ?? $services[1];
         <!--=================== Search JS ====================-->
         <script src="assets/js/search.js"> </script>
 
-
         <!-- Modal Panier -->
         <div id="panierModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full"
             style="z-index:1000;">
@@ -783,29 +1183,37 @@ $service_actuel = $services[$_GET['id'] ?? 1] ?? $services[1];
             </div>
         </div>
 
-
-
-
-        <!-- Animation fadeIn -->
-        <style>
-            @keyframes fadeIn {
-                from {
-                    opacity: 0;
-                    transform: translateY(-5px);
-                }
-
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-
-            .animate-fadeIn {
-                animation: fadeIn 0.4s ease-out;
-            }
-        </style>
-
         <script>
+            // Gestion des caractéristiques déroulantes
+            document.querySelectorAll('.caracteristique-item').forEach(item => {
+                item.addEventListener('click', function () {
+                    const piecesSection = this.querySelector('.pieces-disponibles');
+                    if (piecesSection) {
+                        const isActive = this.classList.contains('active');
+
+                        // Fermer toutes les autres sections
+                        document.querySelectorAll('.caracteristique-item').forEach(otherItem => {
+                            if (otherItem !== this) {
+                                otherItem.classList.remove('active');
+                                const otherPieces = otherItem.querySelector('.pieces-disponibles');
+                                if (otherPieces) {
+                                    otherPieces.classList.remove('show');
+                                }
+                            }
+                        });
+
+                        // Basculer l'état actuel
+                        if (!isActive) {
+                            this.classList.add('active');
+                            piecesSection.classList.add('show');
+                        } else {
+                            this.classList.remove('active');
+                            piecesSection.classList.remove('show');
+                        }
+                    }
+                });
+            });
+
             // Gestion des miniatures
             document.querySelectorAll('.thumbnail').forEach(thumb => {
                 thumb.addEventListener('click', function () {
@@ -860,11 +1268,9 @@ $service_actuel = $services[$_GET['id'] ?? 1] ?? $services[1];
 
     <!-- SEARCH LOGO -->
     <script>
-
         let a = 0;
         let masque = document.createElement('div');
         let cercle = document.createElement('div');
-
         let angle = 0;
 
         window.addEventListener('load', () => {
@@ -918,10 +1324,7 @@ $service_actuel = $services[$_GET['id'] ?? 1] ?? $services[1];
 
         // Variable de l'animation
         let anime;
-
     </script>
-
-
 </body>
 
 </html>

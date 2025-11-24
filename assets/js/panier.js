@@ -41,16 +41,17 @@
                 total += sousTotal;
                 
                 const imagePath = getImagePath(item.image);
-                const nomEchappe = item.nom.replace(/'/g, "\\'").replace(/"/g, '\\"');
+                // Échappement sécurisé pour les noms de produits
+                const nomEchappe = item.nom.replace(/'/g, "\\'").replace(/"/g, '\\"').replace(/`/g, '\\`');
                 
                 contenu.innerHTML += `
                     <div class="flex items-center justify-between mb-4 border-b pb-4">
                         <div class="flex items-center space-x-3 flex-1">
                             ${imagePath ? `
-                                <img src="${imagePath}" alt="${item.nom}" 
+                                <img src="${imagePath}" alt="${item.nom.replace(/"/g, '&quot;')}" 
                                      class="w-16 h-16 object-cover rounded border"
-                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                                <div class="w-16 h-16 bg-gray-200 rounded border flex items-center justify-center hidden">
+                                     onerror="this.style.display='none'">
+                                <div class="w-16 h-16 bg-gray-200 rounded border flex items-center justify-center" style="display: none;">
                                     <i class="ri-image-line text-gray-400"></i>
                                 </div>
                             ` : `
@@ -98,14 +99,51 @@
         miseAJourCompteur();
     }
 
+    function showStyledAlert(message, type = 'warning') {
+        // Supprimer les alertes existantes
+        const existingAlerts = document.querySelectorAll('.custom-alert');
+        existingAlerts.forEach(alert => alert.remove());
+
+        const alert = document.createElement('div');
+        const styles = {
+            warning: 'bg-yellow-50 border-yellow-400 text-yellow-800',
+            error: 'bg-red-50 border-red-400 text-red-800',
+            info: 'bg-blue-50 border-blue-400 text-blue-800'
+        };
+
+        alert.className = `custom-alert fixed top-4 left-1/2 transform -translate-x-1/2 ${styles[type]} border px-6 py-4 rounded-lg shadow-lg z-50 flex items-center space-x-3 min-w-80 max-w-md`;
+        
+        const icon = type === 'warning' ? 'ri-alert-line' : 
+                    type === 'error' ? 'ri-close-circle-line' : 
+                    'ri-information-line';
+        
+        alert.innerHTML = `
+            <i class="${icon} text-xl"></i>
+            <span class="flex-1 font-medium">${message}</span>
+            <button onclick="this.parentElement.remove()" class="text-gray-500 hover:text-gray-700">
+                <i class="ri-close-line"></i>
+            </button>
+        `;
+
+        document.body.appendChild(alert);
+
+        // Auto-suppression après 5 secondes
+        setTimeout(() => {
+            if (document.body.contains(alert)) {
+                alert.remove();
+            }
+        }, 5000);
+    }
+
     function ajouterAuPanier(nom, prix, devise, poids, quantiteMax, image) {
-        <?php if (!isset($_SESSION['user_id'])): ?>
-            alert('Veuillez vous connecter pour ajouter des produits au panier.');
+        // Vérification de connexion utilisant la variable globale
+        if (typeof estConnecte === 'undefined' || !estConnecte) {
+            showStyledAlert('Veuillez vous connecter pour ajouter des produits au panier.', 'warning');
             return;
-        <?php endif; ?>
+        }
 
         if (quantiteMax <= 0) {
-            alert('Ce produit est actuellement en rupture de stock.');
+            showStyledAlert('Ce produit est actuellement en rupture de stock.', 'error');
             return;
         }
 
@@ -114,7 +152,7 @@
             if (produit.quantite < produit.quantiteMax) {
                 produit.quantite++;
             } else {
-                alert('Quantité maximum atteinte pour ce produit');
+                showStyledAlert('Quantité maximum atteinte pour ce produit', 'warning');
                 return;
             }
         } else {
@@ -129,7 +167,7 @@
             });
         }
         mettreAJourPanier();
-        showNotification('Produit ajouté au panier avec succès !');
+        showNotification('Produit ajouté au panier avec succès !', 'success');
     }
 
     function changerQuantite(nom, nouvelleQuantite) {
@@ -140,8 +178,9 @@
         if (q >= 1 && q <= produit.quantiteMax) {
             produit.quantite = q;
             mettreAJourPanier();
+            showNotification('Quantité mise à jour', 'info');
         } else {
-            alert('Quantité invalide (1 - ' + produit.quantiteMax + ')');
+            showStyledAlert(`Quantité invalide. Veuillez choisir entre 1 et ${produit.quantiteMax}.`, 'warning');
             setTimeout(() => mettreAJourPanier(), 100);
         }
     }
@@ -149,20 +188,44 @@
     function supprimerDuPanier(nom) {
         state.panier = state.panier.filter(p => p.nom !== nom);
         mettreAJourPanier();
-        showNotification('Produit retiré du panier');
+        showNotification('Produit retiré du panier', 'info');
     }
 
-    function showNotification(message) {
+    function showNotification(message, type = 'success') {
+        // Supprimer les notifications existantes
+        const existingNotifications = document.querySelectorAll('.custom-notification');
+        existingNotifications.forEach(notif => notif.remove());
+
         const notification = document.createElement('div');
-        notification.className = 'fixed top-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300';
-        notification.textContent = message;
+        const styles = {
+            success: 'bg-green-600 text-white',
+            error: 'bg-red-600 text-white',
+            warning: 'bg-yellow-600 text-white',
+            info: 'bg-blue-600 text-white'
+        };
+
+        const icons = {
+            success: 'ri-checkbox-circle-line',
+            error: 'ri-close-circle-line',
+            warning: 'ri-alert-line',
+            info: 'ri-information-line'
+        };
+
+        notification.className = `custom-notification fixed top-4 right-4 ${styles[type]} px-6 py-3 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300 flex items-center space-x-2`;
+        
+        notification.innerHTML = `
+            <i class="${icons[type]}"></i>
+            <span>${message}</span>
+        `;
 
         document.body.appendChild(notification);
 
+        // Animation d'entrée
         setTimeout(() => {
             notification.classList.remove('translate-x-full');
         }, 100);
 
+        // Animation de sortie après 3 secondes
         setTimeout(() => {
             notification.classList.add('translate-x-full');
             setTimeout(() => {
@@ -171,6 +234,54 @@
                 }
             }, 300);
         }, 3000);
+    }
+
+    function showPanierMessage(message, type = 'error') {
+        const messageContainer = document.getElementById('panierMessage');
+        if (!messageContainer) return;
+
+        // Supprimer les messages existants
+        messageContainer.innerHTML = '';
+
+        const styles = {
+            error: 'bg-red-100 border-red-300 text-red-700',
+            warning: 'bg-yellow-100 border-yellow-300 text-yellow-700',
+            success: 'bg-green-100 border-green-300 text-green-700',
+            info: 'bg-blue-100 border-blue-300 text-blue-700'
+        };
+
+        const icons = {
+            error: 'ri-error-warning-line',
+            warning: 'ri-alert-line',
+            success: 'ri-checkbox-circle-line',
+            info: 'ri-information-line'
+        };
+
+        const messageEl = document.createElement('div');
+        messageEl.className = `mt-3 p-4 rounded-lg border ${styles[type]} flex items-center space-x-3 animate-fade-in`;
+        
+        messageEl.innerHTML = `
+            <i class="${icons[type]} text-xl"></i>
+            <div class="flex-1">
+                <p class="font-medium">${message}</p>
+            </div>
+            <button onclick="this.parentElement.remove()" class="text-gray-500 hover:text-gray-700 transition-colors">
+                <i class="ri-close-line"></i>
+            </button>
+        `;
+
+        messageContainer.appendChild(messageEl);
+
+        // Auto-suppression après 5 secondes
+        setTimeout(() => {
+            if (messageEl.parentNode) {
+                messageEl.style.opacity = '0';
+                messageEl.style.transition = 'opacity 0.3s ease';
+                setTimeout(() => {
+                    if (messageEl.parentNode) messageEl.remove();
+                }, 300);
+            }
+        }, 5000);
     }
 
     function ouvrirPanier() {
@@ -195,20 +306,17 @@
     window.supprimerDuPanier = supprimerDuPanier;
     window.ouvrirPanier = ouvrirPanier;
     window.fermerPanier = fermerPanier;
+    window.showStyledAlert = showStyledAlert;
+    window.showPanierMessage = showPanierMessage;
 
     document.addEventListener('DOMContentLoaded', function(){
+        console.log('Panier.js chargé - Utilisateur connecté:', estConnecte);
+
         // Récupération des éléments
         const shopIcon = document.querySelector('.shop__icon');
         const fermerBtn = document.getElementById('fermerPanierBtn');
         const continuerAchatsBtn = document.getElementById('continuerAchatsBtn');
         const commanderBtn = document.getElementById('btnCommander');
-
-        console.log('Éléments trouvés:', {
-            shopIcon: !!shopIcon,
-            fermerBtn: !!fermerBtn,
-            continuerAchatsBtn: !!continuerAchatsBtn,
-            commanderBtn: !!commanderBtn
-        });
 
         // Événements
         if (shopIcon) {
@@ -221,7 +329,6 @@
 
         if (continuerAchatsBtn) {
             continuerAchatsBtn.addEventListener('click', fermerPanier);
-            console.log('Événement attaché à continuerAchatsBtn');
         }
 
         if (commanderBtn) {
@@ -231,14 +338,13 @@
                 if (messageContainer) messageContainer.innerHTML = '';
 
                 if (state.panier.length === 0) {
-                    const msg = document.createElement('div');
-                    msg.className = 'mt-3 p-3 rounded-lg bg-red-100 border border-red-300 text-red-700 text-center font-medium';
-                    msg.textContent = "⚠️ Votre panier est vide. Ajoutez au moins un produit avant de commander.";
-                    messageContainer?.appendChild(msg);
+                    showPanierMessage('Votre panier est vide. Ajoutez au moins un produit avant de commander.', 'warning');
+                    return;
+                }
 
-                    setTimeout(() => {
-                        if (msg.parentNode) msg.remove();
-                    }, 4000);
+                // Vérifier à nouveau la connexion
+                if (typeof estConnecte === 'undefined' || !estConnecte) {
+                    showStyledAlert('Veuillez vous connecter pour passer commande.', 'warning');
                     return;
                 }
 
@@ -263,6 +369,7 @@
                 mettreAJourPanier();
             } catch (e) {
                 console.error('Erreur lors du chargement du panier:', e);
+                state.panier = [];
             }
         }
 

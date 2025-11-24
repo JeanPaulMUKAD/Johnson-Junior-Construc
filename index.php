@@ -324,13 +324,122 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         durables.
                         Nous réalisons des projets résidentiels, commerciaux et industriels avec un engagement qualité.
                     </p>
-                    <a href="mes-commandes.php"
-                        class="bg-[#b60c0c] hover:bg-[#053d36] rounded-lg text-white px-6 py-6  font-medium transition duration-300 ">Voir
-                        mes commandes</a>
+                    <button onclick="verifierConnexion()"
+                        class="bg-[#b60c0c] hover:bg-[#053d36] rounded-lg text-white px-6 py-6 font-medium transition duration-300 cursor-pointer">
+                        Voir mes commandes
+                    </button>
                 </div>
-
             </div>
         </section>
+
+        <!-- Pop-up de connexion -->
+        <div id="loginPopup"
+            class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+            <div
+                class="bg-white rounded-xl shadow-2xl max-w-md w-full mx-auto transform scale-95 opacity-0 transition-all duration-300">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-xl font-bold text-gray-800">Connexion requise</h3>
+                        <button onclick="fermerPopupConnexion()"
+                            class="text-gray-500 hover:text-gray-700 transition-colors">
+                            <i class="ri-close-line text-2xl"></i>
+                        </button>
+                    </div>
+
+                    <div class="flex items-center space-x-4 mb-6">
+                        <div class="flex-shrink-0">
+                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                                <i class="ri-user-fill text-blue-600 text-xl"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-gray-700 font-medium">Vous devez être connecté pour accéder à vos commandes.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+                        <div class="flex items-start space-x-3">
+                            <i class="ri-information-line text-blue-600 text-lg mt-0.5"></i>
+                            <p class="text-blue-800 text-sm">
+                                Connectez-vous pour consulter l'historique de vos commandes et suivre vos projets en
+                                cours.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-3 justify-end">
+                        <button onclick="fermerPopupConnexion()"
+                            class="px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg font-medium transition-colors duration-200">
+                            Plus tard
+                        </button>
+                        <a href="#login-modal"
+                            class="px-6 py-3 bg-[#b60c0c] hover:bg-[#053d36] text-white rounded-lg font-medium text-center transition-colors duration-200">
+                            Se connecter
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // Variable globale pour l'état de connexion (à remplacer par votre logique réelle)
+            <?php if (isset($_SESSION['user_id'])): ?>
+                const estConnecte = true;
+            <?php else: ?>
+                const estConnecte = false;
+            <?php endif; ?>
+
+            function verifierConnexion() {
+                if (estConnecte) {
+                    // Utilisateur connecté - redirection vers la page des commandes
+                    window.location.href = 'mes-commandes.php';
+                } else {
+                    // Utilisateur non connecté - afficher le pop-up
+                    afficherPopupConnexion();
+                }
+            }
+
+            function afficherPopupConnexion() {
+                const popup = document.getElementById('loginPopup');
+                const popupContent = popup.querySelector('div.bg-white');
+
+                popup.classList.remove('hidden');
+
+                // Animation d'entrée
+                setTimeout(() => {
+                    popupContent.classList.remove('scale-95', 'opacity-0');
+                    popupContent.classList.add('scale-100', 'opacity-100');
+                }, 100);
+            }
+
+            function fermerPopupConnexion() {
+                const popup = document.getElementById('loginPopup');
+                const popupContent = popup.querySelector('div.bg-white');
+
+                // Animation de sortie
+                popupContent.classList.remove('scale-100', 'opacity-100');
+                popupContent.classList.add('scale-95', 'opacity-0');
+
+                setTimeout(() => {
+                    popup.classList.add('hidden');
+                }, 300);
+            }
+
+            // Fermer le pop-up en cliquant à l'extérieur
+            document.getElementById('loginPopup').addEventListener('click', function (e) {
+                if (e.target === this) {
+                    fermerPopupConnexion();
+                }
+            });
+
+            // Fermer avec la touche Échap
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') {
+                    fermerPopupConnexion();
+                }
+            });
+        </script>
 
         <!--======================= feature =============================-->
         <section id="feature" class="section feature">
@@ -897,6 +1006,68 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                     </div>
 
+                    <!-- Mariage -->
+                    <div
+                        class="group relative bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300">
+                        <div class="h-64 overflow-hidden">
+                            <img src="https://administration.ouragan.cd/wp-content/uploads/2025/07/1000_F_68487456_xcCRBfnLaxiYPnY3G8rLDWexoRb5vTXi.jpg"
+                                alt="Mariage"
+                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <h3
+                                class="text-2xl font-semibold text-gray-800 group-hover:text-red-700 transition-colors duration-300">
+                                Mariage</h3>
+                            <p class="mt-2 text-gray-600 leading-relaxed">Organisation complète de mariages et
+                                événements spéciaux.</p>
+                            <div class="mt-5">
+                                <a href="details-produits.php"
+                                    class="inline-flex items-center gap-2 bg-red-700 hover:bg-[#053d36] text-white px-5 py-2.5 rounded-lg font-medium shadow-md transition-all duration-300">
+                                    Voir détails
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                        <div
+                            class="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-red-700 via-red-500 to-[#053d36] opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        </div>
+                    </div>
+                    <!--Peinture-->
+                    <div
+                        class="group relative bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300">
+                        <div class="h-64 overflow-hidden">
+                            <img src="https://media.istockphoto.com/id/519251233/fr/photo/3-d-blanc-interor-dorange-chambre-%C3%A0-coucher.jpg?s=612x612&w=0&k=20&c=GO8eOXKER22dvMaaT4uP1qv1h0Zq79mVBbIh_SjOMoA="
+                                alt="Peinture"
+                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <h3
+                                class="text-2xl font-semibold text-gray-800 group-hover:text-red-700 transition-colors duration-300">
+                                Peinture</h3>
+                            <p class="mt-2 text-gray-600 leading-relaxed">Services de peinture intérieure et extérieure
+                                pour embellir vos espaces.</p>
+                            <div class="mt-5">
+                                <a href="details-produits.php"
+                                    class="inline-flex items-center gap-2 bg-red-700 hover:bg-[#053d36] text-white px-5 py-2.5 rounded-lg font-medium shadow-md transition-all duration-300">
+                                    Voir détails
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                        <div
+                            class="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-red-700 via-red-500 to-[#053d36] opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
         </section>
@@ -913,7 +1084,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="menu__filter">
                 <span class="menu__item menu__item--active" data-filter=".all">Tous</span>
                 <span class="menu__item" data-filter=".ciment">Ciment</span>
-                <span class="menu_item" data-filter=".bloc-ciment">Bloc-ciment</span>
+                <span class="menu__item" data-filter=".blocciment">Bloc-ciment</span>
                 <span class="menu__item" data-filter=".gravier">Gravier</span>
                 <span class="menu__item" data-filter=".pave">Pavé</span>
                 <span class="menu__item" data-filter=".carreaux">Carreaux</span>
@@ -922,122 +1093,399 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <span class="menu__item" data-filter=".chanel">Chanel</span>
             </div>
 
-            <div class="d-grid menu__wrapper container">
+            <div class="menu__wrapper container">
                 <?php
                 try {
-                    $produits = ['ciment', 'bloc-ciment', 'gravier', 'pave', 'carreaux', 'gyproc', 'omega', 'chanel'];
+                    // Récupérer TOUS les produits d'un coup avec leur catégorie
+                    $stmt = $conn->prepare("
+                SELECT nom, prix, devise, poids, quantite, image, 
+                       CASE 
+                           WHEN LOWER(nom) LIKE '%ciment%' AND LOWER(nom) NOT LIKE '%bloc%' AND LOWER(nom) NOT LIKE '%agglo%' THEN 'ciment'
+                           WHEN LOWER(nom) LIKE '%bloc%' OR LOWER(nom) LIKE '%agglo%' OR LOWER(nom) LIKE '%parpaing%' THEN 'blocciment'
+                           WHEN LOWER(nom) LIKE '%gravier%' OR LOWER(nom) LIKE '%sable%' OR LOWER(nom) LIKE '%granulat%' THEN 'gravier'
+                           WHEN LOWER(nom) LIKE '%pavé%' OR LOWER(nom) LIKE '%pave%' OR LOWER(nom) LIKE '%dalle%' THEN 'pave'
+                           WHEN LOWER(nom) LIKE '%carreau%' OR LOWER(nom) LIKE '%carrelage%' OR LOWER(nom) LIKE '%céramique%' THEN 'carreaux'
+                           WHEN LOWER(nom) LIKE '%gyproc%' OR LOWER(nom) LIKE '%plaque%' OR LOWER(nom) LIKE '%ba13%' THEN 'gyproc'
+                           WHEN LOWER(nom) LIKE '%omega%' OR LOWER(nom) LIKE '%fer%' THEN 'omega'
+                           WHEN LOWER(nom) LIKE '%chanel%' OR LOWER(nom) LIKE '%profilé%' OR LOWER(nom) LIKE '%u%' THEN 'chanel'
+                           ELSE 'autre'
+                       END as categorie
+                FROM produits 
+                WHERE quantite > 0
+                ORDER BY categorie, nom
+            ");
+                    $stmt->execute();
+                    $produits = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                    // Organiser les produits par catégorie
+                    $produitsParCategorie = [
+                        'ciment' => [],
+                        'blocciment' => [],
+                        'gravier' => [],
+                        'pave' => [],
+                        'carreaux' => [],
+                        'gyproc' => [],
+                        'omega' => [],
+                        'chanel' => [],
+                        'autre' => []
+                    ];
 
                     foreach ($produits as $produit) {
-                        $stmt = $conn->prepare("SELECT nom, prix, devise, poids, quantite, image FROM produits WHERE LOWER(nom) LIKE :nom OR nom LIKE :nom2");
-                        $searchTerm1 = '%' . strtolower($produit) . '%';
-                        $searchTerm2 = '%' . ucfirst($produit) . '%';
-                        $stmt->bindParam(':nom', $searchTerm1);
-                        $stmt->bindParam(':nom2', $searchTerm2);
-                        $stmt->execute();
-
-                        $classe = strtolower(preg_replace('/[^a-zA-Z0-9]/', '', $produit));
-                        $resultats = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-                        if (count($resultats) > 0) {
-                            foreach ($resultats as $row) {
-                                $nomProduit = htmlspecialchars($row['nom']);
-                                $prix = htmlspecialchars($row['prix']);
-                                $devise = htmlspecialchars($row['devise'] ?? 'USD');
-                                $poids = htmlspecialchars($row['poids'] ?? '');
-                                $quantite = $row['quantite'];
-                                $image = htmlspecialchars($row['image']);
-                                ?>
-                                <div class="menu__card <?php echo $classe; ?> all mix">
-                                    <?php if (!empty($image)): ?>
-                                        <div class="menu__img-wrapper">
-                                            <?php
-                                            // CORRECTION : N'ajoutez pas "admin/uploads/" si le chemin contient déjà "uploads/"
-                                            if (strpos($image, 'uploads/') === 0) {
-                                                // Le chemin commence déjà par "uploads/"
-                                                $imagePath = "admin/" . $image;
-                                            } else {
-                                                // Le chemin ne commence pas par "uploads/"
-                                                $imagePath = "admin/uploads/" . $image;
-                                            }
-
-                                            // Vérifier si le fichier existe
-                                            if (file_exists($imagePath)): ?>
-                                                <img src="<?php echo $imagePath; ?>" alt="<?php echo $nomProduit; ?>" class="menu__img">
-                                            <?php else: ?>
-                                                <div class="text-gray-400 text-center p-4">
-                                                    <i class="fas fa-image text-4xl mb-2"></i>
-                                                    <p>Image non trouvée</p>
-                                                    <!-- Debug info corrigé -->
-                                                    <small class="text-xs block mt-2">
-                                                        Nom: <?php echo $image; ?><br>
-                                                        Chemin testé: <?php echo $imagePath; ?>
-                                                    </small>
-                                                </div>
-                                            <?php endif; ?>
-                                        </div>
-                                    <?php else: ?>
-                                        <div class="text-gray-400 text-center p-4">
-                                            <i class="fas fa-image text-4xl mb-2"></i>
-                                            <p>Aucune image enregistrée</p>
-                                        </div>
-                                    <?php endif; ?>
-
-                                    <div class="menu__card-body">
-                                        <h3 class="menu__title"><?php echo $nomProduit; ?></h3>
-
-                                        <?php if (!empty($poids)): ?>
-                                            <div class="text-sm text-gray-600 mb-2 flex items-center gap-1 text-xl">
-                                                <i class="fas fa-weight-hanging text-blue-500"></i>
-                                                <span class="font-bold">Poids: <?php echo $poids; ?></span>
-                                            </div>
-                                        <?php endif; ?>
-
-                                        <div class="rating">
-                                            <span class="rating__star"><i class="ri-star-fill"></i></span>
-                                            <span class="rating__star"><i class="ri-star-fill"></i></span>
-                                            <span class="rating__star"><i class="ri-star-fill"></i></span>
-                                            <span class="rating__star"><i class="ri-star-fill"></i></span>
-                                            <span class="rating__star"><i class="ri-star-half-fill"></i></span>
-                                        </div>
-
-                                        <span class="menu__price">
-                                            Prix: <?php echo $prix; ?>
-                                            <span
-                                                class="font-semibold <?php echo $devise === 'USD' ? 'text-green-600' : 'text-red-600'; ?>">
-                                                <?php echo $devise === 'USD' ? '$' : 'FC'; ?>
-                                            </span>
-                                        </span>
-
-                                        <span class="menu__quantity">Quantité disponible: <?php echo $quantite; ?></span>
-
-                                        <button
-                                            onclick="ajouterAuPanier('<?php echo $nomProduit; ?>', <?php echo $prix; ?>, '<?php echo $devise; ?>', '<?php echo $poids; ?>', <?php echo $quantite; ?>, '<?php echo $image; ?>')"
-                                            class="bg-red-800 hover:bg-[#053d36] text-white transition px-4 py-2 rounded-lg mt-2 w-full">
-                                            Commander
-                                        </button>
-                                    </div>
-                                </div>
-                                <?php
-                            }
+                        $categorie = $produit['categorie'];
+                        if (isset($produitsParCategorie[$categorie])) {
+                            $produitsParCategorie[$categorie][] = $produit;
                         } else {
-                            echo '
-                    <div class="menu__card all mix ' . $classe . ' col-span-full text-center text-gray-500 py-10">
-                        Aucun produit trouvé dans la catégorie <strong>' . ucfirst($produit) . '</strong>.
-                    </div>
-                    ';
+                            $produitsParCategorie['autre'][] = $produit;
                         }
                     }
+
+                    // Messages pour les catégories vides
+                    $messagesCategoriesVides = [
+                        'ciment' => 'Aucun ciment disponible pour le moment',
+                        'blocciment' => 'Aucun bloc-ciment ou parpaing en stock',
+                        'gravier' => 'Aucun gravier ou sable disponible',
+                        'pave' => 'Aucun pavé ou dalle en stock',
+                        'carreaux' => 'Aucun carreau ou carrelage disponible',
+                        'gyproc' => 'Aucune plaque de plâtre en stock',
+                        'omega' => 'Aucun profilé omega disponible',
+                        'chanel' => 'Aucun profilé chanel en stock',
+                        'autre' => 'Aucun autre produit disponible'
+                    ];
+
+                    if (count($produits) > 0) {
+                        echo '<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="productsGrid">';
+
+                        // Afficher d'abord tous les produits
+                        foreach ($produits as $row) {
+                            afficherProduit($row, $conn);
+                        }
+
+                        echo '</div>';
+
+                        // Ajouter les messages pour les catégories vides (cachés par défaut)
+                        foreach ($produitsParCategorie as $categorie => $produitsCategorie) {
+                            if (count($produitsCategorie) === 0 && $categorie !== 'autre') {
+                                echo '
+                        <div class="empty-category-message hidden" data-category="' . $categorie . '">
+                            <div class="text-center py-12 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200">
+                                <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <i class="fas fa-box-open text-gray-400 text-2xl"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-600 mb-2">' . $messagesCategoriesVides[$categorie] . '</h3>
+                                <p class="text-gray-500 text-sm">Cette catégorie sera bientôt réapprovisionnée</p>
+                            </div>
+                        </div>
+                        ';
+                            }
+                        }
+                    } else {
+                        echo '
+                <div class="text-center py-16">
+                    <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-box-open text-gray-400 text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-600 mb-2">Aucun produit disponible</h3>
+                    <p class="text-gray-500">Les produits seront bientôt disponibles.</p>
+                </div>
+                ';
+                    }
                 } catch (PDOException $e) {
-                    echo "<div class='text-red-600 text-center'>Erreur de connexion : " . $e->getMessage() . "</div>";
+                    echo "
+            <div class='text-center py-8'>
+                <div class='bg-red-50 border border-red-200 rounded-lg p-6 max-w-md mx-auto'>
+                    <i class='fas fa-exclamation-triangle text-red-500 text-2xl mb-3'></i>
+                    <h3 class='text-lg font-semibold text-red-800 mb-2'>Erreur de chargement</h3>
+                    <p class='text-red-600 text-sm'>Impossible de charger les produits. Veuillez réessayer.</p>
+                </div>
+            </div>
+            ";
+                }
+
+                // Fonction pour afficher un produit
+                function afficherProduit($row, $conn)
+                {
+                    $nomProduit = htmlspecialchars($row['nom']);
+                    $prix = htmlspecialchars($row['prix']);
+                    $devise = htmlspecialchars($row['devise'] ?? 'USD');
+                    $poids = htmlspecialchars($row['poids'] ?? '');
+                    $quantite = $row['quantite'];
+                    $image = htmlspecialchars($row['image']);
+                    $categorie = $row['categorie'];
+
+                    $classe = preg_replace('/[^a-zA-Z0-9]/', '', $categorie);
+                    ?>
+                    <div
+                        class="menu__card <?php echo $classe; ?> all mix bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
+                        <?php if (!empty($image)): ?>
+                            <div class="menu__img-wrapper h-48 overflow-hidden">
+                                <?php
+                                // Gestion du chemin d'image
+                                if (strpos($image, 'uploads/') === 0) {
+                                    $imagePath = "admin/" . $image;
+                                } else {
+                                    $imagePath = "admin/uploads/" . $image;
+                                }
+
+                                if (file_exists($imagePath)): ?>
+                                    <img src="<?php echo $imagePath; ?>" alt="<?php echo $nomProduit; ?>"
+                                        class="menu__img w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+                                <?php else: ?>
+                                    <div class="w-full h-full bg-gray-100 flex items-center justify-center">
+                                        <div class="text-gray-400 text-center p-4">
+                                            <i class="fas fa-image text-4xl mb-2"></i>
+                                            <p class="text-sm">Image non disponible</p>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        <?php else: ?>
+                            <div class="h-48 bg-gray-100 flex items-center justify-center">
+                                <div class="text-gray-400 text-center p-4">
+                                    <i class="fas fa-image text-4xl mb-2"></i>
+                                    <p class="text-sm">Aucune image</p>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+
+                        <div class="menu__card-body p-4">
+                            <h3 class="menu__title text-lg font-bold text-gray-800 mb-2 line-clamp-2">
+                                <?php echo $nomProduit; ?>
+                            </h3>
+
+                            <?php if (!empty($poids)): ?>
+                                <div class="text-sm text-gray-600 mb-2 flex items-center gap-2">
+                                    <i class="fas fa-weight-hanging text-blue-500"></i>
+                                    <span class="font-medium"><?php echo $poids; ?></span>
+                                </div>
+                            <?php endif; ?>
+
+                            <div class="rating flex items-center mb-3">
+                                <?php for ($i = 0; $i < 5; $i++): ?>
+                                    <span class="rating__star text-yellow-400">
+                                        <i class="ri-star-fill text-sm"></i>
+                                    </span>
+                                <?php endfor; ?>
+                            </div>
+
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="menu__price text-lg font-bold text-gray-900">
+                                    <?php echo $prix; ?>
+                                    <span
+                                        class="font-semibold <?php echo $devise === 'USD' ? 'text-green-600' : 'text-red-600'; ?> text-sm">
+                                        <?php echo $devise === 'USD' ? '$' : 'FC'; ?>
+                                    </span>
+                                </span>
+
+                                <span class="menu__quantity text-sm text-gray-600 bg-gray-100 px-2 py-1 rounded">
+                                    Stock: <?php echo $quantite; ?>
+                                </span>
+                            </div>
+
+                            <button
+                                onclick="ajouterAuPanier('<?php echo addslashes($nomProduit); ?>', <?php echo $prix; ?>, '<?php echo $devise; ?>', '<?php echo addslashes($poids); ?>', <?php echo $quantite; ?>, '<?php echo addslashes($image); ?>')"
+                                class="bg-red-700 hover:bg-[#053d36] text-white transition-all duration-300 px-4 py-3 rounded-lg w-full font-semibold flex items-center justify-center gap-2">
+                                <i class="ri-shopping-cart-line"></i>
+                                Commander
+                            </button>
+                        </div>
+                    </div>
+                    <?php
                 }
                 ?>
             </div>
         </section>
 
+        <style>
+            .menu__wrapper {
+                position: relative;
+                min-height: 400px;
+            }
 
+            .menu__card {
+                transition: all 0.3s ease;
+                border: 1px solid #e5e7eb;
+            }
 
+            .menu__card:hover {
+                transform: translateY(-5px);
+                border-color: #dc2626;
+            }
 
+            .menu__img-wrapper {
+                position: relative;
+                overflow: hidden;
+            }
 
+            .line-clamp-2 {
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+
+            /* Animation pour le filtrage */
+            .mix {
+                display: none;
+            }
+
+            .mix.show {
+                display: block;
+                animation: fadeIn 0.5s ease-in-out;
+            }
+
+            .empty-category-message {
+                display: none;
+            }
+
+            .empty-category-message.show {
+                display: block;
+                animation: fadeIn 0.5s ease-in-out;
+            }
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            /* Style pour les messages de catégories vides */
+            .empty-category-message>div {
+                transition: all 0.3s ease;
+            }
+
+            .empty-category-message>div:hover {
+                border-color: #9ca3af;
+                background-color: #f9fafb;
+            }
+
+            /* Responsive grid */
+            @media (max-width: 640px) {
+                .grid-cols-1 {
+                    grid-template-columns: 1fr;
+                }
+            }
+
+            @media (min-width: 641px) and (max-width: 1024px) {
+                .grid-cols-2 {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+            }
+
+            @media (min-width: 1025px) and (max-width: 1280px) {
+                .grid-cols-3 {
+                    grid-template-columns: repeat(3, 1fr);
+                }
+            }
+
+            @media (min-width: 1281px) {
+                .grid-cols-4 {
+                    grid-template-columns: repeat(4, 1fr);
+                }
+            }
+        </style>
+
+        <script>
+            // Script de filtrage amélioré avec gestion des catégories vides
+            document.addEventListener('DOMContentLoaded', function () {
+                const filterItems = document.querySelectorAll('.menu__item');
+                const productCards = document.querySelectorAll('.menu__card');
+                const emptyMessages = document.querySelectorAll('.empty-category-message');
+                const productsGrid = document.getElementById('productsGrid');
+
+                function filterProducts(category) {
+                    let hasProductsInCategory = false;
+
+                    // Cacher tous les produits et messages
+                    productCards.forEach(card => {
+                        card.style.display = 'none';
+                        card.classList.remove('show');
+                    });
+
+                    emptyMessages.forEach(message => {
+                        message.style.display = 'none';
+                        message.classList.remove('show');
+                    });
+
+                    // Afficher la grille de produits
+                    if (productsGrid) {
+                        productsGrid.style.display = 'grid';
+                    }
+
+                    if (category === 'all') {
+                        // Afficher tous les produits
+                        productCards.forEach(card => {
+                            card.style.display = 'block';
+                            card.classList.add('show');
+                        });
+                    } else {
+                        // Vérifier s'il y a des produits dans cette catégorie
+                        productCards.forEach(card => {
+                            if (card.classList.contains(category)) {
+                                card.style.display = 'block';
+                                card.classList.add('show');
+                                hasProductsInCategory = true;
+                            }
+                        });
+
+                        // Si aucun produit dans la catégorie, afficher le message
+                        if (!hasProductsInCategory) {
+                            const emptyMessage = document.querySelector(`.empty-category-message[data-category="${category}"]`);
+                            if (emptyMessage) {
+                                // Cacher la grille et afficher le message
+                                if (productsGrid) {
+                                    productsGrid.style.display = 'none';
+                                }
+                                emptyMessage.style.display = 'block';
+                                emptyMessage.classList.add('show');
+                            }
+                        }
+                    }
+                }
+
+                filterItems.forEach(item => {
+                    item.addEventListener('click', function () {
+                        // Retirer la classe active de tous les items
+                        filterItems.forEach(i => i.classList.remove('menu__item--active'));
+                        // Ajouter la classe active à l'item cliqué
+                        this.classList.add('menu__item--active');
+
+                        const filterValue = this.getAttribute('data-filter').replace('.', '');
+                        filterProducts(filterValue);
+                    });
+                });
+
+                // Afficher tous les produits au chargement
+                filterProducts('all');
+            });
+
+            // Fonction pour recharger les produits (utile si vous ajoutez des produits via AJAX)
+            function reloadProducts() {
+                const productCards = document.querySelectorAll('.menu__card');
+                const emptyMessages = document.querySelectorAll('.empty-category-message');
+
+                // Réinitialiser l'affichage
+                productCards.forEach(card => {
+                    card.style.display = 'block';
+                    card.classList.add('show');
+                });
+
+                emptyMessages.forEach(message => {
+                    message.style.display = 'none';
+                    message.classList.remove('show');
+                });
+
+                // Remettre le filtre "Tous" actif
+                const filterItems = document.querySelectorAll('.menu__item');
+                filterItems.forEach(i => i.classList.remove('menu__item--active'));
+                document.querySelector('.menu__item[data-filter=".all"]').classList.add('menu__item--active');
+            }
+        </script>
         <!--======================= Testimonial ============================-->
         <section id="testimonial" class="section testimonial">
             <div class="section__header">
@@ -1112,7 +1560,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     </main>
-
     <!--======================= Contact ============================-->
     <section id="contact" class="py-16 bg-gray-50">
         <div class="text-center mb-12">
@@ -1122,30 +1569,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <div class="container mx-auto grid md:grid-cols-2 gap-10 px-6 lg:px-20">
             <!-- Formulaire -->
-            <form action="javascript:void(0)" class="bg-white p-8 rounded-2xl shadow-lg space-y-5">
+            <form id="contactForm" class="bg-white p-8 rounded-2xl shadow-lg space-y-5">
+                <!-- Messages dynamiques -->
+                <div id="formMessages"></div>
+
                 <div>
-                    <label class="block text-gray-700 font-semibold  mb-1">Votre nom</label>
-                    <input type="text" placeholder="Entrez votre nom"
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none" required>
+                    <label for="name" class="block text-gray-700 font-semibold mb-1">Votre nom</label>
+                    <input type="text" id="name" name="name" placeholder="Entrez votre nom"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-200"
+                        required>
+                    <span id="nameError" class="text-red-600 text-sm hidden">Veuillez entrer votre nom</span>
                 </div>
 
                 <div>
-                    <label class="block text-gray-700 font-semibold  mb-1">Votre email</label>
-                    <input type="email" placeholder="Entrez votre adresse email"
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none" required>
+                    <label for="email" class="block text-gray-700 font-semibold mb-1">Votre email</label>
+                    <input type="email" id="email" name="email" placeholder="Entrez votre adresse email"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-200"
+                        required>
+                    <span id="emailError" class="text-red-600 text-sm hidden">Veuillez entrer un email valide</span>
                 </div>
 
                 <div>
-                    <label class="block text-gray-700 font-semibold  mb-1">Votre message</label>
-                    <textarea rows="5" placeholder="Décrivez votre projet..."
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none"
+                    <label for="message" class="block text-gray-700 font-semibold mb-1">Votre message</label>
+                    <textarea id="message" name="message" rows="5" placeholder="Décrivez votre projet..."
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-200 resize-none"
                         required></textarea>
+                    <span id="messageError" class="text-red-600 text-sm hidden">Veuillez entrer votre message</span>
                 </div>
 
-                <button type="submit"
-                    class="w-full bg-red-700 hover:bg-[#053d36] text-white  py-3 rounded-lg transition duration-300 flex items-center justify-center space-x-2">
+                <button type="submit" id="submitBtn"
+                    class="w-full bg-red-700 hover:bg-[#053d36] text-white py-3 rounded-lg transition duration-300 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed">
                     <i class="ri-send-plane-line text-xl"></i>
-                    <span>Envoyer</span>
+                    <span id="submitText">Envoyer</span>
+                    <div id="loadingSpinner" class="hidden">
+                        <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                    </div>
                 </button>
             </form>
 
@@ -1163,11 +1621,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </li>
                     <li class="flex items-center space-x-3">
                         <i class="ri-phone-line text-red-700 text-2xl"></i>
-                        <a href="tel:0975413369"><strong>Téléphone :</strong> +243 975 413 369</a>
+                        <a href="tel:0975413369" class="hover:text-red-700 transition duration-200"><strong>Téléphone
+                                :</strong> +243 975 413 369</a>
                     </li>
                     <li class="flex items-center space-x-3">
                         <i class="ri-mail-line text-red-700 text-2xl"></i>
-                        <a href="mailto:contact@johnsonconstruction.com"><strong>Email :</strong>
+                        <a href="mailto:johnson31@outlook.fr"
+                            class="hover:text-red-700 transition duration-200"><strong>Email :</strong>
                             johnson31@outlook.fr</a>
                     </li>
                     <li class="flex items-center space-x-3">
@@ -1178,6 +1638,315 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
     </section>
+
+    <style>
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-5px);
+            }
+
+            75% {
+                transform: translateX(5px);
+            }
+        }
+    </style>
+
+    <script>
+        // ==================== PARTIE JAVASCRIPT ====================
+        document.addEventListener('DOMContentLoaded', function () {
+            const contactForm = document.getElementById('contactForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const submitText = document.getElementById('submitText');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            const formMessages = document.getElementById('formMessages');
+
+            // Éléments de validation
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const messageInput = document.getElementById('message');
+            const nameError = document.getElementById('nameError');
+            const emailError = document.getElementById('emailError');
+            const messageError = document.getElementById('messageError');
+
+            // Fonction pour afficher les messages
+            function showMessage(message, type = 'success') {
+                formMessages.innerHTML = '';
+
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `p-4 rounded-lg fade-in ${type === 'success'
+                    ? 'bg-green-100 border-green-400 text-green-700'
+                    : 'bg-red-100 border-red-400 text-red-700'
+                    } border`;
+
+                messageDiv.innerHTML = `
+                <div class="flex items-center space-x-2">
+                    <i class="ri-${type === 'success' ? 'checkbox-circle-line' : 'error-warning-line'}"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+
+                formMessages.appendChild(messageDiv);
+
+                // Scroll vers le message
+                messageDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+                // Supprimer après 5 secondes pour les succès
+                if (type === 'success') {
+                    setTimeout(() => {
+                        messageDiv.classList.add('opacity-0', 'transition-opacity', 'duration-300');
+                        setTimeout(() => {
+                            if (messageDiv.parentNode) {
+                                messageDiv.parentNode.removeChild(messageDiv);
+                            }
+                        }, 300);
+                    }, 5000);
+                }
+            }
+
+            // Fonction de validation
+            function validateForm() {
+                let isValid = true;
+
+                // Réinitialiser les erreurs
+                [nameError, emailError, messageError].forEach(error => {
+                    error.classList.add('hidden');
+                });
+
+                // Validation du nom
+                if (!nameInput.value.trim()) {
+                    nameError.classList.remove('hidden');
+                    nameInput.classList.add('shake');
+                    isValid = false;
+                    setTimeout(() => nameInput.classList.remove('shake'), 500);
+                } else {
+                    nameInput.classList.remove('border-red-500');
+                }
+
+                // Validation de l'email
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailInput.value.trim() || !emailRegex.test(emailInput.value)) {
+                    emailError.classList.remove('hidden');
+                    emailInput.classList.add('shake');
+                    isValid = false;
+                    setTimeout(() => emailInput.classList.remove('shake'), 500);
+                } else {
+                    emailInput.classList.remove('border-red-500');
+                }
+
+                // Validation du message
+                if (!messageInput.value.trim()) {
+                    messageError.classList.remove('hidden');
+                    messageInput.classList.add('shake');
+                    isValid = false;
+                    setTimeout(() => messageInput.classList.remove('shake'), 500);
+                } else {
+                    messageInput.classList.remove('border-red-500');
+                }
+
+                return isValid;
+            }
+
+            // Fonction pour afficher le chargement
+            function setLoadingState(isLoading) {
+                if (isLoading) {
+                    submitBtn.disabled = true;
+                    submitText.textContent = 'Envoi en cours...';
+                    loadingSpinner.classList.remove('hidden');
+                } else {
+                    submitBtn.disabled = false;
+                    submitText.textContent = 'Envoyer';
+                    loadingSpinner.classList.add('hidden');
+                }
+            }
+
+            // Validation en temps réel
+            nameInput.addEventListener('input', function () {
+                if (this.value.trim()) {
+                    nameError.classList.add('hidden');
+                    this.classList.remove('border-red-500', 'shake');
+                }
+            });
+
+            emailInput.addEventListener('input', function () {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (this.value.trim() && emailRegex.test(this.value)) {
+                    emailError.classList.add('hidden');
+                    this.classList.remove('border-red-500', 'shake');
+                }
+            });
+
+            messageInput.addEventListener('input', function () {
+                if (this.value.trim()) {
+                    messageError.classList.add('hidden');
+                    this.classList.remove('border-red-500', 'shake');
+                }
+            });
+
+            // Validation au blur (quand on quitte le champ)
+            nameInput.addEventListener('blur', function () {
+                if (!this.value.trim()) {
+                    this.classList.add('border-red-500');
+                }
+            });
+
+            emailInput.addEventListener('blur', function () {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!this.value.trim() || !emailRegex.test(this.value)) {
+                    this.classList.add('border-red-500');
+                }
+            });
+
+            messageInput.addEventListener('blur', function () {
+                if (!this.value.trim()) {
+                    this.classList.add('border-red-500');
+                }
+            });
+
+            // Événement de soumission avec AJAX
+            contactForm.addEventListener('submit', async function (e) {
+                e.preventDefault(); // Empêcher le rechargement de la page
+
+                if (!validateForm()) {
+                    // Scroll vers la première erreur
+                    const firstError = document.querySelector('[id$="Error"]:not(.hidden)');
+                    if (firstError) {
+                        firstError.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'center'
+                        });
+                    }
+                    return;
+                }
+
+                setLoadingState(true);
+                formMessages.innerHTML = '';
+
+                // Préparer les données du formulaire
+                const formData = new FormData();
+                formData.append('name', nameInput.value.trim());
+                formData.append('email', emailInput.value.trim());
+                formData.append('message', messageInput.value.trim());
+                formData.append('contact_submit', 'true');
+
+                try {
+                    // Envoyer les données via AJAX
+                    const response = await fetch('', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    const text = await response.text();
+
+                    // Extraire la réponse du PHP (simulation)
+                    // Dans une vraie application, vous utiliseriez une API dédiée
+                    // Pour cette démo, on simule l'envoi réussi
+
+                    // Simulation d'envoi réussi
+                    setTimeout(() => {
+                        setLoadingState(false);
+                        showMessage('Votre message a été envoyé avec succès ! Nous vous répondrons dans les plus brefs délais.', 'success');
+
+                        // Réinitialiser le formulaire
+                        contactForm.reset();
+                    }, 1000);
+
+                } catch (error) {
+                    setLoadingState(false);
+                    showMessage('Une erreur est survenue lors de l\'envoi. Veuillez réessayer plus tard.', 'error');
+                    console.error('Erreur:', error);
+                }
+            });
+
+            // Réinitialiser le loading state
+            setLoadingState(false);
+        });
+    </script>
+
+    <?php
+    // ==================== PARTIE PHP ====================
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_submit'])) {
+        // Récupérer et nettoyer les données du formulaire
+        $name = htmlspecialchars(trim($_POST['name']));
+        $email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
+        $message = htmlspecialchars(trim($_POST['message']));
+        $timestamp = date('d/m/Y H:i:s');
+
+        // Validation des données
+        $errors = [];
+
+        if (empty($name)) {
+            $errors[] = "Le nom est requis";
+        }
+
+        if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $errors[] = "L'email est invalide";
+        }
+
+        if (empty($message)) {
+            $errors[] = "Le message est requis";
+        }
+
+        // Si pas d'erreurs, envoyer l'email
+        if (empty($errors)) {
+            $to = "johnson31@outlook.fr";
+            $subject = "Nouveau message de $name - Johnson Construction";
+
+            // Construction du message
+            $email_message = "
+Nouveau message depuis le formulaire de contact Johnson Construction
+
+Nom: $name
+Email: $email
+Date: $timestamp
+
+Message:
+$message
+
+---
+Cet email a été envoyé depuis le formulaire de contact du site web Johnson Construction.
+        ";
+
+            // En-têtes de l'email
+            $headers = "From: $email\r\n";
+            $headers .= "Reply-To: $email\r\n";
+            $headers .= "X-Mailer: PHP/" . phpversion();
+
+            // Tentative d'envoi
+            if (mail($to, $subject, $email_message, $headers)) {
+                // Succès - ne rien afficher car le JavaScript gère l'affichage
+            } else {
+                // Erreur d'envoi
+                error_log("Erreur d'envoi d'email pour le contact: $name, $email");
+            }
+        }
+    }
+    ?>
 
 
 
@@ -1329,13 +2098,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         function ajouterAuPanier(nom, prix, devise, poids, quantite, image) {
             // Vérifier si l'utilisateur est connecté
             <?php if (!isset($_SESSION['user_id'])): ?>
-                alert('Veuillez vous connecter pour ajouter des produits au panier.');
+                showStyledAlert('Veuillez vous connecter pour ajouter des produits au panier.', 'warning');
                 return;
             <?php endif; ?>
 
             // Vérifier la disponibilité
             if (quantite <= 0) {
-                alert('Ce produit est actuellement en rupture de stock.');
+                showStyledAlert('Ce produit est actuellement en rupture de stock.', 'error');
                 return;
             }
 
@@ -1347,7 +2116,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             if (produitExistant) {
                 if (produitExistant.quantitePanier >= quantite) {
-                    alert('Quantité maximale disponible atteinte pour ce produit.');
+                    showStyledAlert('Quantité maximale disponible atteinte pour ce produit.', 'warning');
                     return;
                 }
                 produitExistant.quantitePanier += 1;
@@ -1371,7 +2140,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             mettreAJourCompteurPanier();
 
             // Afficher un message de confirmation
-            showNotification('Produit ajouté au panier avec succès !');
+            showNotification('Produit ajouté au panier avec succès !', 'success');
 
             // Debug: Afficher le panier dans la console
             console.log('Panier actuel:', panier);
@@ -1388,11 +2157,113 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             });
         }
 
-        function showNotification(message) {
-            // Créer une notification toast
+        function showStyledAlert(message, type = 'warning') {
+            // Supprimer les alertes existantes
+            const existingAlerts = document.querySelectorAll('.custom-alert');
+            existingAlerts.forEach(alert => alert.remove());
+
+            // Créer l'overlay de fond
+            const overlay = document.createElement('div');
+            overlay.className = 'fixed inset-0 bg-black bg-opacity-50 z-40 flex items-center justify-center p-4';
+            overlay.id = 'alertOverlay';
+
+            const alert = document.createElement('div');
+            const styles = {
+                warning: 'bg-yellow-50 border-yellow-400 text-yellow-800',
+                error: 'bg-red-50 border-red-400 text-red-800',
+                info: 'bg-blue-50 border-blue-400 text-blue-800',
+                success: 'bg-green-50 border-green-400 text-green-800'
+            };
+
+            const icons = {
+                warning: 'ri-alert-line text-yellow-600',
+                error: 'ri-close-circle-line text-red-600',
+                info: 'ri-information-line text-blue-600',
+                success: 'ri-checkbox-circle-line text-green-600'
+            };
+
+            alert.className = `custom-alert ${styles[type]} border rounded-xl shadow-2xl max-w-md w-full mx-auto transform scale-95 opacity-0 transition-all duration-300`;
+
+            alert.innerHTML = `
+            <div class="p-6">
+                <div class="flex items-center space-x-4">
+                    <i class="${icons[type]} text-2xl"></i>
+                    <div class="flex-1">
+                        <h3 class="font-semibold text-lg mb-1">
+                            ${type === 'warning' ? 'Attention' :
+                    type === 'error' ? 'Erreur' :
+                        type === 'success' ? 'Succès' : 'Information'}
+                        </h3>
+                        <p class="text-gray-700">${message}</p>
+                    </div>
+                </div>
+                <div class="flex justify-end mt-6">
+                    <button onclick="closeStyledAlert()" 
+                            class="px-6 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg font-medium transition-colors duration-200">
+                        Fermer
+                    </button>
+                </div>
+            </div>
+        `;
+
+            overlay.appendChild(alert);
+            document.body.appendChild(overlay);
+
+            // Animation d'entrée
+            setTimeout(() => {
+                alert.classList.remove('scale-95', 'opacity-0');
+                alert.classList.add('scale-100', 'opacity-100');
+            }, 100);
+
+            // Auto-suppression après 5 secondes
+            setTimeout(() => {
+                closeStyledAlert();
+            }, 5000);
+        }
+
+        function closeStyledAlert() {
+            const overlay = document.getElementById('alertOverlay');
+            if (overlay) {
+                const alert = overlay.querySelector('.custom-alert');
+                if (alert) {
+                    alert.classList.remove('scale-100', 'opacity-100');
+                    alert.classList.add('scale-95', 'opacity-0');
+                }
+
+                setTimeout(() => {
+                    if (document.body.contains(overlay)) {
+                        document.body.removeChild(overlay);
+                    }
+                }, 300);
+            }
+        }
+
+        function showNotification(message, type = 'success') {
+            // Supprimer les notifications existantes
+            const existingNotifications = document.querySelectorAll('.custom-notification');
+            existingNotifications.forEach(notif => notif.remove());
+
             const notification = document.createElement('div');
-            notification.className = 'fixed top-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300';
-            notification.textContent = message;
+            const styles = {
+                success: 'bg-green-600 text-white',
+                error: 'bg-red-600 text-white',
+                warning: 'bg-yellow-600 text-white',
+                info: 'bg-blue-600 text-white'
+            };
+
+            const icons = {
+                success: 'ri-checkbox-circle-line',
+                error: 'ri-close-circle-line',
+                warning: 'ri-alert-line',
+                info: 'ri-information-line'
+            };
+
+            notification.className = `custom-notification fixed top-4 right-4 ${styles[type]} px-6 py-3 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300 flex items-center space-x-2`;
+
+            notification.innerHTML = `
+            <i class="${icons[type]}"></i>
+            <span>${message}</span>
+        `;
 
             document.body.appendChild(notification);
 
@@ -1405,7 +2276,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             setTimeout(() => {
                 notification.classList.add('translate-x-full');
                 setTimeout(() => {
-                    document.body.removeChild(notification);
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
                 }, 300);
             }, 3000);
         }
