@@ -1082,96 +1082,92 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
             <div class="menu__filter">
-                <span class="menu__item menu__item--active" data-filter=".all">Tous</span>
-                <span class="menu__item" data-filter=".ciment">Ciment</span>
-                <span class="menu__item" data-filter=".blocciment">Bloc-ciment</span>
-                <span class="menu__item" data-filter=".gravier">Gravier</span>
-                <span class="menu__item" data-filter=".pave">Pavé</span>
-                <span class="menu__item" data-filter=".carreaux">Carreaux</span>
-                <span class="menu__item" data-filter=".gyproc">Gyproc</span>
-                <span class="menu__item" data-filter=".omega">Omega</span>
-                <span class="menu__item" data-filter=".chanel">Chanel</span>
+                <span class="menu__item menu__item--active" data-filter="all">Tous</span>
+                <span class="menu__item" data-filter="Ciment">Ciment</span>
+                <span class="menu__item" data-filter="Bloc-ciment">Bloc-ciment</span>
+                <span class="menu__item" data-filter="Gravier">Gravier</span>
+                <span class="menu__item" data-filter="Pavé">Pavé</span>
+                <span class="menu__item" data-filter="Carreaux">Carreaux</span>
+                <span class="menu__item" data-filter="Gyproc">Gyproc</span>
+                <span class="menu__item" data-filter="Omega">Omega</span>
+                <span class="menu__item" data-filter="Chanel">Chanel</span>
             </div>
 
             <div class="menu__wrapper container">
                 <?php
                 try {
-                    // Récupérer TOUS les produits d'un coup avec leur catégorie
+                    // Récupérer TOUS les produits simplement
                     $stmt = $conn->prepare("
-                SELECT nom, prix, devise, poids, quantite, image, 
-                       CASE 
-                           WHEN LOWER(nom) LIKE '%ciment%' AND LOWER(nom) NOT LIKE '%bloc%' AND LOWER(nom) NOT LIKE '%agglo%' THEN 'ciment'
-                           WHEN LOWER(nom) LIKE '%bloc%' OR LOWER(nom) LIKE '%agglo%' OR LOWER(nom) LIKE '%parpaing%' THEN 'blocciment'
-                           WHEN LOWER(nom) LIKE '%gravier%' OR LOWER(nom) LIKE '%sable%' OR LOWER(nom) LIKE '%granulat%' THEN 'gravier'
-                           WHEN LOWER(nom) LIKE '%pavé%' OR LOWER(nom) LIKE '%pave%' OR LOWER(nom) LIKE '%dalle%' THEN 'pave'
-                           WHEN LOWER(nom) LIKE '%carreau%' OR LOWER(nom) LIKE '%carrelage%' OR LOWER(nom) LIKE '%céramique%' THEN 'carreaux'
-                           WHEN LOWER(nom) LIKE '%gyproc%' OR LOWER(nom) LIKE '%plaque%' OR LOWER(nom) LIKE '%ba13%' THEN 'gyproc'
-                           WHEN LOWER(nom) LIKE '%omega%' OR LOWER(nom) LIKE '%fer%' THEN 'omega'
-                           WHEN LOWER(nom) LIKE '%chanel%' OR LOWER(nom) LIKE '%profilé%' OR LOWER(nom) LIKE '%u%' THEN 'chanel'
-                           ELSE 'autre'
-                       END as categorie
+                SELECT id, nom, description, prix, devise, poids, quantite, image, categorie
                 FROM produits 
                 WHERE quantite > 0
-                ORDER BY categorie, nom
+                ORDER BY id DESC
             ");
                     $stmt->execute();
                     $produits = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                    // Organiser les produits par catégorie
-                    $produitsParCategorie = [
-                        'ciment' => [],
-                        'blocciment' => [],
-                        'gravier' => [],
-                        'pave' => [],
-                        'carreaux' => [],
-                        'gyproc' => [],
-                        'omega' => [],
-                        'chanel' => [],
-                        'autre' => []
+                    // Organiser les produits par NOM exact
+                    $produitsParNom = [
+                        'Ciment' => [],
+                        'Bloc-ciment' => [],
+                        'Gravier' => [],
+                        'Pavé' => [],
+                        'Carreaux' => [],
+                        'Gyproc' => [],
+                        'Omega' => [],
+                        'Chanel' => []
                     ];
 
                     foreach ($produits as $produit) {
-                        $categorie = $produit['categorie'];
-                        if (isset($produitsParCategorie[$categorie])) {
-                            $produitsParCategorie[$categorie][] = $produit;
-                        } else {
-                            $produitsParCategorie['autre'][] = $produit;
+                        $nomProduit = trim($produit['nom']);
+
+                        // Vérifier si le nom correspond exactement à un des filtres
+                        $filtreTrouve = null;
+                        foreach (array_keys($produitsParNom) as $filtre) {
+                            if (stripos($nomProduit, $filtre) !== false) {
+                                $filtreTrouve = $filtre;
+                                break;
+                            }
+                        }
+
+                        // Si aucun filtre trouvé, mettre dans "autres"
+                        if ($filtreTrouve) {
+                            $produitsParNom[$filtreTrouve][] = $produit;
                         }
                     }
 
-                    // Messages pour les catégories vides
-                    $messagesCategoriesVides = [
-                        'ciment' => 'Aucun ciment disponible pour le moment',
-                        'blocciment' => 'Aucun bloc-ciment ou parpaing en stock',
-                        'gravier' => 'Aucun gravier ou sable disponible',
-                        'pave' => 'Aucun pavé ou dalle en stock',
-                        'carreaux' => 'Aucun carreau ou carrelage disponible',
-                        'gyproc' => 'Aucune plaque de plâtre en stock',
-                        'omega' => 'Aucun profilé omega disponible',
-                        'chanel' => 'Aucun profilé chanel en stock',
-                        'autre' => 'Aucun autre produit disponible'
+                    // Messages pour les filtres vides
+                    $messagesFiltresVides = [
+                        'Ciment' => 'Aucun ciment disponible pour le moment',
+                        'Bloc-ciment' => 'Aucun bloc-ciment en stock',
+                        'Gravier' => 'Aucun gravier disponible',
+                        'Pavé' => 'Aucun pavé en stock',
+                        'Carreaux' => 'Aucun carreau disponible',
+                        'Gyproc' => 'Aucune plaque Gyproc en stock',
+                        'Omega' => 'Aucun profilé Omega disponible',
+                        'Chanel' => 'Aucun profilé Chanel en stock'
                     ];
 
                     if (count($produits) > 0) {
                         echo '<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="productsGrid">';
 
-                        // Afficher d'abord tous les produits
+                        // Afficher tous les produits
                         foreach ($produits as $row) {
                             afficherProduit($row, $conn);
                         }
 
                         echo '</div>';
 
-                        // Ajouter les messages pour les catégories vides (cachés par défaut)
-                        foreach ($produitsParCategorie as $categorie => $produitsCategorie) {
-                            if (count($produitsCategorie) === 0 && $categorie !== 'autre') {
+                        // Ajouter les messages pour les filtres vides (cachés par défaut)
+                        foreach ($produitsParNom as $filtre => $produitsFiltre) {
+                            if (count($produitsFiltre) === 0) {
                                 echo '
-                        <div class="empty-category-message hidden" data-category="' . $categorie . '">
+                        <div class="empty-filter-message hidden" data-filter="' . $filtre . '">
                             <div class="text-center py-12 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200">
                                 <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                                     <i class="fas fa-box-open text-gray-400 text-2xl"></i>
                                 </div>
-                                <h3 class="text-lg font-semibold text-gray-600 mb-2">' . $messagesCategoriesVides[$categorie] . '</h3>
+                                <h3 class="text-lg font-semibold text-gray-600 mb-2">' . $messagesFiltresVides[$filtre] . '</h3>
                                 <p class="text-gray-500 text-sm">Cette catégorie sera bientôt réapprovisionnée</p>
                             </div>
                         </div>
@@ -1205,44 +1201,59 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 function afficherProduit($row, $conn)
                 {
                     $nomProduit = htmlspecialchars($row['nom']);
-                    $prix = htmlspecialchars($row['prix']);
+                    $description = htmlspecialchars($row['description'] ?? '');
+                    $prix = floatval($row['prix']);
                     $devise = htmlspecialchars($row['devise'] ?? 'USD');
                     $poids = htmlspecialchars($row['poids'] ?? '');
-                    $quantite = $row['quantite'];
-                    $image = htmlspecialchars($row['image']);
-                    $categorie = $row['categorie'];
+                    $quantite = intval($row['quantite']);
+                    $image = htmlspecialchars($row['image'] ?? '');
 
-                    $classe = preg_replace('/[^a-zA-Z0-9]/', '', $categorie);
+                    // Déterminer le filtre basé sur le nom du produit
+                    $filtre = 'autre';
+                    $filtres = ['Ciment', 'Bloc-ciment', 'Gravier', 'Pavé', 'Carreaux', 'Gyproc', 'Omega', 'Chanel'];
+                    foreach ($filtres as $f) {
+                        if (stripos($nomProduit, $f) !== false) {
+                            $filtre = $f;
+                            break;
+                        }
+                    }
+
+                    // Formater le prix
+                    $prixFormate = number_format($prix, $devise === 'USD' ? 2 : 0, ',', ' ');
+
+                    // Gestion du chemin d'image
+                    $imagePath = "";
+                    if (!empty($image)) {
+                        // Essayer différents chemins possibles
+                        $possiblePaths = [
+                            "admin/uploads/" . $image,
+                            "admin/" . $image,
+                            "../admin/uploads/" . $image,
+                            "../admin/" . $image,
+                            "uploads/" . $image,
+                            $image
+                        ];
+
+                        foreach ($possiblePaths as $path) {
+                            if (file_exists($path) && is_file($path)) {
+                                $imagePath = $path;
+                                break;
+                            }
+                        }
+                    }
                     ?>
-                    <div
-                        class="menu__card <?php echo $classe; ?> all mix bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
-                        <?php if (!empty($image)): ?>
+                    <div class="menu__card product-item bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200"
+                        data-filter="<?php echo $filtre; ?>" data-name="<?php echo htmlspecialchars($nomProduit); ?>">
+                        <?php if (!empty($imagePath) && file_exists($imagePath)): ?>
                             <div class="menu__img-wrapper h-48 overflow-hidden">
-                                <?php
-                                // Gestion du chemin d'image
-                                if (strpos($image, 'uploads/') === 0) {
-                                    $imagePath = "admin/" . $image;
-                                } else {
-                                    $imagePath = "admin/uploads/" . $image;
-                                }
-
-                                if (file_exists($imagePath)): ?>
-                                    <img src="<?php echo $imagePath; ?>" alt="<?php echo $nomProduit; ?>"
-                                        class="menu__img w-full h-full object-cover hover:scale-105 transition-transform duration-300">
-                                <?php else: ?>
-                                    <div class="w-full h-full bg-gray-100 flex items-center justify-center">
-                                        <div class="text-gray-400 text-center p-4">
-                                            <i class="fas fa-image text-4xl mb-2"></i>
-                                            <p class="text-sm">Image non disponible</p>
-                                        </div>
-                                    </div>
-                                <?php endif; ?>
+                                <img src="<?php echo $imagePath; ?>" alt="<?php echo $nomProduit; ?>"
+                                    class="menu__img w-full h-full object-cover hover:scale-105 transition-transform duration-300">
                             </div>
                         <?php else: ?>
                             <div class="h-48 bg-gray-100 flex items-center justify-center">
                                 <div class="text-gray-400 text-center p-4">
-                                    <i class="fas fa-image text-4xl mb-2"></i>
-                                    <p class="text-sm">Aucune image</p>
+                                    <i class="fas fa-box text-4xl mb-2"></i>
+                                    <p class="text-sm"><?php echo $nomProduit; ?></p>
                                 </div>
                             </div>
                         <?php endif; ?>
@@ -1251,6 +1262,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <h3 class="menu__title text-lg font-bold text-gray-800 mb-2 line-clamp-2">
                                 <?php echo $nomProduit; ?>
                             </h3>
+
+                            <?php if (!empty($description)): ?>
+                                <p class="text-sm text-gray-600 mb-2 line-clamp-2">
+                                    <?php echo $description; ?>
+                                </p>
+                            <?php endif; ?>
 
                             <?php if (!empty($poids)): ?>
                                 <div class="text-sm text-gray-600 mb-2 flex items-center gap-2">
@@ -1269,23 +1286,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                             <div class="flex justify-between items-center mb-3">
                                 <span class="menu__price text-lg font-bold text-gray-900">
-                                    <?php echo $prix; ?>
+                                    <?php echo $prixFormate; ?>
                                     <span
-                                        class="font-semibold <?php echo $devise === 'USD' ? 'text-green-600' : 'text-red-600'; ?> text-sm">
+                                        class="font-semibold <?php echo $devise === 'USD' ? 'text-green-600' : 'text-blue-600'; ?> text-sm">
                                         <?php echo $devise === 'USD' ? '$' : 'FC'; ?>
                                     </span>
                                 </span>
 
-                                <span class="menu__quantity text-sm text-gray-600 bg-gray-100 px-2 py-1 rounded">
+                                <span
+                                    class="menu__quantity text-sm px-2 py-1 rounded <?php echo $quantite > 10 ? 'bg-green-100 text-green-800' : ($quantite > 0 ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800'); ?>">
                                     Stock: <?php echo $quantite; ?>
                                 </span>
                             </div>
 
                             <button
-                                onclick="ajouterAuPanier('<?php echo addslashes($nomProduit); ?>', <?php echo $prix; ?>, '<?php echo $devise; ?>', '<?php echo addslashes($poids); ?>', <?php echo $quantite; ?>, '<?php echo addslashes($image); ?>')"
-                                class="bg-red-700 hover:bg-[#053d36] text-white transition-all duration-300 px-4 py-3 rounded-lg w-full font-semibold flex items-center justify-center gap-2">
+                                onclick="ajouterAuPanier('<?php echo addslashes($nomProduit); ?>', <?php echo $prix; ?>, '<?php echo $devise; ?>', '<?php echo addslashes($poids); ?>', <?php echo $quantite; ?>, '<?php echo addslashes($imagePath); ?>')"
+                                class="bg-red-700 hover:bg-[#053d36] text-white transition-all duration-300 px-4 py-3 rounded-lg w-full font-semibold flex items-center justify-center gap-2"
+                                <?php echo $quantite === 0 ? 'disabled' : ''; ?>
+                                style="<?php echo $quantite === 0 ? 'opacity: 0.5; cursor: not-allowed; background-color: #9ca3af;' : ''; ?>">
                                 <i class="ri-shopping-cart-line"></i>
-                                Commander
+                                <?php echo $quantite === 0 ? 'Rupture de stock' : 'Commander'; ?>
                             </button>
                         </div>
                     </div>
@@ -1324,20 +1344,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
 
             /* Animation pour le filtrage */
-            .mix {
-                display: none;
-            }
-
-            .mix.show {
+            .product-item {
                 display: block;
                 animation: fadeIn 0.5s ease-in-out;
             }
 
-            .empty-category-message {
+            .product-item.hidden {
                 display: none;
             }
 
-            .empty-category-message.show {
+            .empty-filter-message {
+                display: none;
+            }
+
+            .empty-filter-message.show {
                 display: block;
                 animation: fadeIn 0.5s ease-in-out;
             }
@@ -1354,12 +1374,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
             }
 
-            /* Style pour les messages de catégories vides */
-            .empty-category-message>div {
+            /* Style pour les messages de filtres vides */
+            .empty-filter-message>div {
                 transition: all 0.3s ease;
             }
 
-            .empty-category-message>div:hover {
+            .empty-filter-message>div:hover {
                 border-color: #9ca3af;
                 background-color: #f9fafb;
             }
@@ -1388,28 +1408,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     grid-template-columns: repeat(4, 1fr);
                 }
             }
+
+            /* Style pour le filtre */
+            .menu__item {
+                cursor: pointer;
+                padding: 8px 16px;
+                border-radius: 20px;
+                transition: all 0.3s ease;
+                border: 1px solid #e5e7eb;
+            }
+
+            .menu__item:hover {
+                background-color: #f3f4f6;
+            }
+
+            .menu__item--active {
+                background-color: #dc2626;
+                color: white;
+                border-color: #dc2626;
+            }
         </style>
 
         <script>
-            // Script de filtrage amélioré avec gestion des catégories vides
+            // Script de filtrage par NOM du produit
             document.addEventListener('DOMContentLoaded', function () {
                 const filterItems = document.querySelectorAll('.menu__item');
-                const productCards = document.querySelectorAll('.menu__card');
-                const emptyMessages = document.querySelectorAll('.empty-category-message');
+                const productItems = document.querySelectorAll('.product-item');
+                const emptyMessages = document.querySelectorAll('.empty-filter-message');
                 const productsGrid = document.getElementById('productsGrid');
 
-                function filterProducts(category) {
-                    let hasProductsInCategory = false;
+                function filterProducts(filterValue) {
+                    let hasProductsInFilter = false;
 
                     // Cacher tous les produits et messages
-                    productCards.forEach(card => {
-                        card.style.display = 'none';
-                        card.classList.remove('show');
+                    productItems.forEach(item => {
+                        item.classList.add('hidden');
                     });
 
                     emptyMessages.forEach(message => {
-                        message.style.display = 'none';
                         message.classList.remove('show');
+                        message.style.display = 'none';
                     });
 
                     // Afficher la grille de produits
@@ -1417,25 +1455,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         productsGrid.style.display = 'grid';
                     }
 
-                    if (category === 'all') {
+                    if (filterValue === 'all') {
                         // Afficher tous les produits
-                        productCards.forEach(card => {
-                            card.style.display = 'block';
-                            card.classList.add('show');
+                        productItems.forEach(item => {
+                            item.classList.remove('hidden');
                         });
                     } else {
-                        // Vérifier s'il y a des produits dans cette catégorie
-                        productCards.forEach(card => {
-                            if (card.classList.contains(category)) {
-                                card.style.display = 'block';
-                                card.classList.add('show');
-                                hasProductsInCategory = true;
+                        // Afficher seulement les produits qui correspondent au filtre
+                        productItems.forEach(item => {
+                            const itemFilter = item.getAttribute('data-filter');
+                            if (itemFilter === filterValue) {
+                                item.classList.remove('hidden');
+                                hasProductsInFilter = true;
                             }
                         });
 
-                        // Si aucun produit dans la catégorie, afficher le message
-                        if (!hasProductsInCategory) {
-                            const emptyMessage = document.querySelector(`.empty-category-message[data-category="${category}"]`);
+                        // Si aucun produit dans le filtre, afficher le message
+                        if (!hasProductsInFilter) {
+                            const emptyMessage = document.querySelector(`.empty-filter-message[data-filter="${filterValue}"]`);
                             if (emptyMessage) {
                                 // Cacher la grille et afficher le message
                                 if (productsGrid) {
@@ -1455,7 +1492,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         // Ajouter la classe active à l'item cliqué
                         this.classList.add('menu__item--active');
 
-                        const filterValue = this.getAttribute('data-filter').replace('.', '');
+                        const filterValue = this.getAttribute('data-filter');
                         filterProducts(filterValue);
                     });
                 });
@@ -1464,26 +1501,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 filterProducts('all');
             });
 
-            // Fonction pour recharger les produits (utile si vous ajoutez des produits via AJAX)
+            // Fonction pour recharger les produits
             function reloadProducts() {
-                const productCards = document.querySelectorAll('.menu__card');
-                const emptyMessages = document.querySelectorAll('.empty-category-message');
+                const productItems = document.querySelectorAll('.product-item');
+                const emptyMessages = document.querySelectorAll('.empty-filter-message');
 
                 // Réinitialiser l'affichage
-                productCards.forEach(card => {
-                    card.style.display = 'block';
-                    card.classList.add('show');
+                productItems.forEach(item => {
+                    item.classList.remove('hidden');
                 });
 
                 emptyMessages.forEach(message => {
-                    message.style.display = 'none';
                     message.classList.remove('show');
+                    message.style.display = 'none';
                 });
 
                 // Remettre le filtre "Tous" actif
                 const filterItems = document.querySelectorAll('.menu__item');
                 filterItems.forEach(i => i.classList.remove('menu__item--active'));
-                document.querySelector('.menu__item[data-filter=".all"]').classList.add('menu__item--active');
+                document.querySelector('.menu__item[data-filter="all"]').classList.add('menu__item--active');
             }
         </script>
         <!--======================= Testimonial ============================-->
