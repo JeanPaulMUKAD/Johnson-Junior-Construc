@@ -109,6 +109,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="assets/img/logo.jpg" type="image/x-icon">
 
     <!--============== Remixicons  =============-->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
@@ -495,7 +496,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </p>
                     <a href="javascript:void(0)" class="btn btn--primary">Notre histoire</a>
                 </div>
-                <img src="https://static.vecteezy.com/system/resources/previews/059/709/783/non_2x/the-red-house-logo-design-real-estate-houses-house-logo-building-logos-business-concept-inspirations-template-element-vector.jpg"
+                <img src="assets/img/logo.jpg"
                     alt="équipe de construction" class="about__img">
             </div>
         </section>
@@ -517,7 +518,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div
                         class="group relative bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300">
                         <div class="h-64 overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUZykXWyPhpeEHDLC899dOeA0TK0INIPOijg&s"
                                 alt="Bâtiment Industriel"
                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         </div>
@@ -548,7 +549,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div
                         class="group relative bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300">
                         <div class="h-64 overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+                            <img src="https://img.freepik.com/photos-gratuite/facade-rangee-immeubles-appartements-contre-ciel-bleu-clair_181624-17998.jpg?semt=ais_incoming&w=740&q=80"
                                 alt="Bâtiment Résidentiel"
                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         </div>
@@ -1067,115 +1068,145 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                     </div>
 
+                    <!-- Plafond -->
+                    <div
+                        class="group relative bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300">
+                        <div class="h-64 overflow-hidden">
+                            <img src="https://www.mon-platrier.fr/wp-content/uploads/2018/01/plafond_stuf-768x0-c-default.jpg"
+                                alt="Équipement et Nettoyage"
+                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <h3
+                                class="text-2xl font-semibold text-gray-800 group-hover:text-red-700 transition-colors duration-300">
+                                Plafond</h3>
+                            <p class="mt-2 text-gray-600 leading-relaxed">Trouvez tout type d'équipements chez nous.</p>
+
+                            <!-- Icônes de plafond -->
+                            <div class="mt-4 grid grid-cols-2 gap-3 py-3">
+                                <!-- Gyproc -->
+                                <div class="flex items-center space-x-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-700" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                                    </svg>
+                                    <span class="text-sm font-medium text-gray-700">Gyproc</span>
+                                </div>
+
+                                <!-- Timerlite -->
+                                <div class="flex items-center space-x-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-700" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <span class="text-sm font-medium text-gray-700">Timerlite</span>
+                                </div>
+
+                                <!-- Multiplex -->
+                                <div class="flex items-center space-x-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-700" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M4 6a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 3v18M15 3v18" />
+                                    </svg>
+                                    <span class="text-sm font-medium text-gray-700">Multiplex</span>
+                                </div>
+
+                                <!-- En beton -->
+                                <div class="flex items-center space-x-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-700" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                                    </svg>
+                                    <span class="text-sm font-medium text-gray-700">En beton</span>
+                                </div>
+                            </div>
+
+                            <div class="mt-5">
+                                <a href="details-produits.php"
+                                    class="inline-flex items-center gap-2 bg-red-700 hover:bg-[#053d36] text-white px-5 py-2.5 rounded-lg font-medium shadow-md transition-all duration-300">
+                                    Voir détails
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                        <div
+                            class="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-red-700 via-red-500 to-[#053d36] opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        </div>
+                    </div>
+
+
+
 
                 </div>
             </div>
         </section>
 
 
-        <!--======================= Menu (Projets) ============================-->
-        <section id="menu" class="section menu">
-            <div class="section__header">
-                <span class="section__subtitle">Nos Produits</span>
-                <h2 class="section__title">Matériaux de Construction</h2>
-                <p>Cliquer sur un produit pour votre réservation</p>
-            </div>
+     <!--======================= Menu (Projets) ============================-->
+<section id="menu" class="section menu">
+    <div class="section__header">
+        <span class="section__subtitle">Nos Produits</span>
+        <h2 class="section__title">Matériaux de Construction</h2>
+        <p>Cliquer sur un produit pour votre réservation</p>
+    </div>
 
-            <div class="menu__filter">
-                <span class="menu__item menu__item--active" data-filter="all">Tous</span>
-                <span class="menu__item" data-filter="Ciment">Ciment</span>
-                <span class="menu__item" data-filter="Bloc-ciment">Bloc-ciment</span>
-                <span class="menu__item" data-filter="Gravier">Gravier</span>
-                <span class="menu__item" data-filter="Pavé">Pavé</span>
-                <span class="menu__item" data-filter="Carreaux">Carreaux</span>
-                <span class="menu__item" data-filter="Gyproc">Gyproc</span>
-                <span class="menu__item" data-filter="Omega">Omega</span>
-                <span class="menu__item" data-filter="Chanel">Chanel</span>
-            </div>
+    <div class="menu__filter">
+        <span class="menu__item menu__item--active" data-filter="all">Tous</span>
+        <span class="menu__item" data-filter="Ciment">Ciment</span>
+        <span class="menu__item" data-filter="Bloc-ciment">Bloc-ciment</span>
+        <span class="menu__item" data-filter="Gravier">Gravier</span>
+        <span class="menu__item" data-filter="Pavé">Pavé</span>
+        <span class="menu__item" data-filter="Carreaux">Carreaux</span>
+        <span class="menu__item" data-filter="Gyproc">Gyproc</span>
+        <span class="menu__item" data-filter="Omega">Omega</span>
+        <span class="menu__item" data-filter="Chanel">Chanel</span>
+    </div>
 
-            <div class="menu__wrapper container">
-                <?php
-                try {
-                    // Récupérer TOUS les produits simplement
-                    $stmt = $conn->prepare("
+    <div class="menu__wrapper container">
+        <?php
+        try {
+            // Récupérer TOUS les produits simplement
+            $stmt = $conn->prepare("
                 SELECT id, nom, description, prix, devise, poids, quantite, image, categorie
                 FROM produits 
                 WHERE quantite > 0
                 ORDER BY id DESC
             ");
-                    $stmt->execute();
-                    $produits = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $stmt->execute();
+            $produits = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                    // Organiser les produits par NOM exact
-                    $produitsParNom = [
-                        'Ciment' => [],
-                        'Bloc-ciment' => [],
-                        'Gravier' => [],
-                        'Pavé' => [],
-                        'Carreaux' => [],
-                        'Gyproc' => [],
-                        'Omega' => [],
-                        'Chanel' => []
-                    ];
+            if (count($produits) > 0) {
+                echo '<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="productsGrid">';
 
-                    foreach ($produits as $produit) {
-                        $nomProduit = trim($produit['nom']);
+                // Afficher tous les produits
+                foreach ($produits as $row) {
+                    afficherProduit($row, $conn);
+                }
 
-                        // Vérifier si le nom correspond exactement à un des filtres
-                        $filtreTrouve = null;
-                        foreach (array_keys($produitsParNom) as $filtre) {
-                            if (stripos($nomProduit, $filtre) !== false) {
-                                $filtreTrouve = $filtre;
-                                break;
-                            }
-                        }
+                echo '</div>';
 
-                        // Si aucun filtre trouvé, mettre dans "autres"
-                        if ($filtreTrouve) {
-                            $produitsParNom[$filtreTrouve][] = $produit;
-                        }
-                    }
-
-                    // Messages pour les filtres vides
-                    $messagesFiltresVides = [
-                        'Ciment' => 'Aucun ciment disponible pour le moment',
-                        'Bloc-ciment' => 'Aucun bloc-ciment en stock',
-                        'Gravier' => 'Aucun gravier disponible',
-                        'Pavé' => 'Aucun pavé en stock',
-                        'Carreaux' => 'Aucun carreau disponible',
-                        'Gyproc' => 'Aucune plaque Gyproc en stock',
-                        'Omega' => 'Aucun profilé Omega disponible',
-                        'Chanel' => 'Aucun profilé Chanel en stock'
-                    ];
-
-                    if (count($produits) > 0) {
-                        echo '<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="productsGrid">';
-
-                        // Afficher tous les produits
-                        foreach ($produits as $row) {
-                            afficherProduit($row, $conn);
-                        }
-
-                        echo '</div>';
-
-                        // Ajouter les messages pour les filtres vides (cachés par défaut)
-                        foreach ($produitsParNom as $filtre => $produitsFiltre) {
-                            if (count($produitsFiltre) === 0) {
-                                echo '
-                        <div class="empty-filter-message hidden" data-filter="' . $filtre . '">
-                            <div class="text-center py-12 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200">
-                                <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                    <i class="fas fa-box-open text-gray-400 text-2xl"></i>
-                                </div>
-                                <h3 class="text-lg font-semibold text-gray-600 mb-2">' . $messagesFiltresVides[$filtre] . '</h3>
-                                <p class="text-gray-500 text-sm">Cette catégorie sera bientôt réapprovisionnée</p>
-                            </div>
-                        </div>
-                        ';
-                            }
-                        }
-                    } else {
-                        echo '
+                // Message général si aucun produit
+                echo '
+                <div class="empty-all-message hidden text-center py-16">
+                    <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-box-open text-gray-400 text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-600 mb-2">Aucun produit disponible</h3>
+                    <p class="text-gray-500">Les produits seront bientôt disponibles.</p>
+                </div>
+                ';
+            } else {
+                echo '
                 <div class="text-center py-16">
                     <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
                         <i class="fas fa-box-open text-gray-400 text-3xl"></i>
@@ -1184,9 +1215,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <p class="text-gray-500">Les produits seront bientôt disponibles.</p>
                 </div>
                 ';
-                    }
-                } catch (PDOException $e) {
-                    echo "
+            }
+        } catch (PDOException $e) {
+            echo "
             <div class='text-center py-8'>
                 <div class='bg-red-50 border border-red-200 rounded-lg p-6 max-w-md mx-auto'>
                     <i class='fas fa-exclamation-triangle text-red-500 text-2xl mb-3'></i>
@@ -1195,333 +1226,363 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
             </div>
             ";
+        }
+
+        // Fonction pour afficher un produit
+        function afficherProduit($row, $conn) {
+            $nomProduit = htmlspecialchars($row['nom']);
+            $description = htmlspecialchars($row['description'] ?? '');
+            $prix = floatval($row['prix']);
+            $devise = htmlspecialchars($row['devise'] ?? 'USD');
+            $poids = htmlspecialchars($row['poids'] ?? '');
+            $quantite = intval($row['quantite']);
+            $image = htmlspecialchars($row['image'] ?? '');
+
+            // Déterminer le filtre basé sur le NOM EXACT du produit
+            $filtre = 'autre';
+            $filtres = ['Ciment', 'Bloc-ciment', 'Gravier', 'Pavé', 'Carreaux', 'Gyproc', 'Omega', 'Chanel'];
+            foreach ($filtres as $f) {
+                if (stripos($nomProduit, $f) !== false) {
+                    $filtre = $f;
+                    break;
                 }
+            }
 
-                // Fonction pour afficher un produit
-                function afficherProduit($row, $conn)
-                {
-                    $nomProduit = htmlspecialchars($row['nom']);
-                    $description = htmlspecialchars($row['description'] ?? '');
-                    $prix = floatval($row['prix']);
-                    $devise = htmlspecialchars($row['devise'] ?? 'USD');
-                    $poids = htmlspecialchars($row['poids'] ?? '');
-                    $quantite = intval($row['quantite']);
-                    $image = htmlspecialchars($row['image'] ?? '');
+            // Formater le prix
+            $prixFormate = number_format($prix, $devise === 'USD' ? 2 : 0, ',', ' ');
 
-                    // Déterminer le filtre basé sur le nom du produit
-                    $filtre = 'autre';
-                    $filtres = ['Ciment', 'Bloc-ciment', 'Gravier', 'Pavé', 'Carreaux', 'Gyproc', 'Omega', 'Chanel'];
-                    foreach ($filtres as $f) {
-                        if (stripos($nomProduit, $f) !== false) {
-                            $filtre = $f;
-                            break;
-                        }
+            // Gestion du chemin d'image
+            $imagePath = "";
+            if (!empty($image)) {
+                $possiblePaths = [
+                    "admin/uploads/" . $image,
+                    "admin/" . $image,
+                    "../admin/uploads/" . $image,
+                    "../admin/" . $image,
+                    "uploads/" . $image,
+                    $image
+                ];
+
+                foreach ($possiblePaths as $path) {
+                    if (file_exists($path) && is_file($path)) {
+                        $imagePath = $path;
+                        break;
                     }
-
-                    // Formater le prix
-                    $prixFormate = number_format($prix, $devise === 'USD' ? 2 : 0, ',', ' ');
-
-                    // Gestion du chemin d'image
-                    $imagePath = "";
-                    if (!empty($image)) {
-                        // Essayer différents chemins possibles
-                        $possiblePaths = [
-                            "admin/uploads/" . $image,
-                            "admin/" . $image,
-                            "../admin/uploads/" . $image,
-                            "../admin/" . $image,
-                            "uploads/" . $image,
-                            $image
-                        ];
-
-                        foreach ($possiblePaths as $path) {
-                            if (file_exists($path) && is_file($path)) {
-                                $imagePath = $path;
-                                break;
-                            }
-                        }
-                    }
-                    ?>
-                    <div class="menu__card product-item bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200"
-                        data-filter="<?php echo $filtre; ?>" data-name="<?php echo htmlspecialchars($nomProduit); ?>">
-                        <?php if (!empty($imagePath) && file_exists($imagePath)): ?>
-                            <div class="menu__img-wrapper h-48 overflow-hidden">
-                                <img src="<?php echo $imagePath; ?>" alt="<?php echo $nomProduit; ?>"
-                                    class="menu__img w-full h-full object-cover hover:scale-105 transition-transform duration-300">
-                            </div>
-                        <?php else: ?>
-                            <div class="h-48 bg-gray-100 flex items-center justify-center">
-                                <div class="text-gray-400 text-center p-4">
-                                    <i class="fas fa-box text-4xl mb-2"></i>
-                                    <p class="text-sm"><?php echo $nomProduit; ?></p>
-                                </div>
-                            </div>
-                        <?php endif; ?>
-
-                        <div class="menu__card-body p-4">
-                            <h3 class="menu__title text-lg font-bold text-gray-800 mb-2 line-clamp-2">
-                                <?php echo $nomProduit; ?>
-                            </h3>
-
-                            <?php if (!empty($description)): ?>
-                                <p class="text-sm text-gray-600 mb-2 line-clamp-2">
-                                    <?php echo $description; ?>
-                                </p>
-                            <?php endif; ?>
-
-                            <?php if (!empty($poids)): ?>
-                                <div class="text-sm text-gray-600 mb-2 flex items-center gap-2">
-                                    <i class="fas fa-weight-hanging text-blue-500"></i>
-                                    <span class="font-medium"><?php echo $poids; ?></span>
-                                </div>
-                            <?php endif; ?>
-
-                            <div class="rating flex items-center mb-3">
-                                <?php for ($i = 0; $i < 5; $i++): ?>
-                                    <span class="rating__star text-yellow-400">
-                                        <i class="ri-star-fill text-sm"></i>
-                                    </span>
-                                <?php endfor; ?>
-                            </div>
-
-                            <div class="flex justify-between items-center mb-3">
-                                <span class="menu__price text-lg font-bold text-gray-900">
-                                    <?php echo $prixFormate; ?>
-                                    <span
-                                        class="font-semibold <?php echo $devise === 'USD' ? 'text-green-600' : 'text-blue-600'; ?> text-sm">
-                                        <?php echo $devise === 'USD' ? '$' : 'FC'; ?>
-                                    </span>
-                                </span>
-
-                                <span
-                                    class="menu__quantity text-sm px-2 py-1 rounded <?php echo $quantite > 10 ? 'bg-green-100 text-green-800' : ($quantite > 0 ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800'); ?>">
-                                    Stock: <?php echo $quantite; ?>
-                                </span>
-                            </div>
-
-                            <button
-                                onclick="ajouterAuPanier('<?php echo addslashes($nomProduit); ?>', <?php echo $prix; ?>, '<?php echo $devise; ?>', '<?php echo addslashes($poids); ?>', <?php echo $quantite; ?>, '<?php echo addslashes($imagePath); ?>')"
-                                class="bg-red-700 hover:bg-[#053d36] text-white transition-all duration-300 px-4 py-3 rounded-lg w-full font-semibold flex items-center justify-center gap-2"
-                                <?php echo $quantite === 0 ? 'disabled' : ''; ?>
-                                style="<?php echo $quantite === 0 ? 'opacity: 0.5; cursor: not-allowed; background-color: #9ca3af;' : ''; ?>">
-                                <i class="ri-shopping-cart-line"></i>
-                                <?php echo $quantite === 0 ? 'Rupture de stock' : 'Commander'; ?>
-                            </button>
+                }
+            }
+            ?>
+            <div class="menu__card product-item bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200"
+                data-filter="<?php echo $filtre; ?>" 
+                data-name="<?php echo htmlspecialchars($nomProduit); ?>">
+                
+                <?php if (!empty($imagePath) && file_exists($imagePath)): ?>
+                    <div class="menu__img-wrapper h-48 overflow-hidden">
+                        <img src="<?php echo $imagePath; ?>" alt="<?php echo $nomProduit; ?>"
+                            class="menu__img w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+                    </div>
+                <?php else: ?>
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <div class="text-gray-400 text-center p-4">
+                            <i class="fas fa-box text-4xl mb-2"></i>
+                            <p class="text-sm"><?php echo $nomProduit; ?></p>
                         </div>
                     </div>
-                    <?php
-                }
-                ?>
+                <?php endif; ?>
+
+                <div class="menu__card-body p-4">
+                    <h3 class="menu__title text-lg font-bold text-gray-800 mb-2 line-clamp-2">
+                        <?php echo $nomProduit; ?>
+                    </h3>
+
+                    <?php if (!empty($description)): ?>
+                        <p class="text-sm text-gray-600 mb-2 line-clamp-2">
+                            <?php echo $description; ?>
+                        </p>
+                    <?php endif; ?>
+
+                    <?php if (!empty($poids)): ?>
+                        <div class="text-sm text-gray-600 mb-2 flex items-center gap-2">
+                            <i class="fas fa-weight-hanging text-blue-500"></i>
+                            <span class="font-medium"><?php echo $poids; ?></span>
+                        </div>
+                    <?php endif; ?>
+
+                    <div class="rating flex items-center mb-3">
+                        <?php for ($i = 0; $i < 5; $i++): ?>
+                            <span class="rating__star text-yellow-400">
+                                <i class="ri-star-fill text-sm"></i>
+                            </span>
+                        <?php endfor; ?>
+                    </div>
+
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="menu__price text-lg font-bold text-gray-900">
+                            <?php echo $prixFormate; ?>
+                            <span class="font-semibold <?php echo $devise === 'USD' ? 'text-green-600' : 'text-blue-600'; ?> text-sm">
+                                <?php echo $devise === 'USD' ? '$' : 'FC'; ?>
+                            </span>
+                        </span>
+
+                        <span class="menu__quantity text-sm px-2 py-1 rounded <?php echo $quantite > 10 ? 'bg-green-100 text-green-800' : ($quantite > 0 ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800'); ?>">
+                            Stock: <?php echo $quantite; ?>
+                        </span>
+                    </div>
+
+                    <button
+                        onclick="ajouterAuPanier('<?php echo addslashes($nomProduit); ?>', <?php echo $prix; ?>, '<?php echo $devise; ?>', '<?php echo addslashes($poids); ?>', <?php echo $quantite; ?>, '<?php echo addslashes($imagePath); ?>')"
+                        class="bg-red-700 hover:bg-[#053d36] text-white transition-all duration-300 px-4 py-3 rounded-lg w-full font-semibold flex items-center justify-center gap-2"
+                        <?php echo $quantite === 0 ? 'disabled' : ''; ?>
+                        style="<?php echo $quantite === 0 ? 'opacity: 0.5; cursor: not-allowed; background-color: #9ca3af;' : ''; ?>">
+                        <i class="ri-shopping-cart-line"></i>
+                        <?php echo $quantite === 0 ? 'Rupture de stock' : 'Commander'; ?>
+                    </button>
+                </div>
             </div>
-        </section>
+            <?php
+        }
+        ?>
+    </div>
+</section>
 
-        <style>
-            .menu__wrapper {
-                position: relative;
-                min-height: 400px;
-            }
+<style>
+    .menu__wrapper {
+        position: relative;
+        min-height: 400px;
+    }
 
-            .menu__card {
-                transition: all 0.3s ease;
-                border: 1px solid #e5e7eb;
-            }
+    .menu__card {
+        transition: all 0.3s ease;
+        border: 1px solid #e5e7eb;
+    }
 
-            .menu__card:hover {
-                transform: translateY(-5px);
-                border-color: #dc2626;
-            }
+    .menu__card:hover {
+        transform: translateY(-5px);
+        border-color: #dc2626;
+    }
 
-            .menu__img-wrapper {
-                position: relative;
-                overflow: hidden;
-            }
+    .line-clamp-2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
 
-            .line-clamp-2 {
-                display: -webkit-box;
-                -webkit-line-clamp: 2;
-                -webkit-box-orient: vertical;
-                overflow: hidden;
-            }
+    /* Animation pour le filtrage */
+    .product-item {
+        display: block;
+        animation: fadeIn 0.3s ease-in-out;
+    }
 
-            /* Animation pour le filtrage */
-            .product-item {
-                display: block;
-                animation: fadeIn 0.5s ease-in-out;
-            }
+    .product-item.hidden {
+        display: none;
+    }
 
-            .product-item.hidden {
-                display: none;
-            }
+    .empty-filter-message {
+        display: none;
+    }
 
-            .empty-filter-message {
-                display: none;
-            }
+    .empty-filter-message.show {
+        display: block;
+        animation: fadeIn 0.3s ease-in-out;
+    }
 
-            .empty-filter-message.show {
-                display: block;
-                animation: fadeIn 0.5s ease-in-out;
-            }
+    .empty-all-message {
+        display: none;
+    }
 
-            @keyframes fadeIn {
-                from {
-                    opacity: 0;
-                    transform: translateY(20px);
-                }
+    .empty-all-message.show {
+        display: block;
+        animation: fadeIn 0.3s ease-in-out;
+    }
 
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 
-            /* Style pour les messages de filtres vides */
-            .empty-filter-message>div {
-                transition: all 0.3s ease;
-            }
+    /* Style pour le filtre */
+    .menu__item {
+        cursor: pointer;
+        padding: 8px 16px;
+        border-radius: 20px;
+        transition: all 0.3s ease;
+        border: 1px solid #e5e7eb;
+    }
 
-            .empty-filter-message>div:hover {
-                border-color: #9ca3af;
-                background-color: #f9fafb;
-            }
+    .menu__item:hover {
+        background-color: #f3f4f6;
+    }
 
-            /* Responsive grid */
-            @media (max-width: 640px) {
-                .grid-cols-1 {
-                    grid-template-columns: 1fr;
-                }
-            }
+    .menu__item--active {
+        background-color: #dc2626;
+        color: white;
+        border-color: #dc2626;
+    }
 
-            @media (min-width: 641px) and (max-width: 1024px) {
-                .grid-cols-2 {
-                    grid-template-columns: repeat(2, 1fr);
-                }
-            }
+    /* Loading state */
+    .menu__wrapper.loading {
+        opacity: 0.7;
+        pointer-events: none;
+    }
+</style>
 
-            @media (min-width: 1025px) and (max-width: 1280px) {
-                .grid-cols-3 {
-                    grid-template-columns: repeat(3, 1fr);
-                }
-            }
+<script>
+// Script de filtrage par NOM du produit - VERSION RAPIDE
+document.addEventListener('DOMContentLoaded', function () {
+    const filterItems = document.querySelectorAll('.menu__item');
+    const productItems = document.querySelectorAll('.product-item');
+    const productsGrid = document.getElementById('productsGrid');
+    const emptyAllMessage = document.querySelector('.empty-all-message');
+    const menuWrapper = document.querySelector('.menu__wrapper');
 
-            @media (min-width: 1281px) {
-                .grid-cols-4 {
-                    grid-template-columns: repeat(4, 1fr);
-                }
-            }
+    // Messages pour les filtres vides
+    const filterMessages = {
+        'Ciment': 'Aucun produit au nom de "Ciment" trouvé',
+        'Bloc-ciment': 'Aucun produit au nom de "Bloc-ciment" trouvé',
+        'Gravier': 'Aucun produit au nom de "Gravier" trouvé',
+        'Pavé': 'Aucun produit au nom de "Pavé" trouvé',
+        'Carreaux': 'Aucun produit au nom de "Carreaux" trouvé',
+        'Gyproc': 'Aucun produit au nom de "Gyproc" trouvé',
+        'Omega': 'Aucun produit au nom de "Omega" trouvé',
+        'Chanel': 'Aucun produit au nom de "Chanel" trouvé'
+    };
 
-            /* Style pour le filtre */
-            .menu__item {
-                cursor: pointer;
-                padding: 8px 16px;
-                border-radius: 20px;
-                transition: all 0.3s ease;
-                border: 1px solid #e5e7eb;
-            }
+    function filterProducts(filterValue) {
+        // Effet de loading léger
+        menuWrapper.classList.add('loading');
+        
+        // Utiliser setTimeout pour permettre le rendu
+        setTimeout(() => {
+            let hasVisibleProducts = false;
+            let hasProductsInFilter = false;
 
-            .menu__item:hover {
-                background-color: #f3f4f6;
-            }
-
-            .menu__item--active {
-                background-color: #dc2626;
-                color: white;
-                border-color: #dc2626;
-            }
-        </style>
-
-        <script>
-            // Script de filtrage par NOM du produit
-            document.addEventListener('DOMContentLoaded', function () {
-                const filterItems = document.querySelectorAll('.menu__item');
-                const productItems = document.querySelectorAll('.product-item');
-                const emptyMessages = document.querySelectorAll('.empty-filter-message');
-                const productsGrid = document.getElementById('productsGrid');
-
-                function filterProducts(filterValue) {
-                    let hasProductsInFilter = false;
-
-                    // Cacher tous les produits et messages
-                    productItems.forEach(item => {
-                        item.classList.add('hidden');
-                    });
-
-                    emptyMessages.forEach(message => {
-                        message.classList.remove('show');
-                        message.style.display = 'none';
-                    });
-
-                    // Afficher la grille de produits
-                    if (productsGrid) {
-                        productsGrid.style.display = 'grid';
-                    }
-
-                    if (filterValue === 'all') {
-                        // Afficher tous les produits
-                        productItems.forEach(item => {
-                            item.classList.remove('hidden');
-                        });
-                    } else {
-                        // Afficher seulement les produits qui correspondent au filtre
-                        productItems.forEach(item => {
-                            const itemFilter = item.getAttribute('data-filter');
-                            if (itemFilter === filterValue) {
-                                item.classList.remove('hidden');
-                                hasProductsInFilter = true;
-                            }
-                        });
-
-                        // Si aucun produit dans le filtre, afficher le message
-                        if (!hasProductsInFilter) {
-                            const emptyMessage = document.querySelector(`.empty-filter-message[data-filter="${filterValue}"]`);
-                            if (emptyMessage) {
-                                // Cacher la grille et afficher le message
-                                if (productsGrid) {
-                                    productsGrid.style.display = 'none';
-                                }
-                                emptyMessage.style.display = 'block';
-                                emptyMessage.classList.add('show');
-                            }
-                        }
-                    }
-                }
-
-                filterItems.forEach(item => {
-                    item.addEventListener('click', function () {
-                        // Retirer la classe active de tous les items
-                        filterItems.forEach(i => i.classList.remove('menu__item--active'));
-                        // Ajouter la classe active à l'item cliqué
-                        this.classList.add('menu__item--active');
-
-                        const filterValue = this.getAttribute('data-filter');
-                        filterProducts(filterValue);
-                    });
-                });
-
-                // Afficher tous les produits au chargement
-                filterProducts('all');
+            // Cacher tous les produits d'abord
+            productItems.forEach(item => {
+                item.classList.add('hidden');
             });
 
-            // Fonction pour recharger les produits
-            function reloadProducts() {
-                const productItems = document.querySelectorAll('.product-item');
-                const emptyMessages = document.querySelectorAll('.empty-filter-message');
+            // Cacher les messages
+            if (emptyAllMessage) {
+                emptyAllMessage.classList.remove('show');
+            }
 
-                // Réinitialiser l'affichage
+            if (filterValue === 'all') {
+                // Afficher TOUS les produits
                 productItems.forEach(item => {
                     item.classList.remove('hidden');
+                    hasVisibleProducts = true;
                 });
 
-                emptyMessages.forEach(message => {
-                    message.classList.remove('show');
-                    message.style.display = 'none';
+                // Si aucun produit visible, afficher message général
+                if (!hasVisibleProducts && emptyAllMessage) {
+                    emptyAllMessage.classList.add('show');
+                }
+            } else {
+                // Filtrer par NOM du produit
+                productItems.forEach(item => {
+                    const itemFilter = item.getAttribute('data-filter');
+                    if (itemFilter === filterValue) {
+                        item.classList.remove('hidden');
+                        hasVisibleProducts = true;
+                        hasProductsInFilter = true;
+                    }
                 });
 
-                // Remettre le filtre "Tous" actif
-                const filterItems = document.querySelectorAll('.menu__item');
-                filterItems.forEach(i => i.classList.remove('menu__item--active'));
-                document.querySelector('.menu__item[data-filter="all"]').classList.add('menu__item--active');
+                // Si aucun produit dans ce filtre, afficher message spécifique
+                if (!hasProductsInFilter) {
+                    showEmptyFilterMessage(filterValue);
+                }
             }
-        </script>
+
+            menuWrapper.classList.remove('loading');
+        }, 50);
+    }
+
+    function showEmptyFilterMessage(filterValue) {
+        // Supprimer tout message existant
+        const existingMessage = document.querySelector('.empty-filter-message');
+        if (existingMessage) {
+            existingMessage.remove();
+        }
+
+        // Créer le nouveau message
+        const messageHTML = `
+            <div class="empty-filter-message show text-center py-16">
+                <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-search text-gray-400 text-3xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-600 mb-2">${filterMessages[filterValue] || 'Aucun produit trouvé'}</h3>
+                <p class="text-gray-500 mb-4">Veuillez essayer une autre catégorie</p>
+                <button onclick="showAllProducts()" class="bg-red-700 hover:bg-[#053d36] text-white px-6 py-2 rounded-lg transition">
+                    Voir tous les produits
+                </button>
+            </div>
+        `;
+
+        productsGrid.insertAdjacentHTML('afterend', messageHTML);
+    }
+
+    // Fonction globale pour afficher tous les produits
+    window.showAllProducts = function() {
+        filterItems.forEach(item => item.classList.remove('menu__item--active'));
+        document.querySelector('.menu__item[data-filter="all"]').classList.add('menu__item--active');
+        filterProducts('all');
+        
+        // Supprimer le message de filtre vide
+        const emptyMessage = document.querySelector('.empty-filter-message');
+        if (emptyMessage) {
+            emptyMessage.remove();
+        }
+    };
+
+    filterItems.forEach(item => {
+        item.addEventListener('click', function () {
+            // Retirer la classe active de tous les items
+            filterItems.forEach(i => i.classList.remove('menu__item--active'));
+            // Ajouter la classe active à l'item cliqué
+            this.classList.add('menu__item--active');
+
+            const filterValue = this.getAttribute('data-filter');
+            filterProducts(filterValue);
+
+            // Supprimer tout message de filtre précédent
+            const existingMessage = document.querySelector('.empty-filter-message');
+            if (existingMessage && filterValue !== 'all') {
+                existingMessage.remove();
+            }
+        });
+    });
+
+    // Afficher tous les produits au chargement
+    filterProducts('all');
+});
+
+// Fonction pour recharger les produits
+function reloadProducts() {
+    const productItems = document.querySelectorAll('.product-item');
+    const emptyMessages = document.querySelectorAll('.empty-filter-message, .empty-all-message');
+
+    // Réinitialiser l'affichage
+    productItems.forEach(item => {
+        item.classList.remove('hidden');
+    });
+
+    emptyMessages.forEach(message => {
+        message.classList.remove('show');
+    });
+
+    // Remettre le filtre "Tous" actif
+    const filterItems = document.querySelectorAll('.menu__item');
+    filterItems.forEach(i => i.classList.remove('menu__item--active'));
+    document.querySelector('.menu__item[data-filter="all"]').classList.add('menu__item--active');
+}
+</script>
         <!--======================= Testimonial ============================-->
         <section id="testimonial" class="section testimonial">
             <div class="section__header">
@@ -1987,81 +2048,76 @@ Cet email a été envoyé depuis le formulaire de contact du site web Johnson Co
 
 
     <!--======================= Footer ============================-->
-    <footer class="footer">
-        <div class="d-grid footer__wrapper container p-6">
-            <div class="footer__content">
-                <h4 class="footer__brand"><span>Johnson</span> Construction</h4>
-                <p class="footer__description">Des constructions durables, réalisées avec professionnalisme et
-                    transparence.</p>
-                <ul class="social__list footer__list">
-                    <li class="social__item">
-                        <a href="javascript:void(0)" class="social__link">
-                            <i class="ri-facebook-fill"></i>
-                        </a>
-                    </li>
-                    <li class="social__item">
-                        <a href="javascript:void(0)" class="social__link">
-                            <i class="ri-linkedin-fill"></i>
-                        </a>
-                    </li>
-                    <li class="social__item">
-                        <a href="javascript:void(0)" class="social__link">
-                            <i class="ri-twitter-fill"></i>
-                        </a>
-                    </li>
-                </ul>
+      <footer class="footer">
+            <div class="d-grid footer__wrapper container p-6">
+                <div class="footer__content">
+                    <h4 class="footer__brand"><span>Johnson</span> Construction</h4>
+                    <p class="footer__description">Des constructions durables, réalisées avec professionnalisme et
+                        transparence.</p>
+                    <ul class="social__list footer__list">
+                        <li class="social__item">
+                            <a href="javascript:void(0)" class="social__link">
+                                <i class="ri-facebook-fill"></i>
+                            </a>
+                        </li>
+                        <li class="social__item">
+                            <a href="javascript:void(0)" class="social__link">
+                                <i class="ri-linkedin-fill"></i>
+                            </a>
+                        </li>
+                        <li class="social__item">
+                            <a href="javascript:void(0)" class="social__link">
+                                <i class="ri-twitter-fill"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="footer__content">
+                    <h4 class="footer__title">Nos Services</h4>
+                    <ul class="footer__list">
+                        <li class="footer__item">
+                            <a href="javascript:void(0)" class="footer__link">Résidentiel</a>
+                        </li>
+                        <li class="footer__item">
+                            <a href="javascript:void(0)" class="footer__link">Commercial</a>
+                        </li>
+                        <li class="footer__item">
+                            <a href="javascript:void(0)" class="footer__link">Industriel</a>
+                        </li>
+                        <li class="footer__item">
+                            <a href="javascript:void(0)" class="footer__link">Autres</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="footer__content">
+                    <h4 class="footer__title">Liens rapides</h4>
+                    <ul class="footer__list">
+                        <li class="footer__item">
+                            <a href="#feature" class="footer__link">Services</a>
+                        </li>
+                        <li class="footer__item">
+                            <a href="#about" class="footer__link">À propos</a>
+                        </li>
+                        <li class="footer__item">
+                            <a href="#testimonial" class="footer__link">Témoignages</a>
+                        </li>
+                        <li class="footer__item">
+                            <a href="#blog" class="footer__link">Actualités</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="footer__content">
+                    <h4 class="footer__title">Support</h4>
+                    <ul class="footer__list">
+                        <li class="footer__item">
+                            <a href="https://wa.me/243851653923?text=Bonjour, Bonjour, j'aimerais prendre rendez-vous." class="footer__link" target="_blank">Contact</a>
+                        </li>
+                       
+                    </ul>
+                </div>
             </div>
-            <div class="footer__content">
-                <h4 class="footer__title">Nos Services</h4>
-                <ul class="footer__list">
-                    <li class="footer__item">
-                        <a href="javascript:void(0)" class="footer__link">Résidentiel</a>
-                    </li>
-                    <li class="footer__item">
-                        <a href="javascript:void(0)" class="footer__link">Commercial</a>
-                    </li>
-                    <li class="footer__item">
-                        <a href="javascript:void(0)" class="footer__link">Industriel</a>
-                    </li>
-                    <li class="footer__item">
-                        <a href="javascript:void(0)" class="footer__link">Rénovation</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="footer__content">
-                <h4 class="footer__title">Liens rapides</h4>
-                <ul class="footer__list">
-                    <li class="footer__item">
-                        <a href="#feature" class="footer__link">Services</a>
-                    </li>
-                    <li class="footer__item">
-                        <a href="#about" class="footer__link">À propos</a>
-                    </li>
-                    <li class="footer__item">
-                        <a href="#testimonial" class="footer__link">Témoignages</a>
-                    </li>
-                    <li class="footer__item">
-                        <a href="#blog" class="footer__link">Actualités</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="footer__content">
-                <h4 class="footer__title">Support</h4>
-                <ul class="footer__list">
-                    <li class="footer__item">
-                        <a href="javascript:void(0)" class="footer__link">Contact</a>
-                    </li>
-                    <li class="footer__item">
-                        <a href="javascript:void(0)" class="footer__link">Conditions</a>
-                    </li>
-                    <li class="footer__item">
-                        <a href="javascript:void(0)" class="footer__link">Vie privée</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <p class="footer__copyright">&copy; 2025 Johnson Construction. Tous droits réservés</p>
-    </footer>
+            <p class="footer__copyright">&copy; 2025 Johnson Construction. Tous droits réservés</p>
+        </footer>
 
     <!-- Modal Panier -->
     <div id="panierModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full z-50">

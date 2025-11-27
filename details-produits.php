@@ -356,6 +356,36 @@ $pieces_disponibles = [
         'Rebouchage fissures et imperfections',
         'Application primaire d\'accrochage',
         'Finition professionnelle 2 couches'
+    ],
+     // Pièces pour Plafonds
+    'Plafonds suspendus et décoratifs' => [
+        'Plafond suspendu Gyproc - Standard',
+        'Plafond Timerlite - Acoustique',
+        'Plafond Multiplex - Design',
+        'Plafond en béton - Industriel',
+        'Plafond PVC - Humidité',
+        'Plafond métallique - Technique'
+    ],
+    'Isolation acoustique plafonds' => [
+        'Isolation phonique standard',
+        'Isolation acoustique renforcée',
+        'Correction acoustique bureaux',
+        'Traitement acoustique salles'
+    ],
+    'Éclairage intégré plafonds' => [
+        'Spot LED encastrable',
+        'Éclairage indirect LED',
+        'Régulation d\'intensité',
+        'Éclairage d\'ambiance'
+    ],
+     // Types de plafonds spécifiques
+    'Types de plafonds disponibles' => [
+        'Plafond Gyproc - Standard professionnel',
+        'Plafond Timerlite - Haute performance acoustique',
+        'Plafond Multiplex - Design et modularité',
+        'Plafond en béton - Robustesse industrielle',
+        'Plafond PVC - Résistance à l\'humidité',
+        'Plafond métallique - Technique et durable'
     ]
 ];
 
@@ -365,10 +395,10 @@ $services = [
         'description' => 'Construction et aménagement de bâtiments industriels adaptés à vos activités de production, entreposage et logistique.',
         'prix' => 'Sur devis',
         'images' => [
-            'main' => 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+            'main' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUZykXWyPhpeEHDLC899dOeA0TK0INIPOijg&s',
             'thumbnails' => [
-                'https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
-                'https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80'
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKyyNPEzhAaGFV1eJuFOW1XcU3tjsP3va3bbjpyNsRI1D3fiS_eQacVkIsV-b1JbEzBnI&usqp=CAU',
+                'https://www.dbtp.fr/img/VotreProjet/BatimentIndustriel_5_w1650_h1100.jpg'
             ]
         ],
         'caracteristiques' => [
@@ -382,9 +412,9 @@ $services = [
         'description' => 'Construction de maisons individuelles, appartements et villas de standing pour votre confort familial.',
         'prix' => 'Sur devis',
         'images' => [
-            'main' => 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+            'main' => 'https://img.freepik.com/photos-gratuite/facade-rangee-immeubles-appartements-contre-ciel-bleu-clair_181624-17998.jpg?semt=ais_incoming&w=740&q=80',
             'thumbnails' => [
-                'https://images.unsplash.com/photo-1518780664697-55e3ad937233?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
+                'https://maquettesarchitecture.fr/wp-content/uploads/2017/11/Maquette-architecturale-du-b%C3%A2timent-r%C3%A9sidentiel-avec-des-d%C3%A9tails-standards-3.jpg',
                 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60'
             ]
         ],
@@ -435,7 +465,7 @@ $services = [
         'images' => [
             'main' => 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
             'thumbnails' => [
-                'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
+                'https://img.freepik.com/photos-premium/main-coupee-machine-laver-feminine_1048944-28688624.jpg?semt=ais_hybrid&w=740&q=80',
                 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80'
             ]
         ],
@@ -467,10 +497,10 @@ $services = [
         'description' => 'Services domestiques complets incluant garde, ménage, coursier, jardinage et nounou pour votre confort quotidien.',
         'prix' => 'Sur devis',
         'images' => [
-            'main' => 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+            'main' => 'https://img.wecasa.fr/v7/https://images.prismic.io/wecasa/01a37248-c348-45d8-8b72-feae84d5eb8e_aspirateur-produits-balais-menage.jpeg?func=crop&w=708&h=auto',
             'thumbnails' => [
-                'https://images.unsplash.com/photo-1581578731548-c64695cc6952?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
-                'https://images.unsplash.com/photo-1581578731548-c64695cc6952?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80'
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwrUMrmtTRu4__AUdVPDLED2MNIFgZn1rGr69xCvYobYD8bndAnHzmS2T90xhId03d_ko&usqp=CAU',
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMISRHWqVJDOD0wVJvEfoJ-_ej7iL7LPmkA_fjtQ-l-OegNvBY_F4skB4SA1MolPyG_nU&usqp=CAU'
             ]
         ],
         'caracteristiques' => [
@@ -542,8 +572,8 @@ $services = [
         'images' => [
             'main' => 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
             'thumbnails' => [
-                'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
-                'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60'
+                'https://sgl-immo.com/app/uploads/2021/05/AdobeStock_284730471-1.jpg',
+                'https://cutjhqvjma.cloudimg.io/_prod_/sweepbright-s3/35809495-36af-460a-b3f8-b94ef8f881fa--66818ab9-2b99-4a20-a9bf-fa814cf44246.jpg?p=default&ci_url_encoded=1&ci_sign=fd679369db3012d15c73d9d35a4ce748aa56111c'
             ]
         ],
         'caracteristiques' => [
@@ -561,8 +591,8 @@ $services = [
         'images' => [
             'main' => 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
             'thumbnails' => [
-                'https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
-                'https://images.unsplash.com/photo-1447877085163-3cce903855cd?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60'
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5atsgao8BqvYHr0F1bXs1lBOko98RHaKsoA&s',
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0j-voGpoAOvyo886wY3v7QvZ2jWg9V8fyRg&s'
             ]
         ],
         'caracteristiques' => [
@@ -578,10 +608,10 @@ $services = [
         'description' => 'Services professionnels de peinture pour embellir et protéger vos espaces intérieurs et extérieurs.',
         'prix' => 'Sur devis',
         'images' => [
-            'main' => 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+            'main' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdCTufm9JhbNIdJOtEb5y_2QyM7svi2Slxfw&s',
             'thumbnails' => [
-                'https://images.unsplash.com/photo-1566195992011-5f6b21e539aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
-                'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60'
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUfKjvfyOCNXhXU1Qs66pBaEU2sjwXbjE_Zg&s',
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_TpI-Usug05Oo47v-JhOAwPBGyr1SlrTOIQ&s'
             ]
         ],
         'caracteristiques' => [
@@ -590,7 +620,27 @@ $services = [
             'Décoration murale et effets spéciaux',
             'Rénovation et rafraîchissement'
         ]
+    ],
+    // NOUVEAU SERVICE - Plafonds
+    14 => [
+        'nom' => 'Installation de Plafonds',
+        'description' => 'Installation professionnelle de tous types de plafonds : gyproc, Timerlite, Multiplex, En beton avec une finition parfaite.',
+        'prix' => 'Sur devis',
+        'images' => [
+            'main' => 'https://www.mon-platrier.fr/wp-content/uploads/2018/01/plafond_stuf-768x0-c-default.jpg',
+            'thumbnails' => [
+                'https://laboutiquedemei.fr/img/cms/Plafond/2018/plafond%20platre%20bas%20relief%20per1%20450.jpg',
+                'https://www.deco.fr/sites/default/files/styles/1200x675/public/2019-11/plafond-suspendu.jpg'
+            ]
+        ],
+        'caracteristiques' => [
+            'Plafonds suspendus et décoratifs',
+            'Isolation acoustique plafonds',
+            'Éclairage intégré plafonds',
+            'Types de plafonds disponibles'
+        ]
     ]
+
 ];
 
 $service_actuel = $services[$_GET['id'] ?? 1] ?? $services[1];
@@ -608,6 +658,7 @@ $service_actuel = $services[$_GET['id'] ?? 1] ?? $services[1];
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="assets/img/logo.jpg" type="image/x-icon">
 
     <!--============== Remixicons  =============-->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
@@ -946,7 +997,7 @@ $service_actuel = $services[$_GET['id'] ?? 1] ?? $services[1];
                             <div
                                 class="rounded-xl overflow-hidden border border-gray-200 hover:border-red-500 transition cursor-pointer">
                                 <img src="<?= $thumbnail ?>" alt="<?= $service_actuel['nom'] ?>"
-                                    class="w-full h-28 object-cover hover:scale-110 transition duration-300 thumbnail">
+                                    class="w-full h-56 object-cover hover:scale-110 transition duration-300 thumbnail">
                             </div>
                         <?php endforeach; ?>
                     </div>
@@ -991,7 +1042,7 @@ $service_actuel = $services[$_GET['id'] ?? 1] ?? $services[1];
                                     <!-- Section des pièces disponibles -->
                                     <?php if (isset($pieces_disponibles[$caracteristique])): ?>
                                         <div class="pieces-disponibles" id="pieces-<?= $index ?>">
-                                            <h4 class="font-semibold text-gray-800 mb-3 text-sm">Pièces disponibles :</h4>
+                                            <h4 class="font-semibold text-gray-800 mb-3 text-sm">disponibles :</h4>
                                             <div class="space-y-2">
                                                 <?php foreach ($pieces_disponibles[$caracteristique] as $piece): ?>
                                                     <div class="piece-item text-[14px]">
@@ -1097,7 +1148,7 @@ $service_actuel = $services[$_GET['id'] ?? 1] ?? $services[1];
                             <a href="javascript:void(0)" class="footer__link">Industriel</a>
                         </li>
                         <li class="footer__item">
-                            <a href="javascript:void(0)" class="footer__link">Rénovation</a>
+                            <a href="javascript:void(0)" class="footer__link">Autres</a>
                         </li>
                     </ul>
                 </div>
@@ -1122,14 +1173,9 @@ $service_actuel = $services[$_GET['id'] ?? 1] ?? $services[1];
                     <h4 class="footer__title">Support</h4>
                     <ul class="footer__list">
                         <li class="footer__item">
-                            <a href="javascript:void(0)" class="footer__link">Contact</a>
+                            <a href="https://wa.me/243851653923?text=Bonjour, Bonjour, j'aimerais prendre rendez-vous." class="footer__link" target="_blank">Contact</a>
                         </li>
-                        <li class="footer__item">
-                            <a href="javascript:void(0)" class="footer__link">Conditions</a>
-                        </li>
-                        <li class="footer__item">
-                            <a href="javascript:void(0)" class="footer__link">Vie privée</a>
-                        </li>
+                       
                     </ul>
                 </div>
             </div>
