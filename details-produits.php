@@ -357,7 +357,7 @@ $pieces_disponibles = [
         'Application primaire d\'accrochage',
         'Finition professionnelle 2 couches'
     ],
-     // Pièces pour Plafonds
+    // Pièces pour Plafonds
     'Plafonds suspendus et décoratifs' => [
         'Plafond suspendu Gyproc - Standard',
         'Plafond Timerlite - Acoustique',
@@ -378,7 +378,7 @@ $pieces_disponibles = [
         'Régulation d\'intensité',
         'Éclairage d\'ambiance'
     ],
-     // Types de plafonds spécifiques
+    // Types de plafonds spécifiques
     'Types de plafonds disponibles' => [
         'Plafond Gyproc - Standard professionnel',
         'Plafond Timerlite - Haute performance acoustique',
@@ -386,6 +386,36 @@ $pieces_disponibles = [
         'Plafond en béton - Robustesse industrielle',
         'Plafond PVC - Résistance à l\'humidité',
         'Plafond métallique - Technique et durable'
+    ],
+    // Pièces pour Carrelage
+    'Carrelage sol et mur intérieur' => [
+        'Carrelage céramique standard - 30x30cm',
+        'Carrelage grès cérame - 60x60cm',
+        'Carrelage aspect bois - 20x120cm',
+        'Carrelage pierre naturelle - 40x40cm',
+        'Mosaïque décorative - 10x10cm',
+        'Carrelage antidérapant - 33x33cm'
+    ],
+    'Carrelage extérieur et terrasse' => [
+        'Carrelage extérieur grès émaillé - 50x50cm',
+        'Dalles terrasse antidérapantes - 60x60cm',
+        'Carrelage pour piscine - 30x30cm',
+        'Dalles béton extérieur - 40x40cm'
+    ],
+    'Pose et installation professionnelle' => [
+        'Préparation et ragréage du sol',
+        'Pose droite traditionnelle',
+        'Pose diagonale (en diagonale)',
+        'Pose avec joints de dilatation',
+        'Pose avec motifs décoratifs',
+        'Finition joints époxy'
+    ],
+    'Rénovation et remplacement' => [
+        'Démolition ancien carrelage',
+        'Réparation sous-couche',
+        'Remplacement pièce par pièce',
+        'Rénovation joints anciens',
+        'Nettoyage et imperméabilisation'
     ]
 ];
 
@@ -582,9 +612,9 @@ $services = [
             'Maisons commerciales',
             'Contrats flexibles'
         ]
-        ],
+    ],
 
-     12 => [
+    12 => [
         'nom' => 'Services de Mariage',
         'description' => 'Organisation complète de votre mariage avec une équipe professionnelle pour un jour inoubliable.',
         'prix' => 'Sur devis',
@@ -638,6 +668,25 @@ $services = [
             'Isolation acoustique plafonds',
             'Éclairage intégré plafonds',
             'Types de plafonds disponibles'
+        ]
+    ],
+    // NOUVEAU SERVICE - Carrelage
+    15 => [
+        'nom' => 'Services de Carrelage',
+        'description' => 'Pose et rénovation de carrelage pour sols et murs, avec un large choix de matériaux et de designs pour tous vos espaces.',
+        'prix' => 'Sur devis',
+        'images' => [
+            'main' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHOGFMEWQlN9riCljaBtp49shwSvJRBhw1Iw&s',
+            'thumbnails' => [
+                'https://www.torchio.fr/data/redactor/image/torchio-tendances-xxl.png',
+                'https://www.espace-aubade.fr/uploads/blog/picture/630x410/le-carrelage-un-revetement-au-top-des-tendances.jpg'
+            ]
+        ],
+        'caracteristiques' => [
+            'Carrelage sol et mur intérieur',
+            'Carrelage extérieur et terrasse',
+            'Pose et installation professionnelle',
+            'Rénovation et remplacement'
         ]
     ]
 
@@ -1173,9 +1222,10 @@ $service_actuel = $services[$_GET['id'] ?? 1] ?? $services[1];
                     <h4 class="footer__title">Support</h4>
                     <ul class="footer__list">
                         <li class="footer__item">
-                            <a href="https://wa.me/243851653923?text=Bonjour, Bonjour, j'aimerais prendre rendez-vous." class="footer__link" target="_blank">Contact</a>
+                            <a href="https://wa.me/243851653923?text=Bonjour, Bonjour, j'aimerais prendre rendez-vous."
+                                class="footer__link" target="_blank">Contact</a>
                         </li>
-                       
+
                     </ul>
                 </div>
             </div>
