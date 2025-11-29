@@ -958,12 +958,7 @@ $service_actuel = $services[$_GET['id'] ?? 1] ?? $services[1];
                     }
                 </script>
 
-                <!-- Panier -->
-                <div class="nav__icon shop__icon">
-                    <i class="ri-shopping-bag-line"></i>
-                    <span class="shop__number">0</span>
-                </div>
-
+              
                 <!-- Toggle menu -->
                 <div class="nav__icon nav__toggle">
                     <i id="nav-toggle" class="ri-menu-3-line"></i>

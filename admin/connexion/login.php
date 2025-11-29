@@ -84,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <div class="flex w-full lg:w-2/5 items-center justify-center bg-white p-10 lg:px-20 **h-full**">
             <div class="w-full">
-                <h2 class="text-center text-xl font-bold" style="color: #673DE6;">JOSHNSON Jr CONSTRUCTION</h2>
+                <h2 class="text-center text-xl font-bold" style="color: #673DE6;">JOHNSON Jr CONSTRUCTION</h2>
                 <div class="text-center mb-6">
                     <!-- Icône de construction au lieu du logo image -->
                     <div

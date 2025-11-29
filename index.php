@@ -486,7 +486,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="about__content">
                     <span class="about__subtitle">À propos</span>
                     <h2 class="about__title">Expertise en construction depuis 2010</h2>
-                    <p class="about__description">Johnson Construction est une entreprise familiale spécialisée dans la
+                    <p class="about__description">Johnson Jr Construction est une entreprise familiale spécialisée dans
+                        la
                         construction clé en main.
                         Nous combinons savoir-faire, innovation et respect des normes pour livrer des bâtiments durables
                         et performants.
@@ -1716,47 +1717,58 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="text-center mb-12">
             <span class="text-red-700 font-semibold text-lg uppercase tracking-wide">Contactez-nous</span>
             <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mt-2">Prêt à démarrer votre projet ?</h2>
+            <p class="mt-4 text-gray-600 max-w-2xl mx-auto">
+                Contactez-nous directement pour discuter de votre projet et obtenir un devis personnalisé.
+            </p>
         </div>
 
         <div class="container mx-auto grid md:grid-cols-2 gap-10 px-6 lg:px-20">
-            <!-- Formulaire -->
-            <form id="contactForm" class="bg-white p-8 rounded-2xl shadow-lg space-y-5">
-                <!-- Messages dynamiques -->
-                <div id="formMessages"></div>
+            <!-- Boutons de contact direct -->
+            <div class="bg-white p-8 rounded-2xl shadow-lg">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-6">Contact direct</h3>
+                <p class="text-gray-600 mb-6 leading-relaxed">
+                    Prenez contact avec nous immédiatement via les canaux les plus rapides.
+                    Notre équipe est disponible pour répondre à toutes vos questions.
+                </p>
 
-                <div>
-                    <label for="name" class="block text-gray-700 font-semibold mb-1">Votre nom</label>
-                    <input type="text" id="name" name="name" placeholder="Entrez votre nom"
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-200"
-                        required>
-                    <span id="nameError" class="text-red-600 text-sm hidden">Veuillez entrer votre nom</span>
-                </div>
+                <div class="space-y-4">
+                    <!-- Appel téléphonique -->
+                    <a href="tel:+243851653923"
+                        class="w-full bg-[#128C7E] hover:bg-green-700 text-white py-4 px-6 rounded-xl font-semibold transition duration-300 flex items-center justify-center space-x-3 shadow-lg hover:shadow-xl">
+                        <i class="ri-phone-fill text-xl"></i>
+                        <span>Appeler maintenant</span>
+                    </a>
 
-                <div>
-                    <label for="email" class="block text-gray-700 font-semibold mb-1">Votre email</label>
-                    <input type="email" id="email" name="email" placeholder="Entrez votre adresse email"
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-200"
-                        required>
-                    <span id="emailError" class="text-red-600 text-sm hidden">Veuillez entrer un email valide</span>
-                </div>
+                    <!-- WhatsApp -->
+                    <a href="https://wa.me/243851653923?text=Bonjour, je suis intéressé par vos services de construction."
+                        target="_blank"
+                        class="w-full bg-[#128C7E] hover:bg-[#128C7E] text-white py-4 px-6 rounded-xl font-semibold transition duration-300 flex items-center justify-center space-x-3 shadow-lg hover:shadow-xl">
+                        <i class="ri-whatsapp-fill text-xl"></i>
+                        <span>WhatsApp</span>
+                    </a>
 
-                <div>
-                    <label for="message" class="block text-gray-700 font-semibold mb-1">Votre message</label>
-                    <textarea id="message" name="message" rows="5" placeholder="Décrivez votre projet..."
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-200 resize-none"
-                        required></textarea>
-                    <span id="messageError" class="text-red-600 text-sm hidden">Veuillez entrer votre message</span>
-                </div>
+                    <!-- Email -->
+                    <a href="mailto:johnson31@outlook.fr?subject=Demande de devis&body=Bonjour, je souhaiterais obtenir un devis pour mon projet."
+                        class="w-full bg-red-700 hover:bg-[#053d36] text-white py-4 px-6 rounded-xl font-semibold transition duration-300 flex items-center justify-center space-x-3 shadow-lg hover:shadow-xl">
+                        <i class="ri-mail-fill text-xl"></i>
+                        <span>Envoyer un email</span>
+                    </a>
 
-                <button type="submit" id="submitBtn"
-                    class="w-full bg-red-700 hover:bg-[#053d36] text-white py-3 rounded-lg transition duration-300 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed">
-                    <i class="ri-send-plane-line text-xl"></i>
-                    <span id="submitText">Envoyer</span>
-                    <div id="loadingSpinner" class="hidden">
-                        <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                    <!-- Visite sur place -->
+                    <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mt-6">
+                        <div class="flex items-start space-x-3">
+                            <i class="ri-map-pin-2-line text-blue-600 text-xl mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold text-blue-800 mb-2">Visite sur place</h4>
+                                <p class="text-blue-700 text-sm">
+                                    Prenez rendez-vous pour une visite de nos installations ou pour une consultation sur
+                                    votre chantier.
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                </button>
-            </form>
+                </div>
+            </div>
 
             <!-- Informations de contact -->
             <div class="bg-white p-8 rounded-2xl shadow-lg flex flex-col justify-center">
@@ -1768,24 +1780,59 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <ul class="space-y-4 text-gray-700">
                     <li class="flex items-center space-x-3">
                         <i class="ri-map-pin-2-line text-red-700 text-2xl"></i>
-                        <span><strong>Adresse :</strong> Camps scout :avenue Lupopo/7/kassapa/ annexe</span>
+                        <span><strong>Adresse :</strong> Camps scout : avenue Lupopo/7/kassapa/ annexe</span>
                     </li>
                     <li class="flex items-center space-x-3">
                         <i class="ri-phone-line text-red-700 text-2xl"></i>
-                        <a href="tel:0975413369" class="hover:text-red-700 transition duration-200"><strong>Téléphone
-                                :</strong> +243 975 413 369</a>
+                        <a href="tel:+243975413369" class="hover:text-red-700 transition duration-200">
+                            <strong>Téléphone :</strong> +243 975 413 369
+                        </a>
+                    </li>
+                    <li class="flex items-center space-x-3">
+                        <i class="ri-whatsapp-line text-red-700 text-2xl"></i>
+                        <a href="https://wa.me/243975413369" target="_blank"
+                            class="hover:text-red-700 transition duration-200">
+                            <strong>WhatsApp :</strong> +243 975 413 369
+                        </a>
                     </li>
                     <li class="flex items-center space-x-3">
                         <i class="ri-mail-line text-red-700 text-2xl"></i>
-                        <a href="mailto:johnson31@outlook.fr"
-                            class="hover:text-red-700 transition duration-200"><strong>Email :</strong>
-                            johnson31@outlook.fr</a>
+                        <a href="mailto:johnson31@outlook.fr" class="hover:text-red-700 transition duration-200">
+                            <strong>Email :</strong> johnson31@outlook.fr
+                        </a>
                     </li>
                     <li class="flex items-center space-x-3">
                         <i class="ri-time-line text-red-700 text-2xl"></i>
                         <span><strong>Horaires :</strong> Lundi–Vendredi 8:00 - 18:00</span>
                     </li>
+                    <li class="flex items-center space-x-3">
+                        <i class="ri-calendar-line text-red-700 text-2xl"></i>
+                        <span><strong>Week-end :</strong> Sur rendez-vous</span>
+                    </li>
                 </ul>
+
+                <!-- Réseaux sociaux -->
+                <div class="mt-8 pt-6 border-t border-gray-200">
+                    <h4 class="font-semibold text-gray-800 mb-4">Suivez-nous</h4>
+                    <div class="flex space-x-4">
+                        <a href="javascript:void(0)"
+                            class="w-10 h-10 bg-blue-600 hover:bg-blue-700 text-white rounded-full flex items-center justify-center transition duration-200">
+                            <i class="ri-facebook-fill"></i>
+                        </a>
+                        <a href="javascript:void(0)"
+                            class="w-10 h-10 bg-blue-400 hover:bg-blue-500 text-white rounded-full flex items-center justify-center transition duration-200">
+                            <i class="ri-twitter-fill"></i>
+                        </a>
+                        <a href="javascript:void(0)"
+                            class="w-10 h-10 bg-blue-700 hover:bg-blue-800 text-white rounded-full flex items-center justify-center transition duration-200">
+                            <i class="ri-linkedin-fill"></i>
+                        </a>
+                        <a href="javascript:void(0)"
+                            class="w-10 h-10 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center transition duration-200">
+                            <i class="ri-instagram-fill"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -2235,224 +2282,488 @@ Cet email a été envoyé depuis le formulaire de contact du site web Johnson Co
     <!--=================== Main JS ====================-->
     <script src="assets/js/main.js"> </script>
 
-    <!--=================== Panier JS ====================-->
-    <script src="assets/js/panier.js"></script>
+
     <!--=================== Search JS ====================-->
     <script src="assets/js/search.js"> </script>
 
+    <!--=================== Panier JS Intégré ====================-->
     <script>
-        // MODIFICATION : Mise à jour de la fonction ajouterAuPanier pour inclure devise, poids et image
-        function ajouterAuPanier(nom, prix, devise, poids, quantite, image) {
-            // Vérifier si l'utilisateur est connecté
-            <?php if (!isset($_SESSION['user_id'])): ?>
-                showStyledAlert('Veuillez vous connecter pour ajouter des produits au panier.', 'warning');
-                return;
+        (function () {
+            // Variable globale pour l'état de connexion
+            <?php if (isset($_SESSION['user_id'])): ?>
+                const estConnecte = true;
+                const userId = <?php echo $_SESSION['user_id']; ?>;
+            <?php else: ?>
+                const estConnecte = false;
+                const userId = null;
             <?php endif; ?>
 
-            // Vérifier la disponibilité
-            if (quantite <= 0) {
-                showStyledAlert('Ce produit est actuellement en rupture de stock.', 'error');
-                return;
-            }
+            const state = {
+                panier: []
+            };
 
-            // Récupérer le panier existant ou en créer un nouveau
-            let panier = JSON.parse(localStorage.getItem('panier')) || [];
-
-            // Vérifier si le produit est déjà dans le panier
-            const produitExistant = panier.find(item => item.nom === nom);
-
-            if (produitExistant) {
-                if (produitExistant.quantitePanier >= quantite) {
-                    showStyledAlert('Quantité maximale disponible atteinte pour ce produit.', 'warning');
-                    return;
-                }
-                produitExistant.quantitePanier += 1;
-            } else {
-                // MODIFICATION : Ajout de devise, poids et image dans l'objet produit
-                panier.push({
-                    nom: nom,
-                    prix: prix,
-                    devise: devise,
-                    poids: poids,
-                    quantiteDisponible: quantite,
-                    quantitePanier: 1,
-                    image: image // L'image est maintenant correctement incluse
+            function miseAJourCompteur() {
+                const nombreArticles = state.panier.reduce((t, it) => t + it.quantite, 0);
+                const badges = document.querySelectorAll('.shop__number');
+                badges.forEach(badge => {
+                    if (badge) badge.textContent = nombreArticles;
                 });
             }
 
-            // Sauvegarder le panier
-            localStorage.setItem('panier', JSON.stringify(panier));
+            function getImagePath(image) {
+                if (!image) return '';
 
-            // Mettre à jour le compteur du panier
-            mettreAJourCompteurPanier();
+                if (image.startsWith('uploads/')) {
+                    return "admin/" + image;
+                } else {
+                    return "admin/uploads/" + image;
+                }
+            }
 
-            // Afficher un message de confirmation
-            showNotification('Produit ajouté au panier avec succès !', 'success');
+            function mettreAJourPanier() {
+                const contenu = document.getElementById('panierContenu');
+                if (!contenu) return;
 
-            // Debug: Afficher le panier dans la console
-            console.log('Panier actuel:', panier);
-        }
+                contenu.innerHTML = '';
+                let total = 0;
 
-        function mettreAJourCompteurPanier() {
-            const panier = JSON.parse(localStorage.getItem('panier')) || [];
-            const totalItems = panier.reduce((sum, item) => sum + item.quantitePanier, 0);
+                if (state.panier.length === 0) {
+                    contenu.innerHTML = `
+                    <div class="text-center py-8 text-gray-500">
+                        <i class="ri-shopping-cart-line text-4xl mb-2"></i>
+                        <p>Votre panier est vide</p>
+                    </div>
+                `;
+                } else {
+                    state.panier.forEach(item => {
+                        const sousTotal = item.prix * item.quantite;
+                        total += sousTotal;
 
-            // Sélectionner tous les éléments avec la classe shop__number
-            const compteursPanier = document.querySelectorAll('.shop__number');
-            compteursPanier.forEach(compteur => {
-                compteur.textContent = totalItems;
-            });
-        }
+                        const imagePath = getImagePath(item.image);
+                        // Échappement sécurisé pour les noms de produits
+                        const nomEchappe = item.nom.replace(/'/g, "\\'").replace(/"/g, '\\"').replace(/`/g, '\\`');
 
-        function showStyledAlert(message, type = 'warning') {
-            // Supprimer les alertes existantes
-            const existingAlerts = document.querySelectorAll('.custom-alert');
-            existingAlerts.forEach(alert => alert.remove());
+                        contenu.innerHTML += `
+                        <div class="flex items-center justify-between mb-4 border-b pb-4">
+                            <div class="flex items-center space-x-3 flex-1">
+                                ${imagePath ? `
+                                    <img src="${imagePath}" alt="${item.nom.replace(/"/g, '&quot;')}" 
+                                         class="w-16 h-16 object-cover rounded border"
+                                         onerror="this.style.display='none'">
+                                    <div class="w-16 h-16 bg-gray-200 rounded border flex items-center justify-center" style="display: none;">
+                                        <i class="ri-image-line text-gray-400"></i>
+                                    </div>
+                                ` : `
+                                    <div class="w-16 h-16 bg-gray-200 rounded border flex items-center justify-center">
+                                        <i class="ri-image-line text-gray-400"></i>
+                                    </div>
+                                `}
+                                <div class="flex-1">
+                                    <h4 class="font-medium text-gray-800">${item.nom}</h4>
+                                    ${item.poids ? `<p class="text-sm text-gray-600">Poids: ${item.poids}</p>` : ''}
+                                    <p class="text-gray-700">
+                                        ${item.prix} 
+                                        <span class="font-semibold ${item.devise === 'USD' ? 'text-green-600' : 'text-red-600'}">
+                                            ${item.devise === 'USD' ? '$' : 'FC'}
+                                        </span>
+                                        × 
+                                        <input type="number" value="${item.quantite}" 
+                                               min="1" max="${item.quantiteMax}" 
+                                               onchange="changerQuantite('${nomEchappe}', this.value)"
+                                               class="w-16 border rounded px-2 py-1 text-center">
+                                    </p>
+                                    <p class="text-sm font-semibold text-blue-600">
+                                        Sous-total: ${sousTotal.toFixed(2)} ${item.devise === 'USD' ? '$' : 'FC'}
+                                    </p>
+                                </div>
+                            </div>
+                            <button onclick="supprimerDuPanier('${nomEchappe}')" 
+                                    class="text-red-500 hover:text-red-700 ml-2 p-2 rounded-full hover:bg-red-50 transition-colors">
+                                <i class="ri-delete-bin-line"></i>
+                            </button>
+                        </div>
+                    `;
+                    });
+                }
 
-            // Créer l'overlay de fond
-            const overlay = document.createElement('div');
-            overlay.className = 'fixed inset-0 bg-black bg-opacity-50 z-40 flex items-center justify-center p-4';
-            overlay.id = 'alertOverlay';
+                const totalEl = document.getElementById('panierTotal');
+                if (totalEl) totalEl.textContent = total.toFixed(2);
 
-            const alert = document.createElement('div');
-            const styles = {
-                warning: 'bg-yellow-50 border-yellow-400 text-yellow-800',
-                error: 'bg-red-50 border-red-400 text-red-800',
-                info: 'bg-blue-50 border-blue-400 text-blue-800',
-                success: 'bg-green-50 border-green-400 text-green-800'
-            };
+                const totalDevise = document.getElementById('panierTotalDevise');
+                if (totalDevise && state.panier.length > 0) {
+                    const devise = state.panier[0].devise || 'USD';
+                    totalDevise.textContent = devise === 'USD' ? '$' : 'FC';
+                }
 
-            const icons = {
-                warning: 'ri-alert-line text-yellow-600',
-                error: 'ri-close-circle-line text-red-600',
-                info: 'ri-information-line text-blue-600',
-                success: 'ri-checkbox-circle-line text-green-600'
-            };
+                miseAJourCompteur();
+            }
 
-            alert.className = `custom-alert ${styles[type]} border rounded-xl shadow-2xl max-w-md w-full mx-auto transform scale-95 opacity-0 transition-all duration-300`;
+            function showStyledAlert(message, type = 'warning') {
+                // Supprimer les alertes existantes
+                const existingAlerts = document.querySelectorAll('.custom-alert');
+                existingAlerts.forEach(alert => alert.remove());
 
-            alert.innerHTML = `
-            <div class="p-6">
-                <div class="flex items-center space-x-4">
-                    <i class="${icons[type]} text-2xl"></i>
-                    <div class="flex-1">
-                        <h3 class="font-semibold text-lg mb-1">
-                            ${type === 'warning' ? 'Attention' :
-                    type === 'error' ? 'Erreur' :
-                        type === 'success' ? 'Succès' : 'Information'}
-                        </h3>
-                        <p class="text-gray-700">${message}</p>
+                // Créer l'overlay de fond
+                const overlay = document.createElement('div');
+                overlay.className = 'fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4';
+                overlay.id = 'alertOverlay';
+
+                const alert = document.createElement('div');
+                const styles = {
+                    warning: 'bg-yellow-50 border-yellow-400 text-yellow-800',
+                    error: 'bg-red-50 border-red-400 text-red-800',
+                    info: 'bg-blue-50 border-blue-400 text-blue-800',
+                    success: 'bg-green-50 border-green-400 text-green-800'
+                };
+
+                const icons = {
+                    warning: 'ri-alert-line text-yellow-600 text-2xl',
+                    error: 'ri-close-circle-line text-red-600 text-2xl',
+                    info: 'ri-information-line text-blue-600 text-2xl',
+                    success: 'ri-checkbox-circle-line text-green-600 text-2xl'
+                };
+
+                const titles = {
+                    warning: 'Attention',
+                    error: 'Erreur',
+                    info: 'Information',
+                    success: 'Succès'
+                };
+
+                alert.className = `custom-alert ${styles[type]} border rounded-xl shadow-2xl max-w-md w-full mx-auto transform scale-95 opacity-0 transition-all duration-300`;
+
+                alert.innerHTML = `
+                <div class="p-6">
+                    <div class="flex items-center space-x-4 mb-4">
+                        <i class="${icons[type]}"></i>
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-lg mb-1">${titles[type]}</h3>
+                            <p class="text-gray-700">${message}</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-end">
+                        <button onclick="closeStyledAlert()" 
+                                class="px-6 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg font-medium transition-colors duration-200">
+                            Fermer
+                        </button>
                     </div>
                 </div>
-                <div class="flex justify-end mt-6">
-                    <button onclick="closeStyledAlert()" 
-                            class="px-6 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg font-medium transition-colors duration-200">
-                        Fermer
-                    </button>
-                </div>
-            </div>
-        `;
+            `;
 
-            overlay.appendChild(alert);
-            document.body.appendChild(overlay);
+                overlay.appendChild(alert);
+                document.body.appendChild(overlay);
 
-            // Animation d'entrée
-            setTimeout(() => {
-                alert.classList.remove('scale-95', 'opacity-0');
-                alert.classList.add('scale-100', 'opacity-100');
-            }, 100);
+                // Animation d'entrée
+                setTimeout(() => {
+                    alert.classList.remove('scale-95', 'opacity-0');
+                    alert.classList.add('scale-100', 'opacity-100');
+                }, 100);
 
-            // Auto-suppression après 5 secondes
-            setTimeout(() => {
-                closeStyledAlert();
-            }, 5000);
-        }
+                // Auto-suppression après 5 secondes
+                setTimeout(() => {
+                    closeStyledAlert();
+                }, 5000);
+            }
 
-        function closeStyledAlert() {
-            const overlay = document.getElementById('alertOverlay');
-            if (overlay) {
-                const alert = overlay.querySelector('.custom-alert');
-                if (alert) {
-                    alert.classList.remove('scale-100', 'opacity-100');
-                    alert.classList.add('scale-95', 'opacity-0');
+            function closeStyledAlert() {
+                const overlay = document.getElementById('alertOverlay');
+                if (overlay) {
+                    const alert = overlay.querySelector('.custom-alert');
+                    if (alert) {
+                        alert.classList.remove('scale-100', 'opacity-100');
+                        alert.classList.add('scale-95', 'opacity-0');
+                    }
+
+                    setTimeout(() => {
+                        if (document.body.contains(overlay)) {
+                            document.body.removeChild(overlay);
+                        }
+                    }, 300);
+                }
+            }
+
+            function ajouterAuPanier(nom, prix, devise, poids, quantiteMax, image) {
+                // Vérification de connexion utilisant la variable globale
+                if (!estConnecte) {
+                    showStyledAlert('Veuillez vous connecter pour ajouter des produits au panier.', 'warning');
+                    return;
                 }
 
-                setTimeout(() => {
-                    if (document.body.contains(overlay)) {
-                        document.body.removeChild(overlay);
+                if (quantiteMax <= 0) {
+                    showStyledAlert('Ce produit est actuellement en rupture de stock.', 'error');
+                    return;
+                }
+
+                let produit = state.panier.find(p => p.nom === nom);
+                if (produit) {
+                    if (produit.quantite < produit.quantiteMax) {
+                        produit.quantite++;
+                    } else {
+                        showStyledAlert('Quantité maximum atteinte pour ce produit', 'warning');
+                        return;
                     }
-                }, 300);
+                } else {
+                    state.panier.push({
+                        nom,
+                        prix: parseFloat(prix),
+                        devise: devise || 'USD',
+                        poids: poids || '',
+                        quantite: 1,
+                        quantiteMax: parseInt(quantiteMax),
+                        image: image || ''
+                    });
+                }
+                mettreAJourPanier();
+                showNotification('Produit ajouté au panier avec succès !', 'success');
             }
-        }
 
-        function showNotification(message, type = 'success') {
-            // Supprimer les notifications existantes
-            const existingNotifications = document.querySelectorAll('.custom-notification');
-            existingNotifications.forEach(notif => notif.remove());
+            function changerQuantite(nom, nouvelleQuantite) {
+                const produit = state.panier.find(p => p.nom === nom);
+                if (!produit) return;
 
-            const notification = document.createElement('div');
-            const styles = {
-                success: 'bg-green-600 text-white',
-                error: 'bg-red-600 text-white',
-                warning: 'bg-yellow-600 text-white',
-                info: 'bg-blue-600 text-white'
-            };
+                const q = parseInt(nouvelleQuantite) || 1;
+                if (q >= 1 && q <= produit.quantiteMax) {
+                    produit.quantite = q;
+                    mettreAJourPanier();
+                    showNotification('Quantité mise à jour', 'info');
+                } else {
+                    showStyledAlert(`Quantité invalide. Veuillez choisir entre 1 et ${produit.quantiteMax}.`, 'warning');
+                    setTimeout(() => mettreAJourPanier(), 100);
+                }
+            }
 
-            const icons = {
-                success: 'ri-checkbox-circle-line',
-                error: 'ri-close-circle-line',
-                warning: 'ri-alert-line',
-                info: 'ri-information-line'
-            };
+            function supprimerDuPanier(nom) {
+                state.panier = state.panier.filter(p => p.nom !== nom);
+                mettreAJourPanier();
+                showNotification('Produit retiré du panier', 'info');
+            }
 
-            notification.className = `custom-notification fixed top-4 right-4 ${styles[type]} px-6 py-3 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300 flex items-center space-x-2`;
+            function showNotification(message, type = 'success') {
+                // Supprimer les notifications existantes
+                const existingNotifications = document.querySelectorAll('.custom-notification');
+                existingNotifications.forEach(notif => notif.remove());
 
-            notification.innerHTML = `
-            <i class="${icons[type]}"></i>
-            <span>${message}</span>
-        `;
+                // Créer l'overlay pour les notifications aussi
+                const overlay = document.createElement('div');
+                overlay.className = 'fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4';
+                overlay.id = 'notificationOverlay';
 
-            document.body.appendChild(notification);
+                const notification = document.createElement('div');
+                const styles = {
+                    success: 'bg-green-50 border-green-400 text-green-800',
+                    error: 'bg-red-50 border-red-400 text-red-800',
+                    warning: 'bg-yellow-50 border-yellow-400 text-yellow-800',
+                    info: 'bg-blue-50 border-blue-400 text-blue-800'
+                };
 
-            // Animation d'entrée
-            setTimeout(() => {
-                notification.classList.remove('translate-x-full');
-            }, 100);
+                const icons = {
+                    success: 'ri-checkbox-circle-line text-green-600 text-2xl',
+                    error: 'ri-close-circle-line text-red-600 text-2xl',
+                    warning: 'ri-alert-line text-yellow-600 text-2xl',
+                    info: 'ri-information-line text-blue-600 text-2xl'
+                };
 
-            // Animation de sortie après 3 secondes
-            setTimeout(() => {
-                notification.classList.add('translate-x-full');
+                notification.className = `custom-notification ${styles[type]} border rounded-xl shadow-2xl max-w-md w-full mx-auto transform scale-95 opacity-0 transition-all duration-300`;
+
+                notification.innerHTML = `
+                <div class="p-6">
+                    <div class="flex items-center space-x-4">
+                        <i class="${icons[type]}"></i>
+                        <div class="flex-1">
+                            <p class="font-medium">${message}</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-end mt-4">
+                        <button onclick="closeNotification()" 
+                                class="px-6 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg font-medium transition-colors duration-200">
+                            OK
+                        </button>
+                    </div>
+                </div>
+            `;
+
+                overlay.appendChild(notification);
+                document.body.appendChild(overlay);
+
+                // Animation d'entrée
                 setTimeout(() => {
-                    if (document.body.contains(notification)) {
-                        document.body.removeChild(notification);
+                    notification.classList.remove('scale-95', 'opacity-0');
+                    notification.classList.add('scale-100', 'opacity-100');
+                }, 100);
+
+                // Auto-suppression après 3 secondes
+                setTimeout(() => {
+                    closeNotification();
+                }, 3000);
+            }
+
+            function closeNotification() {
+                const overlay = document.getElementById('notificationOverlay');
+                if (overlay) {
+                    const notification = overlay.querySelector('.custom-notification');
+                    if (notification) {
+                        notification.classList.remove('scale-100', 'opacity-100');
+                        notification.classList.add('scale-95', 'opacity-0');
                     }
-                }, 300);
-            }, 3000);
-        }
 
-        // Fonction pour afficher le contenu du panier (utile pour le débogage)
-        function afficherPanierConsole() {
-            const panier = JSON.parse(localStorage.getItem('panier')) || [];
-            console.log('Contenu du panier:', panier);
-            panier.forEach((produit, index) => {
-                console.log(`Produit ${index + 1}:`, {
-                    nom: produit.nom,
-                    prix: produit.prix,
-                    devise: produit.devise,
-                    poids: produit.poids,
-                    quantitePanier: produit.quantitePanier,
-                    image: produit.image
-                });
+                    setTimeout(() => {
+                        if (document.body.contains(overlay)) {
+                            document.body.removeChild(overlay);
+                        }
+                    }, 300);
+                }
+            }
+
+            function showPanierMessage(message, type = 'error') {
+                const messageContainer = document.getElementById('panierMessage');
+                if (!messageContainer) return;
+
+                // Supprimer les messages existants
+                messageContainer.innerHTML = '';
+
+                const styles = {
+                    error: 'bg-red-100 border-red-300 text-red-700',
+                    warning: 'bg-yellow-100 border-yellow-300 text-yellow-700',
+                    success: 'bg-green-100 border-green-300 text-green-700',
+                    info: 'bg-blue-100 border-blue-300 text-blue-700'
+                };
+
+                const icons = {
+                    error: 'ri-error-warning-line',
+                    warning: 'ri-alert-line',
+                    success: 'ri-checkbox-circle-line',
+                    info: 'ri-information-line'
+                };
+
+                const messageEl = document.createElement('div');
+                messageEl.className = `mt-3 p-4 rounded-lg border ${styles[type]} flex items-center space-x-3 animate-fade-in`;
+
+                messageEl.innerHTML = `
+                <i class="${icons[type]} text-xl"></i>
+                <div class="flex-1">
+                    <p class="font-medium">${message}</p>
+                </div>
+                <button onclick="this.parentElement.remove()" class="text-gray-500 hover:text-gray-700 transition-colors">
+                    <i class="ri-close-line"></i>
+                </button>
+            `;
+
+                messageContainer.appendChild(messageEl);
+
+                // Auto-suppression après 5 secondes
+                setTimeout(() => {
+                    if (messageEl.parentNode) {
+                        messageEl.style.opacity = '0';
+                        messageEl.style.transition = 'opacity 0.3s ease';
+                        setTimeout(() => {
+                            if (messageEl.parentNode) messageEl.remove();
+                        }, 300);
+                    }
+                }, 5000);
+            }
+
+            function ouvrirPanier() {
+                const modal = document.getElementById('panierModal');
+                if (modal) {
+                    modal.classList.remove('hidden');
+                    document.body.style.overflow = 'hidden';
+                }
+            }
+
+            function fermerPanier() {
+                const modal = document.getElementById('panierModal');
+                if (modal) {
+                    modal.classList.add('hidden');
+                    document.body.style.overflow = 'auto';
+                }
+            }
+
+            // Fonctions globales
+            window.ajouterAuPanier = ajouterAuPanier;
+            window.changerQuantite = changerQuantite;
+            window.supprimerDuPanier = supprimerDuPanier;
+            window.ouvrirPanier = ouvrirPanier;
+            window.fermerPanier = fermerPanier;
+            window.showStyledAlert = showStyledAlert;
+            window.showPanierMessage = showPanierMessage;
+            window.closeStyledAlert = closeStyledAlert;
+            window.closeNotification = closeNotification;
+
+            document.addEventListener('DOMContentLoaded', function () {
+                console.log('Panier intégré chargé - Utilisateur connecté:', estConnecte);
+
+                // Récupération des éléments
+                const shopIcon = document.querySelector('.shop__icon');
+                const fermerBtn = document.getElementById('fermerPanierBtn');
+                const continuerAchatsBtn = document.getElementById('continuerAchatsBtn');
+                const commanderBtn = document.getElementById('btnCommander');
+
+                // Événements
+                if (shopIcon) {
+                    shopIcon.addEventListener('click', ouvrirPanier);
+                }
+
+                if (fermerBtn) {
+                    fermerBtn.addEventListener('click', fermerPanier);
+                }
+
+                if (continuerAchatsBtn) {
+                    continuerAchatsBtn.addEventListener('click', fermerPanier);
+                }
+
+                if (commanderBtn) {
+                    commanderBtn.addEventListener('click', function () {
+                        const messageContainer = document.getElementById('panierMessage');
+
+                        if (messageContainer) messageContainer.innerHTML = '';
+
+                        if (state.panier.length === 0) {
+                            showPanierMessage('Votre panier est vide. Ajoutez au moins un produit avant de commander.', 'warning');
+                            return;
+                        }
+
+                        // Vérifier à nouveau la connexion
+                        if (!estConnecte) {
+                            showStyledAlert('Veuillez vous connecter pour passer commande.', 'warning');
+                            return;
+                        }
+
+                        // MODIFICATION IMPORTANTE : Vérifier s'il y a un produit dans le panier
+                        if (state.panier.length > 0) {
+                            // Prendre le premier produit du panier
+                            const produit = state.panier[0];
+
+                            // Rediriger vers details-commandes.php avec le nom du produit
+                            window.location.href = `details-commandes.php?nom=${encodeURIComponent(produit.nom)}`;
+                        } else {
+                            showPanierMessage('Aucun produit dans le panier.', 'warning');
+                        }
+                    });
+                }
+
+                // Fermeture au clic sur le fond
+                const modal = document.getElementById('panierModal');
+                if (modal) {
+                    modal.addEventListener('click', (e) => {
+                        if (e.target === modal) fermerPanier();
+                    });
+                }
+
+                // Chargement du panier
+                const panierSauvegarde = localStorage.getItem('panier');
+                if (panierSauvegarde) {
+                    try {
+                        state.panier = JSON.parse(panierSauvegarde);
+                        mettreAJourPanier();
+                    } catch (e) {
+                        console.error('Erreur lors du chargement du panier:', e);
+                        state.panier = [];
+                    }
+                }
+
+                miseAJourCompteur();
             });
-        }
-
-        // Initialiser le compteur du panier au chargement de la page
-        document.addEventListener('DOMContentLoaded', function () {
-            mettreAJourCompteurPanier();
-
-            // Afficher le panier dans la console pour débogage
-            afficherPanierConsole();
-        });
+        })();
     </script>
 
     <!-- Animation fadeIn -->
