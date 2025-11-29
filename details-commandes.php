@@ -1,6 +1,9 @@
-<?php declare(strict_types=1);
+<?php 
+declare(strict_types=1);
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 session_start();
-include 'config/database.php';
 
 // Vérifier que l'utilisateur est connecté
 if (!isset($_SESSION['user_id'])) {
@@ -12,6 +15,15 @@ $user_id = $_SESSION['user_id'];
 if (!isset($_GET['nom'])) {
     die("Produit non spécifié !");
 }
+
+// Initialiser la connexion
+try {
+    include 'config/database.php';
+    $conn = getConnection();
+} catch (PDOException $e) {
+    die("Erreur de connexion à la base : " . $e->getMessage());
+}
+
 // Récupérer les informations de l'utilisateur
 try {
     $stmt_user = $conn->prepare("SELECT nom FROM utilisateurs WHERE id = :user_id");
@@ -26,7 +38,6 @@ try {
 $nomProduit = htmlspecialchars(urldecode($_GET['nom']));
 
 try {
-    $conn = getConnection();
     $stmt = $conn->prepare("SELECT * FROM produits WHERE nom = :nom");
     $stmt->bindParam(':nom', $nomProduit);
     $stmt->execute();
