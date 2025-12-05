@@ -9,15 +9,16 @@ if (!isset($_SESSION['admin_id'])) {
 }
 
 // Fonction pour obtenir le taux de change depuis l'API
-function getTauxChange() {
+function getTauxChange()
+{
     // Taux par défaut si l'API échoue
     $tauxParDefaut = 2500;
-    
+
     try {
         // Utilisation d'une API gratuite de taux de change
         $apiUrl = 'https://api.exchangerate-api.com/v4/latest/USD';
         $response = file_get_contents($apiUrl);
-        
+
         if ($response !== false) {
             $data = json_decode($response, true);
             if (isset($data['rates']['CDF'])) {
@@ -27,7 +28,7 @@ function getTauxChange() {
     } catch (Exception $e) {
         error_log("Erreur API taux de change: " . $e->getMessage());
     }
-    
+
     return $tauxParDefaut;
 }
 
@@ -148,11 +149,12 @@ $result = $conn->query("SELECT * FROM produits ORDER BY id ASC");
                 <div class="flex items-center gap-2">
                     <i class="fas fa-sync-alt text-blue-600"></i>
                     <span class="text-sm font-medium text-blue-800">
-                        Taux de change actuel : 
+                        Taux de change actuel :
                         <span id="taux-actuel" class="font-bold">1 USD = <?= formaterPrix($tauxChange) ?> CDF</span>
                     </span>
                 </div>
-                <button onclick="mettreAJourTaux()" class="text-blue-600 hover:text-blue-800 text-sm flex items-center gap-1">
+                <button onclick="mettreAJourTaux()"
+                    class="text-blue-600 hover:text-blue-800 text-sm flex items-center gap-1">
                     <i class="fas fa-redo-alt"></i>
                     Actualiser
                 </button>
@@ -191,6 +193,20 @@ $result = $conn->query("SELECT * FROM produits ORDER BY id ASC");
                         <option value="gyproc">Gyproc</option>
                         <option value="omega">Omega</option>
                         <option value="chanel">Chanel</option>
+                        <option value="moellon">Moellon</option>
+                        <option value="sable">Sable</option>
+                        <option value="tolle">Tôle</option>
+                        <option value="charpente">Charpente</option>
+                        <option value="feron">Feron</option>
+                        <option value="bande-adhesive">Bande adhésive</option>
+                        <option value="vis-jaune">Vis jaune</option>
+                        <option value="vis-noire">Vis noire</option>
+                        <option value="cheville">Cheville</option>
+                        <option value="couteau-mastique">Couteau mastique</option>
+                        <option value="gypsum">Gypsum</option>
+                        <option value="corniere">Cornière</option>
+                        <option value="peinture">Peinture</option>
+                        <option value="cole-froide">Colle froide</option>
                     </select>
                     <p class="text-xs text-gray-500 mt-2 flex items-center gap-1">
                         <i class="fas fa-info-circle text-red-500"></i>
@@ -255,7 +271,8 @@ $result = $conn->query("SELECT * FROM produits ORDER BY id ASC");
                         <div class="md:col-span-2">
                             <input type="number" min="0" step="0.01" name="prix" id="prix" placeholder="Prix en USD"
                                 class="w-full border-2 border-gray-200 rounded-xl p-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition duration-200"
-                                required oninput="convertirPrixTempsReel('prix', 'conversion-text', 'conversion-display')">
+                                required
+                                oninput="convertirPrixTempsReel('prix', 'conversion-text', 'conversion-display')">
                         </div>
                     </div>
                     <div class="mt-3 space-y-2">
@@ -489,7 +506,8 @@ $result = $conn->query("SELECT * FROM produits ORDER BY id ASC");
                                     <input type="number" min="0" step="0.01" name="prix" id="prix-edit"
                                         value="<?= floatval($prod['prix']) ?>"
                                         class="w-full border-2 border-yellow-200 rounded-xl p-3 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 transition duration-200"
-                                        required oninput="convertirPrixTempsReel('prix-edit', 'conversion-text-edit', 'conversion-display-edit')">
+                                        required
+                                        oninput="convertirPrixTempsReel('prix-edit', 'conversion-text-edit', 'conversion-display-edit')">
                                 </div>
                             </div>
                             <div class="mt-3 space-y-2">
@@ -607,15 +625,15 @@ $result = $conn->query("SELECT * FROM produits ORDER BY id ASC");
 
                 if (data && data.rates && data.rates.CDF) {
                     TAUX_CHANGE = data.rates.CDF;
-                    document.getElementById('taux-actuel').textContent = 
+                    document.getElementById('taux-actuel').textContent =
                         `1 USD = ${TAUX_CHANGE.toLocaleString('fr-FR')} CDF`;
-                    
+
                     // Mettre à jour les conversions affichées
                     convertirPrixTempsReel('prix', 'conversion-text', 'conversion-display');
                     if (document.getElementById('prix-edit')) {
                         convertirPrixTempsReel('prix-edit', 'conversion-text-edit', 'conversion-display-edit');
                     }
-                    
+
                     // Afficher un message de succès
                     showNotification('Taux de change mis à jour avec succès', 'success');
                 }
@@ -627,12 +645,11 @@ $result = $conn->query("SELECT * FROM produits ORDER BY id ASC");
 
         function showNotification(message, type) {
             const notification = document.createElement('div');
-            notification.className = `fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 ${
-                type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
-            }`;
+            notification.className = `fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 ${type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+                }`;
             notification.textContent = message;
             document.body.appendChild(notification);
-            
+
             setTimeout(() => {
                 notification.remove();
             }, 3000);
@@ -733,7 +750,21 @@ $result = $conn->query("SELECT * FROM produits ORDER BY id ASC");
                 'carreaux': { nom: 'Carreaux' },
                 'gyproc': { nom: 'Gyproc' },
                 'omega': { nom: 'Omega' },
-                'chanel': { nom: 'Chanel' }
+                'chanel': { nom: 'Chanel' },
+                'moellon': { nom: 'Moellon' },
+                'sable': { nom: 'Sable' },
+                'tolle': { nom: 'Tôle' },
+                'charpente': { nom: 'Charpente' },
+                'feron': { nom: 'Feron' },
+                'bande-adhesive': { nom: 'Bande adhésive' },
+                'vis-jaune': { nom: 'Vis jaune' },
+                'vis-noire': { nom: 'Vis noire' },
+                'cheville': { nom: 'Cheville' },
+                'couteau-mastique': { nom: 'Couteau mastique' },
+                'gypsum': { nom: 'Gypsum' },
+                'corniere': { nom: 'Cornière' },
+                'peinture': { nom: 'Peinture' },
+                'cole-froide': { nom: 'Colle froide' }
             };
 
             if (produitSelect && produitsData[produitSelect]) {
@@ -759,7 +790,7 @@ $result = $conn->query("SELECT * FROM produits ORDER BY id ASC");
             if (document.getElementById('devise-edit')) {
                 updatePricePlaceholderEdit();
             }
-            
+
             // Mettre à jour le taux toutes les 5 minutes
             setInterval(mettreAJourTaux, 5 * 60 * 1000);
         });
@@ -819,4 +850,5 @@ $result = $conn->query("SELECT * FROM produits ORDER BY id ASC");
         let anime;
     </script>
 </body>
+
 </html>

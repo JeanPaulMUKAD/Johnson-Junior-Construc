@@ -1250,6 +1250,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <span
                     class="menu__item bg-white text-gray-700 border border-gray-300 px-5 py-2.5 rounded-lg font-medium cursor-pointer transition-all duration-300 hover:bg-gray-50 hover:border-red-700"
                     data-filter="Chanel">Chanel</span>
+                <span
+                    class="menu__item bg-white text-gray-700 border border-gray-300 px-5 py-2.5 rounded-lg font-medium cursor-pointer transition-all duration-300 hover:bg-gray-50 hover:border-red-700"
+                    data-filter="Moellon">Moellon</span>
+                <span
+                    class="menu__item bg-white text-gray-700 border border-gray-300 px-5 py-2.5 rounded-lg font-medium cursor-pointer transition-all duration-300 hover:bg-gray-50 hover:border-red-700"
+                    data-filter="Sable">Sable</span>
+                <span
+                    class="menu__item bg-white text-gray-700 border border-gray-300 px-5 py-2.5 rounded-lg font-medium cursor-pointer transition-all duration-300 hover:bg-gray-50 hover:border-red-700"
+                    data-filter="Tôle">Tôle</span>
+                <span
+                    class="menu__item bg-white text-gray-700 border border-gray-300 px-5 py-2.5 rounded-lg font-medium cursor-pointer transition-all duration-300 hover:bg-gray-50 hover:border-red-700"
+                    data-filter="Charpente">Charpente</span>
+                <span
+                    class="menu__item bg-white text-gray-700 border border-gray-300 px-5 py-2.5 rounded-lg font-medium cursor-pointer transition-all duration-300 hover:bg-gray-50 hover:border-red-700"
+                    data-filter="Feron">Feron</span>
+                <span
+                    class="menu__item bg-white text-gray-700 border border-gray-300 px-5 py-2.5 rounded-lg font-medium cursor-pointer transition-all duration-300 hover:bg-gray-50 hover:border-red-700"
+                    data-filter="Bande adhésive">Bande adhésive</span>
+                <span
+                    class="menu__item bg-white text-gray-700 border border-gray-300 px-5 py-2.5 rounded-lg font-medium cursor-pointer transition-all duration-300 hover:bg-gray-50 hover:border-red-700"
+                    data-filter="Vis jaune">Vis jaune</span>
+                <span
+                    class="menu__item bg-white text-gray-700 border border-gray-300 px-5 py-2.5 rounded-lg font-medium cursor-pointer transition-all duration-300 hover:bg-gray-50 hover:border-red-700"
+                    data-filter="Vis noire">Vis noire</span>
+                <span
+                    class="menu__item bg-white text-gray-700 border border-gray-300 px-5 py-2.5 rounded-lg font-medium cursor-pointer transition-all duration-300 hover:bg-gray-50 hover:border-red-700"
+                    data-filter="Cheville">Cheville</span>
+                <span
+                    class="menu__item bg-white text-gray-700 border border-gray-300 px-5 py-2.5 rounded-lg font-medium cursor-pointer transition-all duration-300 hover:bg-gray-50 hover:border-red-700"
+                    data-filter="Couteau mastique">Couteau mastique</span>
+                <span
+                    class="menu__item bg-white text-gray-700 border border-gray-300 px-5 py-2.5 rounded-lg font-medium cursor-pointer transition-all duration-300 hover:bg-gray-50 hover:border-red-700"
+                    data-filter="Gypsum">Gypsum</span>
+                <span
+                    class="menu__item bg-white text-gray-700 border border-gray-300 px-5 py-2.5 rounded-lg font-medium cursor-pointer transition-all duration-300 hover:bg-gray-50 hover:border-red-700"
+                    data-filter="Cornière">Cornière</span>
+                <span
+                    class="menu__item bg-white text-gray-700 border border-gray-300 px-5 py-2.5 rounded-lg font-medium cursor-pointer transition-all duration-300 hover:bg-gray-50 hover:border-red-700"
+                    data-filter="Peinture">Peinture</span>
+                <span
+                    class="menu__item bg-white text-gray-700 border border-gray-300 px-5 py-2.5 rounded-lg font-medium cursor-pointer transition-all duration-300 hover:bg-gray-50 hover:border-red-700"
+                    data-filter="Colle froide">Colle froide</span>
             </div>
 
             <div class="container mx-auto px-6 lg:px-12">
@@ -1520,7 +1562,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     'Carreaux': 'Aucun produit au nom de "Carreaux" trouvé',
                     'Gyproc': 'Aucun produit au nom de "Gyproc" trouvé',
                     'Omega': 'Aucun produit au nom de "Omega" trouvé',
-                    'Chanel': 'Aucun produit au nom de "Chanel" trouvé'
+                    'Chanel': 'Aucun produit au nom de "Chanel" trouvé',
+                    'Moellon': 'Aucun produit au nom de "Moellon" trouvé',
+                    'Sable': 'Aucun produit au nom de "Sable" trouvé',
+                    'Tôle': 'Aucun produit au nom de "Tôle" trouvé',
+                    'Charpente': 'Aucun produit au nom de "Charpente" trouvé',
+                    'Feron': 'Aucun produit au nom de "Feron" trouvé',
+                    'Bande adhésive': 'Aucun produit au nom de "Bande adhésive" trouvé',
+                    'Vis jaune': 'Aucun produit au nom de "Vis jaune" trouvé',
+                    'Vis noire': 'Aucun produit au nom de "Vis noire" trouvé',
+                    'Cheville': 'Aucun produit au nom de "Cheville" trouvé',
+                    'Couteau mastique': 'Aucun produit au nom de "Couteau mastique" trouvé',
+                    'Gypsum': 'Aucun produit au nom de "Gypsum" trouvé',
+                    'Cornière': 'Aucun produit au nom de "Cornière" trouvé',
+                    'Peinture': 'Aucun produit au nom de "Peinture" trouvé',
+                    'Colle froide': 'Aucun produit au nom de "Colle froide" trouvé'
                 };
 
                 function filterProducts(filterValue) {
