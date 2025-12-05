@@ -1175,6 +1175,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                     </div>
 
+                    <!-- Plomberie et Menuiserie -->
+                    <div
+                        class="group relative bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300">
+                        <div class="h-64 overflow-hidden">
+                            <img src="https://images.thebusinessplanshop.com/ouvrir-plomberie/ouvrir-une-entreprise-de-plbomerie.jpg?tr=n-fb"
+                                alt="Plomberie et menuiserie"
+                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <h3
+                                class="text-2xl font-semibold text-gray-800 group-hover:text-red-700 transition-colors duration-300">
+                                Plomberie et Menuiserie</h3>
+                            <p class="mt-2 text-gray-600 leading-relaxed">Services complets de plomberie et menuiserie
+                                pour vos projets de rénovation et construction, avec expertise et qualité garantie.</p>
+                            <div class="mt-5">
+                                <a href="details-produits.php"
+                                    class="inline-flex items-center gap-2 bg-red-700 hover:bg-[#053d36] text-white px-5 py-2.5 rounded-lg font-medium shadow-md transition-all duration-300">
+                                    Voir détails
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                        <div
+                            class="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-red-700 via-red-500 to-[#053d36] opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        </div>
+                    </div>
+
 
                 </div>
             </div>
@@ -2711,6 +2742,7 @@ Cet email a été envoyé depuis le formulaire de contact du site web Johnson Co
                     continuerAchatsBtn.addEventListener('click', fermerPanier);
                 }
 
+                // Dans votre code JavaScript du panier (index.php)
                 if (commanderBtn) {
                     commanderBtn.addEventListener('click', function () {
                         const messageContainer = document.getElementById('panierMessage');
@@ -2728,16 +2760,21 @@ Cet email a été envoyé depuis le formulaire de contact du site web Johnson Co
                             return;
                         }
 
-                        // MODIFICATION IMPORTANTE : Vérifier s'il y a un produit dans le panier
-                        if (state.panier.length > 0) {
-                            // Prendre le premier produit du panier
-                            const produit = state.panier[0];
+                        // Sauvegarder le panier dans la session
+                        localStorage.setItem('panier', JSON.stringify(state.panier));
 
-                            // Rediriger vers details-commandes.php avec le nom du produit
-                            window.location.href = `details-commandes.php?nom=${encodeURIComponent(produit.nom)}`;
-                        } else {
-                            showPanierMessage('Aucun produit dans le panier.', 'warning');
-                        }
+                        // Préparer les données des produits
+                        const produitsData = state.panier.map(item => ({
+                            nom: item.nom,
+                            quantite: item.quantite,
+                            prix: item.prix
+                        }));
+
+                        // Encoder les données en JSON pour l'URL
+                        const produitsEncoded = encodeURIComponent(JSON.stringify(produitsData));
+
+                        // Rediriger vers details-commandes.php avec tous les produits
+                        window.location.href = `details-commandes.php?produits=${produitsEncoded}`;
                     });
                 }
 

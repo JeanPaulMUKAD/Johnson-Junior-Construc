@@ -416,6 +416,39 @@ $pieces_disponibles = [
         'Remplacement pièce par pièce',
         'Rénovation joints anciens',
         'Nettoyage et imperméabilisation'
+    ],
+    // Pièces pour Plomberie et Menuiserie
+    'Installation et réparation de plomberie' => [
+        'Installation sanitaire complète',
+        'Remplacement de robinetterie',
+        'Débouchage canalisations',
+        'Rénovation réseau d\'eau',
+        'Installation ballon d\'eau chaude',
+        'Dépannage fuites d\'eau'
+    ],
+    'Menuiserie bois et aluminium' => [
+        'Fenêtres PVC sur mesure',
+        'Portes intérieures bois massif',
+        'Portes d\'entrée blindées',
+        'Véranda aluminium',
+        'Pergola bois',
+        'Cuisine équipée'
+    ],
+    'Équipements sanitaires et robinetterie' => [
+        'Lavabo et vasque design',
+        'Baignoire et receveur de douche',
+        'WC suspendu',
+        'Robinetterie thermostatique',
+        'Mitigeur évier cuisine',
+        'Accessoires salle de bain'
+    ],
+    'Rénovation salle de bain et cuisine' => [
+        'Rénovation complète salle de bain',
+        'Aménagement cuisine',
+        'Pose de carrelage salle d\'eau',
+        'Installation meuble vasque',
+        'Pose de miroir et éclairage',
+        'Ventilation salle de bain'
     ]
 ];
 
@@ -688,6 +721,25 @@ $services = [
             'Pose et installation professionnelle',
             'Rénovation et remplacement'
         ]
+    ],
+    // NOUVEAU SERVICE - Plomberie et Menuiserie
+    16 => [
+        'nom' => 'Plomberie et Menuiserie',
+        'description' => 'Services complets de plomberie et menuiserie pour vos projets de rénovation et construction, avec expertise et qualité garantie.',
+        'prix' => 'Sur devis',
+        'images' => [
+            'main' => 'https://images.thebusinessplanshop.com/ouvrir-plomberie/ouvrir-une-entreprise-de-plbomerie.jpg?tr=n-fb',
+            'thumbnails' => [
+                'https://www.onfaitconstruire.fr/wp-content/uploads/2021/05/canalisations-maison.jpg',
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJmUjxGi-Wl241BNzvZJG79fGoXfsCp1JNzw&s'
+            ]
+        ],
+        'caracteristiques' => [
+            'Installation et réparation de plomberie',
+            'Menuiserie bois et aluminium',
+            'Équipements sanitaires et robinetterie',
+            'Rénovation salle de bain et cuisine'
+        ]
     ]
 
 ];
@@ -958,7 +1010,7 @@ $service_actuel = $services[$_GET['id'] ?? 1] ?? $services[1];
                     }
                 </script>
 
-              
+
                 <!-- Toggle menu -->
                 <div class="nav__icon nav__toggle">
                     <i id="nav-toggle" class="ri-menu-3-line"></i>
