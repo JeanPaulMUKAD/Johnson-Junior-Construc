@@ -593,7 +593,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmer_reservation
     <!-- Confirmation Modal -->
     <div id="confirmModal"
         class="fixed inset-0 bg-black bg-opacity-60 hidden flex items-center justify-center z-50 p-4">
-        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md transform transition-all duration-300 scale-95">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-2xl transform transition-all duration-300 scale-95">
             <div class="p-8">
                 <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
                     <i class="fas fa-shopping-cart text-blue-600 text-2xl"></i>

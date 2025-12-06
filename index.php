@@ -151,20 +151,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </ul>
             </div>
 
-            <div class="nav__buttons">
-                <!-- Connexion -->
-                <div class="nav__icon nav__auth">
-                    <a href="#" class="nav__link" aria-label="Connexion" title="Connexion">
-                        <i class="ri-login-box-line"></i>
-                    </a>
-                </div>
 
-                <!-- Inscription -->
-                <div class="nav__icon nav__auth">
-                    <a href="#" class="nav__link" aria-label="Inscription" title="Inscription">
-                        <i class="ri-user-add-line"></i>
-                    </a>
-                </div>
+            <div class="nav__buttons">
+                <?php if (isset($_SESSION['user_id'])): ?>
+                    <!-- Utilisateur connecté -->
+                    <div class="nav__icon nav__auth">
+                        <a href="#" class="nav__link flex items-center space-x-2" aria-label="Mon compte"
+                            title="Mon compte">
+                            <i class="ri-user-3-line"></i>
+                            <span
+                                class="hidden md:inline text-xl font-medium"><?= htmlspecialchars($_SESSION['user_nom']) ?></span>
+                        </a>
+                    </div>
+
+                    <!-- Déconnexion -->
+                    <div class="nav__icon nav__auth">
+                        <a href="deconnexion.php" class="nav__link" aria-label="Déconnexion" title="Déconnexion">
+                            <i class="ri-logout-box-r-line"></i>
+                        </a>
+                    </div>
+                <?php else: ?>
+                    <!-- Connexion -->
+                    <div class="nav__icon nav__auth">
+                        <a href="#" class="nav__link" aria-label="Connexion" title="Connexion" onclick="openLoginModal()">
+                            <i class="ri-login-box-line"></i>
+                        </a>
+                    </div>
+
+                    <!-- Inscription -->
+                    <div class="nav__icon nav__auth">
+                        <a href="#" class="nav__link" aria-label="Inscription" title="Inscription"
+                            onclick="openRegisterModal()">
+                            <i class="ri-user-add-line"></i>
+                        </a>
+                    </div>
+                <?php endif; ?>
 
 
                 <!--======================= Formulaire Connexion ===================-->
@@ -172,25 +193,95 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo '';
                 else
                     echo 'hidden'; ?> fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                    <div class="bg-white p-8 rounded-lg w-full max-w-md md:max-w-lg lg:max-w-xl">
-                        <h2 class="text-2xl font-bold mb-6 uppercase">Connexion</h2>
+                    <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-3xl mx-4">
+                        <!-- En-tête -->
+                        <div class="flex justify-between items-center mb-6">
+                            <h2 class="text-2xl font-bold text-gray-800">Connexion</h2>
+                            <button onclick="closeModal('login-modal')"
+                                class="text-gray-500 hover:text-red-700 transition-colors">
+                                <i class="ri-close-line text-2xl"></i>
+                            </button>
+                        </div>
 
                         <?php if ($error_login): ?>
-                            <p class="text-red-600 mb-4"><?= $error_login ?></p>
+                            <div class="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center space-x-3">
+                                <i class="ri-error-warning-line text-red-600 text-xl"></i>
+                                <p class="text-red-700 font-medium"><?= $error_login ?></p>
+                            </div>
                         <?php elseif (isset($success_login)): ?>
-                            <p class="text-green-600 mb-4"><?= $success_login ?></p>
+                            <div
+                                class="mb-4 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center space-x-3">
+                                <i class="ri-checkbox-circle-line text-green-600 text-xl"></i>
+                                <p class="text-green-700 font-medium"><?= $success_login ?></p>
+                            </div>
                         <?php endif; ?>
 
-                        <form method="POST" action="" class="space-y-4">
-                            <input type="email" name="email" placeholder="Email" class="w-full p-3 border rounded-md">
-                            <input type="password" name="mot_de_passe" placeholder="Mot de passe"
-                                class="w-full p-3 border rounded-md">
+                        <form method="POST" action="" class="space-y-6">
+                            <!-- Champ Email -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i class="ri-mail-line text-gray-400"></i>
+                                    </div>
+                                    <input type="email" name="email" placeholder="votre@email.com"
+                                        class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-colors"
+                                        value="<?= isset($_POST['email']) ? htmlspecialchars($_POST['email']) : '' ?>">
+                                </div>
+                            </div>
+
+                            <!-- Champ Mot de passe -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Mot de passe</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i class="ri-lock-line text-gray-400"></i>
+                                    </div>
+                                    <input type="password" name="mot_de_passe" placeholder="Votre mot de passe"
+                                        class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-colors">
+                                </div>
+                            </div>
+
+                            <!-- Bouton de connexion -->
                             <button type="submit" name="login"
-                                class="w-full bg-[#053d36] text-white py-3 rounded-md hover:bg-[#811313] transition">Se
-                                connecter</button>
+                                class="w-full bg-red-700 hover:bg-[#053d36] text-white py-3.5 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]">
+                                Se connecter
+                            </button>
                         </form>
-                        <button class="mt-4 text-gray-500 hover:text-red-700"
-                            onclick="closeModal('login-modal')">Fermer</button>
+
+                        <!-- Liens supplémentaires -->
+                        <div class="mt-6 pt-6 border-t border-gray-200 space-y-4">
+                            <!-- Lien mot de passe oublié -->
+                            <div class="text-center">
+                                <a href="mot-de-passe-oublie.php"
+                                    class="inline-flex items-center space-x-2 text-red-700 hover:text-[#053d36] font-medium transition-colors group">
+                                    <i class="ri-lock-unlock-line group-hover:scale-110 transition-transform"></i>
+                                    <span>Mot de passe oublié ?</span>
+                                </a>
+                            </div>
+
+                            <!-- Lien déconnexion (visible seulement si connecté) -->
+                            <?php if (isset($_SESSION['user_id'])): ?>
+                                <div class="text-center">
+                                    <a href="deconnexion.php"
+                                        class="inline-flex items-center space-x-2 text-gray-600 hover:text-red-700 font-medium transition-colors group">
+                                        <i class="ri-logout-box-r-line group-hover:scale-110 transition-transform"></i>
+                                        <span>Se déconnecter</span>
+                                    </a>
+                                </div>
+                            <?php endif; ?>
+
+                            <!-- Lien vers l'inscription -->
+                            <div class="text-center pt-2">
+                                <p class="text-gray-600 text-xl">
+                                    Pas de compte ?
+                                    <a href="#" onclick="openRegisterModal()"
+                                        class="text-red-700 hover:text-[#053d36] font-medium transition-colors text-xl">
+                                        S'inscrire
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -199,28 +290,143 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo '';
                 else
                     echo 'hidden'; ?> fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                    <div class="bg-white p-8 rounded-lg w-full max-w-md md:max-w-lg lg:max-w-xl">
-                        <h2 class="text-2xl font-bold mb-6 uppercase">Inscription</h2>
+                    <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-3xl mx-4">
+                        <!-- En-tête -->
+                        <div class="flex justify-between items-center mb-6">
+                            <h2 class="text-2xl font-bold text-gray-800">Créer un compte</h2>
+                            <button onclick="closeModal('register-modal')"
+                                class="text-gray-500 hover:text-red-700 transition-colors">
+                                <i class="ri-close-line text-2xl"></i>
+                            </button>
+                        </div>
 
+                        <!-- Messages d'alerte -->
                         <?php if ($error_register): ?>
-                            <p class="text-red-600 mb-4"><?= $error_register ?></p>
+                            <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center space-x-3">
+                                <i class="ri-error-warning-line text-red-600 text-xl"></i>
+                                <p class="text-red-700 font-medium"><?= $error_register ?></p>
+                            </div>
                         <?php elseif ($success_register): ?>
-                            <p class="text-green-600 mb-4"><?= $success_register ?></p>
+                            <div
+                                class="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center space-x-3">
+                                <i class="ri-checkbox-circle-line text-green-600 text-xl"></i>
+                                <p class="text-green-700 font-medium"><?= $success_register ?></p>
+                            </div>
                         <?php endif; ?>
 
-                        <form method="POST" action="" class="space-y-4">
-                            <input type="text" name="nom" placeholder="Nom complet"
-                                class="w-full p-3 border rounded-md">
-                            <input type="email" name="email" placeholder="Email" class="w-full p-3 border rounded-md">
-                            <input type="password" name="mot_de_passe" placeholder="Mot de passe"
-                                class="w-full p-3 border rounded-md">
-                            <input type="password" name="confirmation" placeholder="Confirmer mot de passe"
-                                class="w-full p-3 border rounded-md">
+                        <form method="POST" action="" class="space-y-6 ">
+                            <!-- Champ Nom complet -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Nom complet</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i class="ri-user-line text-gray-400"></i>
+                                    </div>
+                                    <input type="text" name="nom" placeholder="Votre nom complet"
+                                        class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-colors"
+                                        value="<?= isset($_POST['nom']) ? htmlspecialchars($_POST['nom']) : '' ?>"
+                                        required>
+                                </div>
+                            </div>
+
+                            <!-- Champ Email -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Adresse email</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i class="ri-mail-line text-gray-400"></i>
+                                    </div>
+                                    <input type="email" name="email" placeholder="votre@email.com"
+                                        class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-colors"
+                                        value="<?= isset($_POST['email']) ? htmlspecialchars($_POST['email']) : '' ?>"
+                                        required>
+                                </div>
+                            </div>
+
+                            <!-- Champ Mot de passe -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Mot de passe</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i class="ri-lock-line text-gray-400"></i>
+                                    </div>
+                                    <input type="password" name="mot_de_passe"
+                                        placeholder="Créez un mot de passe sécurisé"
+                                        class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-colors"
+                                        required>
+                                </div>
+                                <p class="mt-2 text-xs text-gray-500">
+                                    Le mot de passe doit contenir au moins 6 caractères
+                                </p>
+                            </div>
+
+                            <!-- Champ Confirmation mot de passe -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Confirmer le mot de
+                                    passe</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i class="ri-lock-unlock-line text-gray-400"></i>
+                                    </div>
+                                    <input type="password" name="confirmation"
+                                        placeholder="Confirmez votre mot de passe"
+                                        class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-colors"
+                                        required>
+                                </div>
+                            </div>
+
+                            <!-- Informations de sécurité -->
+                            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                                <div class="flex items-start space-x-3">
+                                    <i class="ri-shield-check-line text-blue-600 text-lg mt-0.5"></i>
+                                    <div>
+                                        <h4 class="font-semibold text-blue-800 text-xl mb-1">Sécurité de votre compte
+                                        </h4>
+                                        <p class="text-blue-700 text-xl">
+                                            Vos informations sont sécurisées et ne seront jamais partagées avec des
+                                            tiers.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Bouton d'inscription -->
                             <button type="submit" name="register"
-                                class="w-full bg-[#053d36] text-white py-3 rounded-md hover:bg-[#811313] transition">S’inscrire</button>
+                                class="w-full bg-gradient-to-r from-[#053d36] to-red-700 hover:from-red-700 hover:to-[#053d36] text-white py-3.5 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] group">
+                                <span class="flex items-center justify-center space-x-2">
+                                    <i class="ri-user-add-line group-hover:scale-110 transition-transform"></i>
+                                    <span>Créer mon compte</span>
+                                </span>
+                            </button>
                         </form>
-                        <button class="mt-4 text-gray-500 hover:text-red-700"
-                            onclick="closeModal('register-modal')">Fermer</button>
+
+                        <!-- Liens supplémentaires -->
+                        <div class="mt-6 pt-6 border-t border-gray-200 space-y-4">
+                            <!-- Lien vers la connexion -->
+                            <div class="text-center">
+                                <p class="text-gray-600 text-xl">
+                                    Déjà un compte ?
+                                    <a href="#" onclick="openLoginModal()"
+                                        class="text-red-700 hover:text-[#053d36] font-medium transition-colors text-xl">
+                                        Se connecter
+                                    </a>
+                                </p>
+                            </div>
+
+                            <!-- Lien vers les conditions -->
+                            <div class="text-center">
+                                <p class="text-gray-500 text-xl">
+                                    En créant un compte, vous acceptez nos
+                                    <a href="#"
+                                        class="text-gray-600 hover:text-red-700 underline transition-colors">conditions
+                                        d'utilisation</a>
+                                    et notre
+                                    <a href="#"
+                                        class="text-gray-600 hover:text-red-700 underline transition-colors">politique
+                                        de confidentialité</a>
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -2334,11 +2540,10 @@ Cet email a été envoyé depuis le formulaire de contact du site web Johnson Co
 
                 <!-- Total et boutons -->
                 <div class="mt-4 border-t pt-4">
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="text-lg font-semibold text-gray-800">Total:</span>
-                        <div class="flex items-center gap-1">
-                            <span id="panierTotal" class="text-lg font-bold text-blue-600">0</span>
-                            <span id="panierTotalDevise" class="text-lg font-bold text-blue-600">$</span>
+                    <div class="mb-4">
+                        <span class="text-lg font-semibold text-gray-800 block mb-2">Total:</span>
+                        <div id="panierTotal" class="space-y-1">
+                            <!-- Les totaux par devise seront injectés ici -->
                         </div>
                     </div>
 
@@ -2412,79 +2617,100 @@ Cet email a été envoyé depuis le formulaire de contact du site web Johnson Co
                 if (!contenu) return;
 
                 contenu.innerHTML = '';
-                let total = 0;
+
+                // Objets pour stocker les totaux par devise
+                const totauxParDevise = {};
 
                 if (state.panier.length === 0) {
                     contenu.innerHTML = `
-                    <div class="text-center py-8 text-gray-500">
-                        <i class="ri-shopping-cart-line text-4xl mb-2"></i>
-                        <p>Votre panier est vide</p>
-                    </div>
-                `;
+            <div class="text-center py-8 text-gray-500">
+                <i class="ri-shopping-cart-line text-4xl mb-2"></i>
+                <p>Votre panier est vide</p>
+            </div>
+        `;
                 } else {
                     state.panier.forEach(item => {
                         const sousTotal = item.prix * item.quantite;
-                        total += sousTotal;
 
-                        const imagePath = getImagePath(item.image);
-                        // Échappement sécurisé pour les noms de produits
+                        // Accumuler les totaux par devise
+                        if (!totauxParDevise[item.devise]) {
+                            totauxParDevise[item.devise] = 0;
+                        }
+                        totauxParDevise[item.devise] += sousTotal;
+
                         const nomEchappe = item.nom.replace(/'/g, "\\'").replace(/"/g, '\\"').replace(/`/g, '\\`');
 
                         contenu.innerHTML += `
-                        <div class="flex items-center justify-between mb-4 border-b pb-4">
-                            <div class="flex items-center space-x-3 flex-1">
-                                ${imagePath ? `
-                                    <img src="${imagePath}" alt="${item.nom.replace(/"/g, '&quot;')}" 
-                                         class="w-16 h-16 object-cover rounded border"
-                                         onerror="this.style.display='none'">
-                                    <div class="w-16 h-16 bg-gray-200 rounded border flex items-center justify-center" style="display: none;">
-                                        <i class="ri-image-line text-gray-400"></i>
-                                    </div>
-                                ` : `
-                                    <div class="w-16 h-16 bg-gray-200 rounded border flex items-center justify-center">
-                                        <i class="ri-image-line text-gray-400"></i>
-                                    </div>
-                                `}
-                                <div class="flex-1">
-                                    <h4 class="font-medium text-gray-800">${item.nom}</h4>
-                                    ${item.poids ? `<p class="text-sm text-gray-600">Poids: ${item.poids}</p>` : ''}
-                                    <p class="text-gray-700">
-                                        ${item.prix} 
-                                        <span class="font-semibold ${item.devise === 'USD' ? 'text-green-600' : 'text-red-600'}">
-                                            ${item.devise === 'USD' ? '$' : 'FC'}
-                                        </span>
-                                        × 
-                                        <input type="number" value="${item.quantite}" 
-                                               min="1" max="${item.quantiteMax}" 
-                                               onchange="changerQuantite('${nomEchappe}', this.value)"
-                                               class="w-16 border rounded px-2 py-1 text-center">
-                                    </p>
-                                    <p class="text-sm font-semibold text-blue-600">
-                                        Sous-total: ${sousTotal.toFixed(2)} ${item.devise === 'USD' ? '$' : 'FC'}
-                                    </p>
-                                </div>
+                <div class="flex items-center justify-between mb-4 border-b pb-4">
+                    <div class="flex items-center space-x-3 flex-1">
+                        ${item.image ? `
+                            <img src="${item.image}" alt="${item.nom.replace(/"/g, '&quot;')}" 
+                                 class="w-16 h-16 object-cover rounded border"
+                                 onerror="this.style.display='none'">
+                        ` : `
+                            <div class="w-16 h-16 bg-gray-200 rounded border flex items-center justify-center">
+                                <i class="ri-image-line text-gray-400"></i>
                             </div>
-                            <button onclick="supprimerDuPanier('${nomEchappe}')" 
-                                    class="text-red-500 hover:text-red-700 ml-2 p-2 rounded-full hover:bg-red-50 transition-colors">
-                                <i class="ri-delete-bin-line"></i>
-                            </button>
+                        `}
+                        <div class="flex-1">
+                            <h4 class="font-medium text-gray-800">${item.nom}</h4>
+                            ${item.poids ? `<p class="text-sm text-gray-600">Poids: ${item.poids}</p>` : ''}
+                            <div class="flex items-center gap-2 mt-1">
+                                <span class="text-gray-700 font-semibold">
+                                    ${item.prix.toFixed(2)} 
+                                    <span class="font-bold ${item.devise === 'USD' ? 'text-green-600' : 'text-red-600'}">
+                                        ${item.devise === 'USD' ? '$' : 'FC'}
+                                    </span>
+                                </span>
+                                <span class="text-gray-400">×</span>
+                                <input type="number" value="${item.quantite}" 
+                                       min="1" max="${item.quantiteMax}" 
+                                       onchange="changerQuantite('${nomEchappe}', this.value)"
+                                       class="w-16 border rounded px-2 py-1 text-center">
+                            </div>
+                            <p class="text-sm font-semibold text-blue-600 mt-1">
+                                Sous-total: ${sousTotal.toFixed(2)} ${item.devise === 'USD' ? '$' : 'FC'}
+                            </p>
                         </div>
-                    `;
+                    </div>
+                    <button onclick="supprimerDuPanier('${nomEchappe}')" 
+                            class="text-red-500 hover:text-red-700 ml-2 p-2 rounded-full hover:bg-red-50 transition-colors">
+                        <i class="ri-delete-bin-line"></i>
+                    </button>
+                </div>
+            `;
                     });
                 }
 
-                const totalEl = document.getElementById('panierTotal');
-                if (totalEl) totalEl.textContent = total.toFixed(2);
+                // Mise à jour de l'affichage des totaux
+                const totalContainer = document.getElementById('panierTotal');
+                if (totalContainer) {
+                    let htmlTotaux = '';
 
-                const totalDevise = document.getElementById('panierTotalDevise');
-                if (totalDevise && state.panier.length > 0) {
-                    const devise = state.panier[0].devise || 'USD';
-                    totalDevise.textContent = devise === 'USD' ? '$' : 'FC';
+                    if (Object.keys(totauxParDevise).length === 0) {
+                        htmlTotaux = '<span class="text-gray-500">0</span>';
+                    } else {
+                        const totauxArray = Object.entries(totauxParDevise);
+
+                        totauxArray.forEach(([devise, total], index) => {
+                            const symboleDevise = devise === 'USD' ? '$' : 'FC';
+                            const classeDevise = devise === 'USD' ? 'text-green-600' : 'text-red-600';
+
+                            htmlTotaux += `
+                    <div class="flex items-center gap-1 ${index > 0 ? 'mt-2' : ''}">
+                        <span class="text-lg font-bold ${classeDevise}">${total.toFixed(2)}</span>
+                        <span class="text-lg font-bold ${classeDevise}">${symboleDevise}</span>
+                    </div>
+                `;
+                        });
+                    }
+
+                    totalContainer.innerHTML = htmlTotaux;
                 }
 
+                // Mettre à jour le compteur d'articles
                 miseAJourCompteur();
             }
-
             function showStyledAlert(message, type = 'warning') {
                 // Supprimer les alertes existantes
                 const existingAlerts = document.querySelectorAll('.custom-alert');
