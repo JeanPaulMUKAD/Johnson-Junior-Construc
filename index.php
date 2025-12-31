@@ -2511,7 +2511,7 @@ Cet email a été envoyé depuis le formulaire de contact du site web Johnson Co
                 </ul>
             </div>
         </div>
-        <p class="footer__copyright">&copy; 2025 Johnson Construction. Tous droits réservés</p>
+        <p class="footer__copyright">&copy; 2026 Johnson Construction. Tous droits réservés</p>
     </footer>
 
     <!-- Modal Panier -->
